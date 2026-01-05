@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import PublicRoutes from './PublicRoutes';
 import ProtectedRoutes from './ProtectedRoutes';
@@ -27,39 +27,58 @@ import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
 
+const router = createBrowserRouter([
+  {
+    element: <PublicRoutes />,
+    children: [
+      { path: '/', element: <OnboardingPage /> },
+      { path: '/login', element: <LoginPage /> },
+    ],
+  },
+
+  {
+    element: <ProtectedRoutes />,
+    children: [
+      { path: '/home', element: <HomePage /> },
+
+      {
+        path: '/job',
+        element: <JobLayout />,
+        children: [
+          { index: true, element: <JobPage /> },
+          { path: 'category', element: <CategoryPage /> },
+          { path: 'category/:id', element: <CategoryDetailPage /> },
+          { path: 'analysis', element: <AnalysisPage /> },
+          { path: 'result', element: <ResultPage /> },
+        ],
+      },
+
+      {
+        path: '/report',
+        element: <ReportLayout />,
+        children: [
+          { index: true, element: <ReportMainPage /> },
+          { path: 'mycard', element: <MyCardPage /> },
+          { path: 'growth', element: <GrowthMainPage /> },
+          { path: 'growth/write', element: <GrowthWritePage /> },
+          { path: 'growth/timeline', element: <TimelinePage /> },
+        ],
+      },
+
+      {
+        path: '/social',
+        element: <SocialLayout />,
+        children: [
+          { path: 'board', element: <BoardPage /> },
+          { path: 'board/:postId', element: <BoardDetailPage /> },
+        ],
+      },
+    ],
+  },
+
+  { path: '*', element: <div>Not Found</div> },
+]);
+
 export default function AppRouter() {
-  return (
-    <Routes>
-      <Route element={<PublicRoutes />}>
-        <Route path="/" element={<OnboardingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Route>
-
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/job" element={<JobLayout />}>
-          <Route index element={<JobPage />} />
-          <Route path="category" element={<CategoryPage />} />
-          <Route path="category/:id" element={<CategoryDetailPage />} />
-          <Route path="analysis" element={<AnalysisPage />} />
-          <Route path="result" element={<ResultPage />} />
-        </Route>
-
-        <Route path="/home" element={<HomePage />} />
-
-        <Route path="/report" element={<ReportLayout />}>
-          <Route index element={<ReportMainPage />} />
-          <Route path="mycard" element={<MyCardPage />} />
-          <Route path="growth" element={<GrowthMainPage />} />
-          <Route path="growth/write" element={<GrowthWritePage />} />
-          <Route path="growth/timeline" element={<TimelinePage />} />
-        </Route>
-
-        <Route path="/social" element={<SocialLayout />}>
-          <Route path="board" element={<BoardPage />} />
-          <Route path="board/:postId" element={<BoardDetailPage />} />
-        </Route>
-      </Route>
-      <Route path="*" element={<div>Not Found</div>} />
-    </Routes>
-  );
+  return <RouterProvider router={router} />;
 }
