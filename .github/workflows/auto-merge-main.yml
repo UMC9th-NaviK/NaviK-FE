@@ -7,6 +7,10 @@ on:
     types:
       - completed
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   merge:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -25,3 +29,4 @@ jobs:
           from_branch: develop
           target_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
