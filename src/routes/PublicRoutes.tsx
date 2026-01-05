@@ -1,12 +1,16 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 
-export default function PublicRoutes() {
-  const token = localStorage.getItem('accessToken');
-  const isLoggedIn = Boolean(token);
+import PublicLayout from '../layouts/PublicLayout';
+import OnboardingPage from '../pages/onboarding/OnboardingPage';
+import LoginPage from '../pages/onboarding/LoginPage';
 
-  if (isLoggedIn) {
-    return <Navigate to="/" replace />;
-  }
-
-  return <Outlet />;
-}
+export const publicRoutes: RouteObject[] = [
+  {
+    path: '/',
+    element: <PublicLayout />,
+    children: [
+      { index: true, element: <OnboardingPage /> },
+      { path: 'login', element: <LoginPage /> },
+    ],
+  },
+];
