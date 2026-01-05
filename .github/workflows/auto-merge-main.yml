@@ -1,0 +1,32 @@
+name: Auto merge develop to main
+
+on:
+  workflow_run:
+    workflows: ["CI/CD Build Check"]
+    branches: [develop]
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge develop into main
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          type: now
+          from_branch: develop
+          target_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
