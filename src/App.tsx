@@ -1,10 +1,11 @@
+import { RouterProvider } from 'react-router-dom';
 import MobileLayout from './layouts/MobileLayout';
-import AppRouter from './routes/AppRouter';
+import router from './routes';
 
 const App = () => {
   return (
     <MobileLayout>
-      <AppRouter />
+      <RouterProvider router={router} />
     </MobileLayout>
   );
 };
