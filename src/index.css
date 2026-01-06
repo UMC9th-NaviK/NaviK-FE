@@ -84,6 +84,10 @@
   font-display: swap;
 }
 
+.font-en {
+  font-family: 'Montserrat', 'Pretendard', Arial, sans-serif !important;
+}
+
 body {
   background-color: #fff;
   color: #000;
