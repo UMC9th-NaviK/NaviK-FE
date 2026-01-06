@@ -1,1 +1,78 @@
 @import 'tailwindcss';
+
+@theme {
+  /* Primary Blue Scale */
+  --color-primary-blue-100: #dbebfe;
+  --color-primary-blue-200: #b8d4fe;
+  --color-primary-blue-300: #94bbfd;
+  --color-primary-blue-400: #79a6fb;
+  --color-primary-blue-500: #4e83f9;
+  --color-primary-blue-600: #3964d6;
+  --color-primary-blue-700: #2749b3;
+  --color-primary-blue-800: #183290;
+  --color-primary-blue-900: #0e2277;
+
+  /* Deep Blue Scale */
+  --color-deep-blue-100: #ded6ff;
+  --color-deep-blue-200: #bdadff;
+  --color-deep-blue-300: #9a84ff;
+  --color-deep-blue-400: #7e66ff;
+  --color-deep-blue-500: #5133ff;
+  --color-deep-blue-600: #3d25db;
+  --color-deep-blue-700: #2c19b7;
+  --color-deep-blue-800: #1d1093;
+  --color-deep-blue-900: #13097a;
+
+  /* Pink Scale */
+  --color-pink-100: #fee0db;
+  --color-pink-200: #fdbab7;
+  --color-pink-300: #fb9398;
+  --color-pink-400: #f7778a;
+  --color-pink-500: #f24b74;
+  --color-pink-600: #d0366b;
+  --color-pink-700: #ae2561;
+  --color-pink-800: #8c1756;
+  --color-pink-900: #740e4e;
+
+  /* Violet Scale */
+  --color-violet-100: #fed3fa;
+  --color-violet-200: #fea8fb;
+  --color-violet-300: #f57cfc;
+  --color-violet-400: #e55bf9;
+  --color-violet-500: #cc27f5;
+  --color-violet-600: #a01cd2;
+  --color-violet-700: #7913b0;
+  --color-violet-800: #570c8e;
+  --color-violet-900: #3e0775;
+
+  /* Green Scale */
+  --color-green-100: #d1fddd;
+  --color-green-200: #a4fcc5;
+  --color-green-300: #76f6b2;
+  --color-green-400: #52ecab;
+  --color-green-500: #1ee1a1;
+  --color-green-600: #15c19a;
+  --color-green-700: #0fa28e;
+  --color-green-800: #09827e;
+  --color-green-900: #05656c;
+
+  /* Base Scale */
+  --color-base-100: #ffffff;
+  --color-base-200: #e3e3e3;
+  --color-base-300: #d6d6d6;
+  --color-base-400: #a6a6a6;
+  --color-base-500: #5d5d5d;
+  --color-base-600: #454545;
+  --color-base-700: #2c2c2c;
+  --color-base-800: #1b1b1b;
+  --color-base-900: #111111;
+
+  --color-white-background: #f5f8ff;
+  --color-gray-background: #f5f5f5;
+
+  /* Opacity Scale */
+  --color-opacity-black-80: rgba(0, 0, 0, 0.8);
+  --color-opacity-black-60: rgba(0, 0, 0, 0.6);
+  --color-opacity-black-40: rgba(0, 0, 0, 0.4);
+  --color-opacity-black-20: rgba(0, 0, 0, 0.2);
+}
