@@ -189,7 +189,7 @@ body {
 }
 
 @utility text-body-14B {
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   font-size: var(--text-14);
   letter-spacing: var(--letter-spacing-1);
   line-height: var(--line-height-160);
@@ -199,7 +199,7 @@ body {
   font-weight: var(--font-weight-medium);
   font-size: var(--text-14);
   letter-spacing: var(--letter-spacing-1);
-  line-height: var(--line-height-160);
+  line-height: var(--line-height-140);
 }
 
 @utility text-body-14R {
@@ -210,18 +210,25 @@ body {
 }
 
 /* caption */
+@utility text-caption-12B {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-12);
+  letter-spacing: var(--letter-spacing);
+  line-height: var(--line-height-140);
+}
+
 @utility text-caption-12M {
   font-weight: var(--font-weight-medium);
   font-size: var(--text-12);
   letter-spacing: var(--letter-spacing);
-  line-height: var(--line-height-160);
+  line-height: var(--line-height-140);
 }
 
 @utility text-caption-12R {
   font-weight: var(--font-weight-regular);
   font-size: var(--text-12);
   letter-spacing: var(--letter-spacing);
-  line-height: var(--line-height-160);
+  line-height: var(--line-height-140);
 }
 
 @utility text-caption-10M {
