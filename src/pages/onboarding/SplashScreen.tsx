@@ -1,6 +1,6 @@
 const SplashScreen = () => {
   return (
-    <div className="gradient-bg-01 relative flex h-screen flex-col items-center justify-center overflow-hidden">
+    <div className="gradient-bg-01 relative flex h-dvh flex-col items-center justify-center overflow-hidden">
       <img src="/icons/logo-white.svg" alt="NaviK Logo" className="h-10.4 w-66.5" />
       <img
         src="/images/big-symbol-white.svg"
