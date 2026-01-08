@@ -295,3 +295,8 @@ body {
   letter-spacing: var(--letter-spacing-2);
   font-family: 'Montserrat', 'Pretendard', Arial, sans-serif !important;
 }
+
+/* Gradients */
+@utility gradient-bg-01 {
+  background: linear-gradient(180.02deg, #ffffff 8.57%, #4e83f9 45.49%);
+}
