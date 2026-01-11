@@ -2,11 +2,18 @@ import { useState } from 'react';
 import Career from '../../components/onboarding/Career';
 import Input from '../../components/onboarding/Input';
 import BackHeader from './BackHeader';
+import { useNavigate } from 'react-router-dom';
 
 const OnboardingPage = () => {
   const [career, setCareer] = useState<'신입' | '경력'>('신입');
   const [name, setName] = useState('');
   const [nickname, setNickname] = useState('');
+
+  const navigate = useNavigate();
+
+  const onSubmit = () => {
+    navigate('/setup/job');
+  };
 
   return (
     <div className="relative flex h-dvh flex-col overflow-hidden">
@@ -37,6 +44,7 @@ const OnboardingPage = () => {
           <button
             className={`text-base-100 text-body-16B w-full rounded-lg py-3 text-center transition-all ${name ? 'bg-primary-blue-500 cursor-pointer opacity-100' : 'bg-primary-blue-200 cursor-not-allowed opacity-50'}`}
             disabled={!name}
+            onClick={onSubmit}
           >
             다음
           </button>
