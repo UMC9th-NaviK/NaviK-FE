@@ -1,8 +1,8 @@
 import { Navigate, type RouteObject } from 'react-router-dom';
 import HomePage from '../pages/home/HomePage';
-import JobPage from '../pages/job/JobPage';
-import CategoryPage from '../pages/job/CategoryPage';
-import CategoryDetailPage from '../pages/job/CategoryDetailPage';
+import JobPage from '../pages/setup/JobPage';
+import CategoryPage from '../pages/setup/CategoryPage';
+import CategoryDetailPage from '../pages/setup/CategoryDetailPage';
 import AnalysisPage from '../pages/job/AnalysisPage';
 import ResultPage from '../pages/job/ResultPage';
 import ReportMainPage from '../pages/report/ReportMainPage';
