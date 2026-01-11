@@ -1,4 +1,4 @@
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, type RouteObject } from 'react-router-dom';
 import HomePage from '../pages/home/HomePage';
 import JobPage from '../pages/job/JobPage';
 import CategoryPage from '../pages/job/CategoryPage';
@@ -15,18 +15,27 @@ import BoardDetailPage from '../pages/social/BoardDetailPage';
 import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
+import SetupLayout from '../layouts/SetupLayout';
 
 export const protectedRoutes: RouteObject[] = [
   {
     children: [
       { path: '/home', element: <HomePage /> },
+      // 초기 설정 flow, 1회 접근 가능
+      {
+        path: '/setup',
+        element: <SetupLayout />,
+        children: [
+          { index: true, element: <Navigate to="job" replace /> },
+          { path: 'job', element: <JobPage /> },
+          { path: 'category', element: <CategoryPage /> },
+          { path: 'category/:id', element: <CategoryDetailPage /> },
+        ],
+      },
       {
         path: '/job',
         element: <JobLayout />,
         children: [
-          { index: true, element: <JobPage /> },
-          { path: 'category', element: <CategoryPage /> },
-          { path: 'category/:id', element: <CategoryDetailPage /> },
           { path: 'analysis', element: <AnalysisPage /> },
           { path: 'result', element: <ResultPage /> },
         ],
