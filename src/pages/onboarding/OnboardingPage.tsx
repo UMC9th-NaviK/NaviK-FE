@@ -17,14 +17,14 @@ const OnboardingPage = () => {
   };
 
   return (
-    <div className="relative flex h-dvh flex-col overflow-hidden">
+    <div className="relative flex h-dvh flex-col overflow-hidden bg-white">
       <img
         src="/images/big-symbol-blue.svg"
         alt="NaviK Logo"
-        className="absolute bottom-4.5 left-0"
+        className="pointer-events-none absolute bottom-4.5 left-0 z-0"
       />
       {/* 헤더 */}
-      <div className="text-heading-20B w-full p-6">
+      <div className="text-heading-20B z-10 w-full p-6">
         <BackHeader title="프로필 정보 입력" />
         <div className="mt-8.25 flex flex-col gap-7.5">
           <div className="flex flex-col gap-6">

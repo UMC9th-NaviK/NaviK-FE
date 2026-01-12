@@ -15,7 +15,7 @@ export default function JobPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white">
+    <div className="relative min-h-dvh overflow-hidden bg-white">
       <div className="absolute inset-0">
         {/* 배경 이미지 - 위로 사라짐 */}
         <motion.img

@@ -5,7 +5,7 @@ const JobStart = ({ onNext }: { onNext: () => void }) => {
   return (
     <div className="relative flex h-full flex-col">
       {/* 안내 텍스트 */}
-      <div className="mt-76 flex flex-col items-center">
+      <div className="mt-60 flex flex-col items-center">
         <div className="flex flex-col items-center gap-10">
           <p className="text-primary-blue-500 text-heading-20B">안녕하세요, 항해자님</p>
           <p className="text-body-16B text-opacity-black-80 text-center whitespace-pre-line">
