@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import JobStart from '../../components/setup/JobStart';
 
 export default function JobPage() {
   const navigate = useNavigate();
@@ -48,14 +49,7 @@ export default function JobPage() {
             style={{ width: 741, height: 440 }}
           />
           {/* 내부 요소 */}
-          <div className="absolute right-0 bottom-0 left-0 z-20 flex justify-center px-4 pb-8">
-            <button
-              onClick={handleNext}
-              className="bg-primary-blue-500 text-body-16B text-base-100 mx-4 w-full cursor-pointer rounded-full py-3"
-            >
-              나의 직무 선택하기
-            </button>
-          </div>
+          <JobStart onNext={handleNext} />
         </motion.div>
       </div>
     </div>
