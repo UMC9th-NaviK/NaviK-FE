@@ -1,3 +1,4 @@
+import ButtonRound from '../common/ButtonRound';
 import JobSlider from './JobSlider';
 
 const JobStart = ({ onNext }: { onNext: () => void }) => {
@@ -19,12 +20,7 @@ const JobStart = ({ onNext }: { onNext: () => void }) => {
       </div>
       {/* 버튼 - 하단 고정 */}
       <div className="absolute right-0 bottom-0 left-0 z-20 flex justify-center px-4 pb-8">
-        <button
-          onClick={onNext}
-          className="bg-primary-blue-500 text-body-16B text-base-100 mx-4 w-full cursor-pointer rounded-full py-3"
-        >
-          나의 직무 선택하기
-        </button>
+        <ButtonRound onClick={onNext} text="나의 직무 선택하기" />
       </div>
     </div>
   );

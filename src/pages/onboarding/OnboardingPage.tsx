@@ -3,6 +3,7 @@ import Career from '../../components/onboarding/Career';
 import Input from '../../components/onboarding/Input';
 import BackHeader from './BackHeader';
 import { useNavigate } from 'react-router-dom';
+import ButtonSquare from '../../components/common/ButtonSquare';
 
 const OnboardingPage = () => {
   const [career, setCareer] = useState<'신입' | '경력'>('신입');
@@ -41,13 +42,7 @@ const OnboardingPage = () => {
             />
             <Career value={career} onChange={setCareer} />
           </div>
-          <button
-            className={`text-base-100 text-body-16B w-full rounded-lg py-3 text-center transition-all ${name ? 'bg-primary-blue-500 cursor-pointer opacity-100' : 'bg-primary-blue-200 cursor-not-allowed opacity-50'}`}
-            disabled={!name}
-            onClick={onSubmit}
-          >
-            다음
-          </button>
+          <ButtonSquare text="다음" disabled={!name} onClick={onSubmit} />
         </div>
       </div>
     </div>
