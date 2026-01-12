@@ -4,14 +4,14 @@ type BackHeaderProps = {
 
 const BackHeader = ({ title }: BackHeaderProps) => {
   return (
-    <div className="relative flex w-full items-center justify-center">
+    <div className="relative flex w-full items-center p-6">
       <button
-        className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer"
+        className="absolute top-1/2 left-6 -translate-y-1/2 cursor-pointer"
         onClick={() => window.history.back()}
       >
         <img src="/icons/arrow-back.svg" className="h-6 w-6" alt="Back" />
       </button>
-      <p>{title}</p>
+      <p className="text-heading-20B w-full text-center">{title}</p>
     </div>
   );
 };
