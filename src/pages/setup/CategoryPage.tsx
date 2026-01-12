@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import JobSelect from '../../components/setup/JobSelect';
 
 export default function CategoryPage() {
   return (
@@ -22,6 +23,7 @@ export default function CategoryPage() {
           className="relative z-10"
         >
           {/* 카테고리 선택 UI */}
+          <JobSelect />
         </motion.div>
       </div>
     </div>
