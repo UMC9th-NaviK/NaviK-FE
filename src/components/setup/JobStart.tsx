@@ -19,7 +19,7 @@ const JobStart = ({ onNext }: { onNext: () => void }) => {
         <JobSlider />
       </div>
       {/* 버튼 - 하단 고정 */}
-      <div className="absolute right-0 bottom-0 left-0 z-20 flex justify-center px-4 pb-8">
+      <div className="absolute right-0 bottom-0 left-0 z-20 flex justify-center px-4 pb-6">
         <ButtonRound onClick={onNext} text="나의 직무 선택하기" />
       </div>
     </div>
