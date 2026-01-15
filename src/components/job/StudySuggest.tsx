@@ -2,7 +2,7 @@ const StudySuggest = () => {
   return (
     <div className="bg-base-100 shadow-card gap-4 rounded-2xl py-4">
       <p className="text-heading-20B text-base-900 flex px-4">
-        <p className="text-primary-blue-500">김나비</p>
+        <span className="text-primary-blue-500">김나비</span>
         님을 위한 추천 스터디📚
       </p>
       <div className="flex flex-col gap-3">

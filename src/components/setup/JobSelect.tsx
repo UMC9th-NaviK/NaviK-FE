@@ -7,7 +7,7 @@ const JobSelect = () => {
         <p className="text-heading-20B text-primary-blue-500">직무 선택</p>
         <span className="text-opacity-black-80 text-body-16M flex">
           항해자님의&nbsp;
-          <p className="text-body-16B">커리어 출발점을&nbsp;</p>
+          <span className="text-body-16B">커리어 출발점을&nbsp;</span>
           골라주세요
         </span>
       </div>

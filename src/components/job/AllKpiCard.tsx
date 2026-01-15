@@ -8,6 +8,7 @@ const AllKpiCard = () => {
           <img
             key={index}
             src="/images/kpi/example.png"
+            alt={`KPI 카드 ${index + 1}`}
             className="aspect-2/3 w-full object-cover"
           />
         ))}
