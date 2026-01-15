@@ -1,6 +1,6 @@
 const AllKpiCard = () => {
   return (
-    <div className="flex flex-col gap-4 pb-7">
+    <div className="flex flex-col gap-4 p-4 pb-7">
       {/* 전체 카드 리스트 */}
       <div className="grid grid-cols-2 gap-4">
         {/* 카드 20개 반복 */}

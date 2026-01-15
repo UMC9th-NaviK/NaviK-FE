@@ -13,9 +13,10 @@ const ResultPage = () => {
 
   return (
     <>
+      {/* TODO: 은솔 공통 컴포넌트로 변경 */}
       <BackHeader title="KPI 진단 결과" />
       <CardNavigate selected={selected} setSelected={setSelected} />
-      <div className="bg-white-background px-2.5 py-4">
+      <div className="bg-white-background">
         <CurrentComponent />
       </div>
     </>
