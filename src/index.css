@@ -306,6 +306,10 @@ body {
   box-shadow: 0 0 5px 0 var(--color-opacity-black-20, rgba(17, 17, 17, 0.2));
 }
 
+.shadow-card {
+  box-shadow: 0 0 10px 0 var(--color-primary-blue-100, #dbebfe);
+}
+
 /* 스크롤바 숨김 (커스텀) */
 .scrollbar-hide {
   scrollbar-width: none; /* Firefox */
