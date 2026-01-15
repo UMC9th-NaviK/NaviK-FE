@@ -305,3 +305,12 @@ body {
 .shadow-career-active {
   box-shadow: 0 0 5px 0 var(--color-opacity-black-20, rgba(17, 17, 17, 0.2));
 }
+
+/* 스크롤바 숨김 (커스텀) */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
