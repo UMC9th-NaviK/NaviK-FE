@@ -30,7 +30,7 @@ export default function JobPage() {
           src="/icons/logo-gradient.svg"
           alt="logo gradient"
           className="absolute left-1/2 -translate-x-1/2"
-          style={{ width: 310, height: 48, top: 84 }}
+          style={{ width: 310, height: 48, top: 72 }}
           initial={{ y: 0 }}
           animate={{ y: isExiting ? '-100vh' : 0 }}
           transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
