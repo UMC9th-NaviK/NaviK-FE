@@ -16,11 +16,13 @@ import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
 import SetupLayout from '../layouts/SetupLayout';
+import NoticePage from '../pages/home/NoticePage';
 
 export const protectedRoutes: RouteObject[] = [
   {
     children: [
       { path: '/home', element: <HomePage /> },
+      { path: '/notice', element: <NoticePage /> },
       // 초기 설정 flow, 1회 접근 가능
       {
         path: '/setup',
