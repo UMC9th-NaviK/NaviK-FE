@@ -9,7 +9,8 @@ export const publicRoutes: RouteObject[] = [
     path: '/',
     element: <PublicLayout />,
     children: [
-      { index: true, element: <OnboardingPage /> },
+      { index: true, element: <LoginPage /> },
+      { path: 'onboarding', element: <OnboardingPage /> },
       { path: 'login', element: <LoginPage /> },
     ],
   },
