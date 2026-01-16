@@ -15,6 +15,8 @@ import BoardDetailPage from '../pages/social/BoardDetailPage';
 import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
+import MyPageLayout from '../layouts/MyPageLayout';
+import ProfilePage from '../pages/mypage/ProfilePage';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -48,6 +50,16 @@ export const protectedRoutes: RouteObject[] = [
         children: [
           { path: 'board', element: <BoardPage /> },
           { path: 'board/:postId', element: <BoardDetailPage /> },
+        ],
+      },
+      {
+        path: '/mypage',
+        element: <MyPageLayout />,
+        children: [
+          {
+            path: 'profile',
+            element: <ProfilePage />,
+          },
         ],
       },
     ],
