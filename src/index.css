@@ -295,3 +295,26 @@ body {
   letter-spacing: var(--letter-spacing-2);
   font-family: 'Montserrat', 'Pretendard', Arial, sans-serif !important;
 }
+
+/* Gradients */
+@utility gradient-bg-01 {
+  background: linear-gradient(180.02deg, #ffffff 8.57%, #4e83f9 45.49%);
+}
+
+/* Shadow */
+.shadow-career-active {
+  box-shadow: 0 0 5px 0 var(--color-opacity-black-20, rgba(17, 17, 17, 0.2));
+}
+
+.shadow-card {
+  box-shadow: 0 0 10px 0 var(--color-primary-blue-100, #dbebfe);
+}
+
+/* 스크롤바 숨김 (커스텀) */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
