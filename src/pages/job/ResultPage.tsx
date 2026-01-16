@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CardNavigate from '../../components/job/CardNavigate';
-import BackHeader from '../onboarding/BackHeader';
+import BackHeader from '../../components/common/BackHeader';
 import AllKpiCard from '../../components/job/AllKpiCard';
 import OvercomePower from '../../components/job/OvercomePower';
 import CorePower from '../../components/job/CorePower';

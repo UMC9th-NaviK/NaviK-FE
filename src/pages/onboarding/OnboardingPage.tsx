@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Career from '../../components/onboarding/Career';
 import Input from '../../components/onboarding/Input';
-import BackHeader from './BackHeader';
+import BackHeader from '../../components/common/BackHeader';
 import { useNavigate } from 'react-router-dom';
 import ButtonSquare from '../../components/common/ButtonSquare';
 
