@@ -8,7 +8,7 @@ const LoginPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 3000);
+    }, 3600);
     return () => clearTimeout(timer);
   }, []);
 
