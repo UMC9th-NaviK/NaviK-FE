@@ -1,5 +1,41 @@
+import { useEffect, useState } from 'react';
+import SplashScreen from './SplashScreen';
+import LoginButton from '../../components/onboarding/LoginButton';
+
 const LoginPage = () => {
-  return <div>LoginPage</div>;
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (showSplash) {
+    return <SplashScreen />;
+  }
+
+  return (
+    <div className="flex h-dvh items-center justify-center px-4">
+      <div className="flex w-full flex-col gap-20">
+        <div className="flex flex-col items-center gap-4">
+          <img src="/icons/logo-blue.svg" alt="NaviK Logo" className="h-7.6 w-49" />
+          <p className="text-body-14M text-primary-blue-500">
+            성장의 방향을 설계하는 커리어 나침반, 나빅
+          </p>
+        </div>
+        <div className="flex flex-col gap-16">
+          <p className="text-heading-20B text-base-900 text-center whitespace-pre-line">{`쉽게 가입하고\n간편하게 로그인하세요`}</p>
+          <div className="flex flex-col gap-4">
+            <LoginButton platform="google" />
+            <LoginButton platform="naver" />
+            <LoginButton platform="kakao" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default LoginPage;
