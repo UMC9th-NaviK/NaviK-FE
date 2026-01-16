@@ -42,7 +42,7 @@ const ProfileHeader = ({ role }: HeaderProps) => {
         </div>
       </div>
 
-      <div className="relative z-10 flex h-10 w-90 items-center justify-center gap-5 self-center rounded-3xl bg-white/30 px-5">
+      <div className="relative z-10 flex h-10 w-84 items-center justify-center gap-5 self-center rounded-3xl bg-white/30 px-5">
         <span className="text-14 font-semibold tracking-wider text-white uppercase">
           {role === 'PM' && 'PRODUCT MANAGER'}
           {role === 'DESIGNER' && 'PRODUCT DESIGNER'}
@@ -51,7 +51,7 @@ const ProfileHeader = ({ role }: HeaderProps) => {
         </span>
       </div>
 
-      <div className="absolute bottom-0 left-1/2 z-20 flex h-16 w-90 -translate-x-1/2 translate-y-1/2 flex-col justify-center overflow-hidden rounded-xl border border-[#BDADFF] bg-white px-4 text-black shadow-lg backdrop-blur-md">
+      <div className="absolute bottom-0 left-1/2 z-20 flex h-16 w-85.75 -translate-x-1/2 translate-y-1/2 flex-col justify-center overflow-hidden rounded-xl border border-[#BDADFF] bg-white px-4 text-black shadow-lg backdrop-blur-md">
         <img
           src={bedgeImg}
           className="pointer-events-none absolute top-1/2 right-2 h-24 w-24 -translate-y-1/2"
@@ -59,8 +59,10 @@ const ProfileHeader = ({ role }: HeaderProps) => {
         />
 
         <div className="relative z-10 pl-3">
-          <div className="text-Opacity/Black80 text-12">항해자님에 대해 더 알려주세요!</div>
-          <div className="text-Opacity/Black80 text-12">
+          <div className="text-Opacity/Black80 text-12 leading-[1.4]">
+            항해자님에 대해 더 알려주세요!
+          </div>
+          <div className="text-Opacity/Black80 text-12 leading-[1.4]">
             걸어오신 길을 토대로 꿈을 펼칠 수 있는 공고를 추천해드릴게요!
           </div>
         </div>
