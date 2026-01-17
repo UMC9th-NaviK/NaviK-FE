@@ -20,7 +20,7 @@ const RecommendationList = () => {
   };
 
   return (
-    <div className="flex-2 overflow-y-auto bg-white p-5 pt-12">
+    <div className="flex-2 overflow-y-auto bg-[#F5F8FF] bg-white p-5 pt-12">
       <div className="text-xl font-bold text-gray-800">내가 찾는 공고</div>
       <div className="text-14 mt-4 text-gray-500">
         <div>핵심 역량 카드를 기반으로 추천되는 공고들이에요.</div>
