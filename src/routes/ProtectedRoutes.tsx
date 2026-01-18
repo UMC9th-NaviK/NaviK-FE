@@ -1,8 +1,8 @@
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, type RouteObject } from 'react-router-dom';
 import HomePage from '../pages/home/HomePage';
-import JobPage from '../pages/job/JobPage';
-import CategoryPage from '../pages/job/CategoryPage';
-import CategoryDetailPage from '../pages/job/CategoryDetailPage';
+import JobPage from '../pages/setup/JobPage';
+import CategoryPage from '../pages/setup/CategoryPage';
+import CategoryDetailPage from '../pages/setup/CategoryDetailPage';
 import AnalysisPage from '../pages/job/AnalysisPage';
 import ResultPage from '../pages/job/ResultPage';
 import ReportMainPage from '../pages/report/ReportMainPage';
@@ -19,18 +19,27 @@ import CoreKPIPage from '../pages/report/CoreKPIPage';
 import OvercomingKPIPage from '../pages/report/OvercomingKPIPage';
 import CoreKPIDetailPage from '../pages/report/CoreKPIDetailPage';
 import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
+import SetupLayout from '../layouts/SetupLayout';
 
 export const protectedRoutes: RouteObject[] = [
   {
     children: [
       { path: '/home', element: <HomePage /> },
+      // 초기 설정 flow, 1회 접근 가능
+      {
+        path: '/setup',
+        element: <SetupLayout />,
+        children: [
+          { index: true, element: <Navigate to="job" replace /> },
+          { path: 'job', element: <JobPage /> },
+          { path: 'category', element: <CategoryPage /> },
+          { path: 'category/:id', element: <CategoryDetailPage /> },
+        ],
+      },
       {
         path: '/job',
         element: <JobLayout />,
         children: [
-          { index: true, element: <JobPage /> },
-          { path: 'category', element: <CategoryPage /> },
-          { path: 'category/:id', element: <CategoryDetailPage /> },
           { path: 'analysis', element: <AnalysisPage /> },
           { path: 'result', element: <ResultPage /> },
         ],
