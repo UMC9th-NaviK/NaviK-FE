@@ -18,7 +18,7 @@ const KPIComment = () => {
                     ‘사용자의 진짜 문제’를 끌어낼 줄 알아야 합니다.
                     </span>
                     <img 
-                    src="/icons/logo.svg"
+                    src="/icons/reports/logo.svg"
                     className='absolute right-[122px] bottom-[0px]'
                     />
                 </div>
@@ -28,7 +28,7 @@ const KPIComment = () => {
                     <div className='flex flex-col items-center w-[31px]'>
                         <span className='text-body-14B text-[#5133FF]'> 20% </span>
                         <img
-                        src="/icons/myCardBackArrow.svg"
+                        src="/icons/reports/myCardBackArrow.svg"
                         className='w-[16px] h-[16px]'
                         />
                     </div>

@@ -10,7 +10,7 @@ const OvercomingKPIDetailPage = () => {
                 <div className='flex flex-1 items-center justify-center gap-[14px] overflow-hidden'>
                     <div className='bg-[#DED6FF] w-[284px] h-[383px] rounded-[14px] overflow-hidden'></div>
                     <img 
-                    src="/icons/KPIcard_1.svg"
+                    src="/icons/reports/KPIcard_1.svg"
                     className='w-[279px] h-[416.7115478515625px]'
                     />
                     <div className='bg-[#DED6FF] w-[284px] h-[383px] rounded-[14px] overflow-hidden'></div>

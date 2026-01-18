@@ -12,7 +12,7 @@ const ReportMainPage = () => {
           </div>
 
           <img 
-          src="/icons/profileCompass.svg" 
+          src="/icons/reports/profileCompass.svg" 
           alt="프로필 나침반 아이콘" 
           className="absolute right-[10px] top-[px] w-[100px] h-[100px] rotate-[0deg] z-0 blur-[0.8px]"
           />
@@ -40,7 +40,7 @@ const ReportMainPage = () => {
             <button className="relative flex items-start justify-start bg-gradient-to-b from-[#79A6FB] to-[#3964D6] h-[111px] rounded-[7px] p-4 overflow-hidden">
               <p className="relative z-10 h-full text-heading-20B text-white text-left"> 내 카드 <br /> 보러가기 </p>
               <img 
-              src="/images/goingMyCard.png"
+              src="/images/reports/goingMyCard.png"
               className="absolute w-[120px] h-[130px] right-[-10px] bottom-[-10px] p-[10px] z-0 opacity-70"
               />
             </button>
@@ -48,7 +48,7 @@ const ReportMainPage = () => {
               <p className="text-heading-20B text-black relative z-10 text-left"> 동료 피드백 </p>
               <p className="text-body-14M relative z-10 text-left"> <text className="text-[#4E83F9]">협업 커뮤니케이션</text>이 <br /> 뛰어나요👍🏻 </p>
               <img 
-              src="/images/colleagueFeedback.png"
+              src="/images/reports/colleagueFeedback.png"
               className="absolute w-[120px] h-[120px] right-[0px] bottom-[0px] z-0"
               />
             </button>
@@ -60,7 +60,7 @@ const ReportMainPage = () => {
                 <p className="text-heading-20B text-black"> 목표 설정 </p>
                 <button>
                   <img 
-                  src="/icons/material-symbols_settings-rounded.svg"
+                  src="/icons/reports/material-symbols_settings-rounded.svg"
                   className="w-[24px] h-[24px]"
                   />
                 </button>
@@ -89,7 +89,7 @@ const ReportMainPage = () => {
                   <p className="text-body-16B z-10"> 직무 레벨 배지 </p>
                   <span className="text-heading-24B text-[#4E83F9] relative z-10"> LV. 3 </span>
                   <img 
-                  src="/images/levelBadge.png"
+                  src="/images/reports/levelBadge.png"
                   className="absolute w-[120px] h-[140px] right-[-22px] bottom-[-75px] p-[10px] z-0"
                   />
                 </div>

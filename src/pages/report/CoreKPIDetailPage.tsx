@@ -19,7 +19,7 @@ const CoreKPIDetailPage = () => {
                 <div className='flex flex-1 items-center justify-center gap-[14px]'>
                     <div className='bg-[#FEE0DB] w-[284px] h-[383px] rounded-[14px]'></div>
                     <img 
-                    src="/icons/KPIcard_2.svg"
+                    src="/icons/reports/KPIcard_2.svg"
                     className='w-[279px] h-[416.7115478515625px]'
                     />
                     <div className='bg-[#FEE0DB] w-[284px] h-[383px] rounded-[14px]'></div>
@@ -31,7 +31,7 @@ const CoreKPIDetailPage = () => {
                         <button 
                         className='flex bg-black h-[48px] rounded-[8px] pt-[12px] pb-[12px] pr-[100px] pl-[100px] gap-[10px]'> 
                             <img 
-                            src="/icons/instagramIcon.svg"
+                            src="/icons/reports/instagramIcon.svg"
                             className=''
                             />
                             <p className='flex-1 text-body-16M text-[#F5F8FF]'> Instagram 공유 </p>
