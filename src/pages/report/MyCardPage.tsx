@@ -4,7 +4,7 @@ import KPISearchBar from "../../components/report/KPISearchBar";
 import ReportNavbar from "../../components/report/ReportNavbar";
 
 const MyCardPage = () => {
-  const [cardCount, setCardCount] = useState(10);
+  const [cardCount] = useState(10);
 
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
