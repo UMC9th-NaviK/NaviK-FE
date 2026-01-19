@@ -20,11 +20,14 @@ const ReportNavbar = () => {
     return (
         <nav className='flex bg-white items-center p-[24px] gap-[10px]'>
             <div className='flex flex-1 justify-between'>
-                <img 
-                src="/icons/reports/prevButton.svg"
-                className='w-[24px] h-[24px]'
-                onClick={() => navigate(-1)}
-                />
+                <button>
+                    <img 
+                    src="/icons/reports/prevButton.svg"
+                    alt="뒤로가기 버튼"
+                    className='w-[24px] h-[24px]'
+                    onClick={() => navigate(-1)}
+                    />
+                </button>
                 <h1 className='text-heading-20B'> { getTitle } </h1>
                 <div className='w-[24px] h-[24px] border-white'>  </div>
             </div>

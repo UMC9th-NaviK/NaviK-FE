@@ -23,10 +23,10 @@ const OvercomingKPIPage = () => {
                         <p className='text-heading-18B text-[#1B1B1B]'> <span className='text-[#4E83F9]'> 김나비</span>님을 위한 추천 스터디 📚 </p>
                         <div className="overflow-x-auto">
                             <div className='flex flex-nowrap box-border w-full gap-[16px] snap-x snap-mandatory scrollbar-hide scroll-smooth'>
-                                <RecommendationNotice />
-                                <RecommendationNotice />
-                                <RecommendationNotice />
-                                <RecommendationNotice />
+                                <RecommendationNotice role={'pm'} />
+                                <RecommendationNotice role={'pm'} />
+                                <RecommendationNotice role={'pm'} />
+                                <RecommendationNotice role={'pm'} />
                             </div>
                         </div>
                         <div className='flex flex-1 justify-end gap-[4px]'> 
