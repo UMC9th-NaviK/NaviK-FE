@@ -318,3 +318,100 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+:root {
+  /* PM */
+  --color-blue-100: #DED6FF;
+  --color-blue-500: #5133FF;
+  --color-blue-200: #9A84FF;
+
+  /* Designer */
+  --color-pink-100: #FEE0DB;
+  --color-pink-500: #F24B74;
+  --color-pink-300: #FB9398;
+
+  /* Front */
+  --color-violet-100: #FED3FA;
+  --color-violet-500: #CC27F5;
+  --color-violet-200: #FEA8FB;
+
+  /* Back */
+  --color-green-100: #D1FDDD;
+  --color-green-200: #A4FCC5;
+  --color-green-600: #15C19A;
+  --color-green-400: #52ECAB;
+
+    /* PM */
+  --role-pm-surface:   var(--color-blue-100);
+  --role-pm-primary:   var(--color-blue-500);
+  --role-pm-secondary: var(--color-blue-200);
+
+  /* Designer */
+  --role-designer-surface:   var(--color-pink-100);
+  --role-designer-primary:   var(--color-pink-500);
+  --role-designer-secondary: var(--color-pink-300);
+
+  /* Frontend */
+  --role-frontend-surface:   var(--color-violet-100);
+  --role-frontend-primary:   var(--color-violet-500);
+  --role-frontend-secondary: var(--color-violet-200);
+
+  /* Backend */
+  --role-backend-surface:   var(--color-green-100);
+  --role-backend-primary:   var(--color-green-600);
+  --role-backend-secondary: var(--color-green-200);
+  --role-backend-tertiary:  var(--color-green-400); /* 뒷 배경 그라데이션 색상 다름 */
+}
+
+/* PM */
+@utility bg-role-pm-surface {
+  background-color: var(--role-pm-surface);
+}
+
+@utility text-role-pm-primary {
+  color: var(--role-pm-primary);
+}
+
+@utility text-role-pm-secondary {
+  color: var(--role-pm-secondary);
+}
+
+/* Designer */
+@utility bg-role-designer-surface {
+  background-color: var(--role-designer-surface);
+}
+
+@utility text-role-designer-primary {
+  color: var(--role-designer-primary);
+}
+
+@utility text-role-designer-secondary {
+  color: var(--role-designer-secondary);
+}
+
+/* Frontend */
+@utility bg-role-frontend-surface {
+  background-color: var(--role-frontend-surface);
+}
+
+@utility text-role-frontend-primary {
+  color: var(--role-frontend-primary);
+}
+
+@utility text-role-frontend-secondary {
+  color: var(--role-frontend-secondary);
+}
+
+/* Backend */
+@utility bg-role-backend-surface {
+  background-color: var(--role-backend-surface);
+}
+
+@utility text-role-backend-primary {
+  color: var(--role-backend-primary);
+}
+
+@utility text-role-backend-secondary {
+  color: var(--role-backend-secondary);
+}
+
