@@ -33,6 +33,7 @@ const MyCardPage = () => {
             >
               <img
                 src="/icons/reports/KPIcard_1.svg"
+                alt="KPI 카드"
                 className="w-full"
               />
             </div>
@@ -48,6 +49,7 @@ const MyCardPage = () => {
             >
               <img
                 src="/icons/reports/KPIcard_1.svg"
+                alt="KPI 카드"
                 className="w-full"
               />
             </div>

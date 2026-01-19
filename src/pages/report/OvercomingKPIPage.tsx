@@ -16,6 +16,7 @@ const OvercomingKPIPage = () => {
                     <div className='flex flex-1 gap-[8px]'>
                         <img 
                         src="/icons/reports/Vector.svg"
+                        alt="vector"
                         />
                         <p className='text-heading-20B'> 이렇게 <span className='text-[#4E83F9]'>극복</span>하는 건 어때요? </p>
                     </div>
@@ -33,6 +34,7 @@ const OvercomingKPIPage = () => {
                             <p className='text-caption-12M text-[#11111199]'> 전체 스터디 보러가기 </p>
                             <img 
                             src="/icons/reports/material-symbols_arrow-back-ios-new-rounded.svg"
+                            alt=""
                             className='w-[16px] h-[16px]'
                             />
                         </div>

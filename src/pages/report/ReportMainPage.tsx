@@ -8,7 +8,9 @@ const ReportMainPage = () => {
       <div className="flex pl-[16px] pr-[16px]">
         <div className="relative flex flex-1 items-center bg-white rounded-full shadow-[0_0_10px_0_#DBEBFE] p-[10px] gap-[10px] overflow-hidden">
           <div className="flex items-center justify-center w-[65px] h-[65px] rounded-full bg-[conic-gradient(from_0deg,#4E83F9,#DBEBFE)]">
-            <img className="flex items-center justify-center w-[55px] h-[55px] rounded-full bg-white" />
+            <img 
+            alt="프로필 이미지"
+            className="flex items-center justify-center w-[55px] h-[55px] rounded-full bg-white" />
           </div>
 
           <img 
@@ -41,6 +43,7 @@ const ReportMainPage = () => {
               <p className="relative z-10 h-full text-heading-20B text-white text-left"> 내 카드 <br /> 보러가기 </p>
               <img 
               src="/images/reports/goingMyCard.png"
+              alt=""
               className="absolute w-[120px] h-[130px] right-[-10px] bottom-[-10px] p-[10px] z-0 opacity-70"
               />
             </button>
@@ -49,6 +52,7 @@ const ReportMainPage = () => {
               <p className="text-body-14M relative z-10 text-left"> <text className="text-[#4E83F9]">협업 커뮤니케이션</text>이 <br /> 뛰어나요👍🏻 </p>
               <img 
               src="/images/reports/colleagueFeedback.png"
+              alt=""
               className="absolute w-[120px] h-[120px] right-[0px] bottom-[0px] z-0"
               />
             </button>
@@ -61,6 +65,7 @@ const ReportMainPage = () => {
                 <button>
                   <img 
                   src="/icons/reports/material-symbols_settings-rounded.svg"
+                  alt=""
                   className="w-[24px] h-[24px]"
                   />
                 </button>
@@ -90,6 +95,7 @@ const ReportMainPage = () => {
                   <span className="text-heading-24B text-[#4E83F9] relative z-10"> LV. 3 </span>
                   <img 
                   src="/images/reports/levelBadge.png"
+                  alt=""
                   className="absolute w-[120px] h-[140px] right-[-22px] bottom-[-75px] p-[10px] z-0"
                   />
                 </div>

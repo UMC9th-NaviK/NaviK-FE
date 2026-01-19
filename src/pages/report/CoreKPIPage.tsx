@@ -15,6 +15,7 @@ const CoreKPIPage = () => {
                     <div className='flex flex-1 gap-[8px]'>
                         <img 
                         src="/icons/reports/material-symbols_highlight-mouse-cursor-rounded.svg"
+                        alt=''
                         />
                         <p className='text-heading-20B'> 이렇게 <span className='text-[#4E83F9]'>활용</span>하면 좋아요! </p>
                     </div>
@@ -29,6 +30,7 @@ const CoreKPIPage = () => {
                             <p className='text-caption-12M text-[#11111199]'> 전체 공고 보러가기 </p>
                             <img 
                             src="/icons/reports/material-symbols_arrow-back-ios-new-rounded.svg"
+                            alt=''
                             className='w-[16px] h-[16px]'
                             />
                         </div>

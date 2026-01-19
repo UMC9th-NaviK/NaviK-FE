@@ -19,6 +19,7 @@ const OvercomingKPIDetailPage = ({ role } : OvercomingKPIDetailPageProps) => {
                     <div className={`${theme.surfaceBg} w-[284px] h-[383px] rounded-[14px] overflow-hidden`}></div>
                     <img 
                     src="/icons/reports/KPIcard_1.svg"
+                    alt="KPI 카드"
                     className='w-[279px] h-[416.7115478515625px]'
                     />
                     <div className={`${theme.surfaceBg} w-[284px] h-[383px] rounded-[14px] overflow-hidden`}></div>
