@@ -372,6 +372,14 @@ body {
   color: var(--role-pm-primary);
 }
 
+@utility bg-role-pm-primary {
+  background-color: var(--role-pm-primary);
+}
+
+@utility border-role-pm {
+  border-color: var(--role-pm-surface);
+}
+
 @utility text-role-pm-secondary {
   color: var(--role-pm-secondary);
 }
@@ -383,6 +391,14 @@ body {
 
 @utility text-role-designer-primary {
   color: var(--role-designer-primary);
+}
+
+@utility bg-role-designer-primary {
+  background-color: var(--role-designer-primary);
+}
+
+@utility border-role-designer {
+  border-color: var(--role-designer-surface);
 }
 
 @utility text-role-designer-secondary {
@@ -398,6 +414,14 @@ body {
   color: var(--role-frontend-primary);
 }
 
+@utility bg-role-frontend-primary {
+  background-color: var(--role-frontend-primary);
+}
+
+@utility border-role-frontend {
+  border-color: var(--role-frontend-surface);
+}
+
 @utility text-role-frontend-secondary {
   color: var(--role-frontend-secondary);
 }
@@ -411,7 +435,24 @@ body {
   color: var(--role-backend-primary);
 }
 
+@utility bg-role-backend-primary {
+  background-color: var(--role-backend-primary);
+}
+
+@utility border-role-backend {
+  border-color: var(--role-backend-surface);
+}
+
 @utility text-role-backend-secondary {
   color: var(--role-backend-secondary);
 }
 
+@utility mask-icon {
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
