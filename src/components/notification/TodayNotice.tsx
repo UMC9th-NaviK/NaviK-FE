@@ -1,14 +1,9 @@
-import NoticeItem from './NoticeItem';
+import NoticeSection from './NoticeSection';
 
 const TodayNotice = () => {
-  return (
-    <>
-      <div className="text-heading-18B text-primary-blue-500 border-b-base-200 border-b px-5 pt-2.5 pb-4">
-        오늘
-      </div>
-      <NoticeItem />
-    </>
-  );
-};
+  // TODO: 추후 타입 분리 필요
+  const notices: Array<{ isRead: boolean; text?: string; time?: string }> = [];
 
+  return <NoticeSection title="오늘" notices={notices} />;
+};
 export default TodayNotice;

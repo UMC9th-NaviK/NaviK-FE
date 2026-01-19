@@ -7,6 +7,7 @@ const NoticePage = () => {
   return (
     <>
       <BackHeader title="알림" />
+      {/* TODO: 서버 데이터 구조에 따라 변경 예정 */}
       <TodayNotice />
       <YesterdayNotice />
       <SevenDaysNotice />

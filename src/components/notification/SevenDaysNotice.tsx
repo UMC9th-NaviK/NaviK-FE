@@ -1,14 +1,15 @@
-import NoticeItem from './NoticeItem';
+import NoticeSection from './NoticeSection';
 
 const SevenDaysNotice = () => {
-  return (
-    <>
-      <div className="text-heading-18B text-opacity-black-80 border-b-base-200 border-b px-5 py-4">
-        최근 7일
-      </div>
-      <NoticeItem />
-    </>
-  );
+  // TODO: 추후 타입 분리 필요
+
+  const notices: Array<{ isRead: boolean; text?: string; time?: string }> = [
+    { isRead: true },
+    { isRead: false },
+    { isRead: false },
+  ];
+
+  return <NoticeSection title="최근 7일" notices={notices} />;
 };
 
 export default SevenDaysNotice;
