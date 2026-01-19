@@ -49,7 +49,7 @@ const ReportMainPage = () => {
             </button>
             <button className="flex flex-col relative bg-white h-[111px] rounded-[7px] p-4 gap-[5px]">
               <p className="text-heading-20B text-black relative z-10 text-left"> 동료 피드백 </p>
-              <p className="text-body-14M relative z-10 text-left"> <text className="text-[#4E83F9]">협업 커뮤니케이션</text>이 <br /> 뛰어나요👍🏻 </p>
+              <p className="text-body-14M relative z-10 text-left"> <span className="text-[#4E83F9]">협업 커뮤니케이션</span>이 <br /> 뛰어나요👍🏻 </p>
               <img 
               src="/images/reports/colleagueFeedback.png"
               alt=""
