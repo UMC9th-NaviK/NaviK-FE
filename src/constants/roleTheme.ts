@@ -1,6 +1,4 @@
-import type { RoleTheme } from "../types/role"
-
-type Role = 'pm' | 'designer' | 'frontend' | 'backend'
+import type { Role, RoleTheme } from "../types/role"
 
 export const ROLE_THEME_MAP: Record<Role, RoleTheme> = {
     pm: {
