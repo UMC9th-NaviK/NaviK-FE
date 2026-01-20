@@ -26,14 +26,14 @@ const CoreKPIPage = () => {
                                 {/* 동열님이 만드신 컴포넌트 넣을 예정 */}
                             </div>
                         </div>
-                        <div className='flex flex-1 justify-end gap-[4px]'> 
+                        <button className='flex flex-1 justify-end gap-[4px]'> 
                             <p className='text-caption-12M text-[#11111199]'> 전체 공고 보러가기 </p>
                             <img 
                             src="/icons/reports/material-symbols_arrow-back-ios-new-rounded.svg"
                             alt=''
                             className='w-[16px] h-[16px]'
                             />
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
