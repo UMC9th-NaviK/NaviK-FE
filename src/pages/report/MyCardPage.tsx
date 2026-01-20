@@ -23,7 +23,7 @@ const MyCardPage = () => {
       <KPILocalNavbar />
       <KPISearchBar />
 
-      <div className="flex flex-col gap-[16px] pr-[16px] pl-[16px] bg-[#F5F8FF]">
+      <div className="flex flex-col gap-[16px] pr-[16px] pl-[16px] bg-white-background">
         <h1 className="text-heading-20B"> 핵심 역량 </h1>
         <div className="grid grid-cols-2 gap-[10px] pb-[24px]">
           {Array.from({ length: cardCount }).map((_, idx) => (

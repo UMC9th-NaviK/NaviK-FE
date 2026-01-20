@@ -1,6 +1,6 @@
 const ReportMainPage = () => {
   return (
-    <div className="flex flex-col w-full bg-[#F5F8FF] bg-[radial-gradient(circle,_#94BBFD_0%,_rgba(184,212,254,0)_100%)]">
+    <div className="flex flex-col w-full bg-white-background bg-[radial-gradient(circle,_#94BBFD_0%,_rgba(184,212,254,0)_100%)]">
       <header className="pl-[24px] pt-[16px] pb-[24px] pr-[24px]">
         <h1 className="text-heading-24B"> 리포트 </h1>
       </header>
@@ -72,7 +72,7 @@ const ReportMainPage = () => {
               </div>
 
               <div className="flex flex-col gap-[8px] text-body-14M text-center">
-                <p className="bg-[#4E83F9] p-[8px] rounded-[5px] text-white"> 페르소나 3개 구체화 </p>
+                <p className="bg-primary-blue-500 p-[8px] rounded-[5px] text-white"> 페르소나 3개 구체화 </p>
                 <p className="bg-white p-[8px] rounded-[5px] text-[#0E2277]"> 팀 주간 회의 템플릿 </p>
                 <p className="bg-white p-[8px] rounded-[5px] text-[#0E2277]"> 데이터 분석 MYSQL </p>
               </div>

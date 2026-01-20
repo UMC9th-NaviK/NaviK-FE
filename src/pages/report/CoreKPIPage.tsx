@@ -9,7 +9,7 @@ const CoreKPIPage = () => {
             <ReportNavbar />
             <KPILocalNavbar />
             <KPISearchBar />
-            <div className='flex flex-col bg-[#F5F8FF] gap-[16px]'>
+            <div className='flex flex-col bg-white-background gap-[16px]'>
                 <CardSlider title={'핵심 역량'} />
                 <div className='flex flex-col px-[16px] gap-[16px]'>
                     <div className='flex flex-1 gap-[8px]'>
