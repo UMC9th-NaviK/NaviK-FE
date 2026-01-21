@@ -34,8 +34,8 @@ const Footer = () => {
           return (
             <Link
               key={item.path}
-              className={`text-12 flex flex-col items-center justify-center gap-y-2 p-1 transition-colors ${
-                active ? 'font-bold text-[#4E83F9]' : 'font-medium text-[#5D5D5D]'
+              className={`text-caption-12B flex flex-col items-center justify-center gap-y-2 p-1 transition-colors ${
+                active ? 'text-primary-blue-500' : 'text-opacity-black-60'
               }`}
               to={item.path}
             >
