@@ -1,4 +1,4 @@
-import sklogo from '../../../images/mypage/SKlogo.svg';
+import sklogo from '../../../public/images/mypage/SKlogo.svg';
 const RecommandCard = () => {
   return (
     <div className="flex h-auto w-72 flex-col gap-3 rounded-lg border border-[#D6D6D6] px-4 py-3">

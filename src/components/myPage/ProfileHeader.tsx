@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import bedgeImg from '../../../images/mypage/bedgeImg.svg';
+import bedgeImg from '../../../public/images/mypage/bedgeImg.svg';
 import { type RoleType, bgStyles, roleImages } from '../myPage/profiledata';
 
 interface HeaderProps {
