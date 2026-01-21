@@ -20,16 +20,16 @@ const RecommendationList = () => {
   };
 
   return (
-    <div className="flex-2 overflow-y-auto bg-[#F5F8FF] bg-white p-5 pt-12">
-      <div className="text-xl font-bold text-gray-800">내가 찾는 공고</div>
-      <div className="text-14 mt-4 text-gray-500">
+    <div className="flex flex-1 flex-col bg-white p-5 pt-12">
+      <div className="text-heading-20B font-bold text-gray-800">내가 찾는 공고</div>
+      <div className="text-body-14M mt-4 text-gray-500">
         <div>핵심 역량 카드를 기반으로 추천되는 공고들이에요.</div>
         <div>원하는 세부 조건 설정으로 보다 나은 추천을 받아보세요!</div>
       </div>
 
       <div className="mt-4 w-full">
         <div className="flex flex-col gap-y-3 rounded-2xl bg-white p-4 shadow-[0px_0px_15px_0px_rgba(78,131,249,0.15)]">
-          <div className="text-base-900/40 text-12 mb-1 self-end px-3 py-1">
+          <div className="text-caption-12M mb-1 self-end px-3 py-1 text-[#111111]/40">
             {currentIndex} / {totalItems}
           </div>
           <div
@@ -45,7 +45,7 @@ const RecommendationList = () => {
           </div>
           <Link
             to={'/'}
-            className="text-16 flex h-12 items-center justify-between rounded-xl bg-[#4E83F9] px-4 font-bold text-white transition-all hover:bg-[#3b6ed9]"
+            className="text-body-16B bg-primary-blue-500 flex h-12 items-center justify-between rounded-xl px-4 font-bold text-white transition-all hover:bg-[#3b6ed9]"
           >
             맞춤 추천 공고 더보기
             <Icon icon="material-symbols:arrow-forward-ios-rounded" />

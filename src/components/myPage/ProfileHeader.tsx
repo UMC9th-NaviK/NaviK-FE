@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import bedgeImg from '../../../images/mypage/bedgeImg.svg';
+import bedgeImg from '../../../public/images/mypage/bedgeImg.svg';
 import { type RoleType, bgStyles, roleImages } from '../myPage/profiledata';
 
 interface HeaderProps {
@@ -8,10 +8,8 @@ interface HeaderProps {
 
 const ProfileHeader = ({ role }: HeaderProps) => {
   return (
-    <div
-      className={`relative flex flex-1 flex-col gap-3 px-5 transition-all duration-500 ${bgStyles[role]}`}
-    >
-      <div className="relative z-10 flex w-full items-center justify-between p-5">
+    <div className={`relative flex h-64.25 flex-col gap-6 px-5 ${bgStyles[role]}`}>
+      <div className="relative z-10 flex w-full items-center justify-between p-3 pt-5">
         <div className="text-2xl font-bold text-white">마이페이지</div>
         <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/20">
           <Icon icon="material-symbols:settings-rounded" className="h-6 w-6 text-white" />
@@ -24,7 +22,7 @@ const ProfileHeader = ({ role }: HeaderProps) => {
         alt="background character"
       />
 
-      <div className="relative z-10 flex items-center gap-5 pt-3">
+      <div className="relative z-10 flex h-16 items-center gap-5 pt-3">
         <div className="relative h-20 w-20">
           <div className="h-full w-full rounded-full bg-white opacity-20"></div>
           <div className="absolute right-0 bottom-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-[#E3E3E3]">

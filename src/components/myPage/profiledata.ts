@@ -1,7 +1,7 @@
-import PMImg from '../../../images/mypage/PmImg.svg';
-import DesginerImg from '../../../images/mypage/designerImg.svg';
-import FeImg from '../../../images/mypage/FeImg.svg';
-import BeImg from '../../../images/mypage/FeImg.svg';
+import PMImg from '../../../public/images/mypage/PmImg.svg';
+import DesginerImg from '../../../public/images/mypage/designerImg.svg';
+import FeImg from '../../../public/images/mypage/FeImg.svg';
+import BeImg from '../../../public/images/mypage/FeImg.svg';
 
 export type RoleType = 'PM' | 'DESIGNER' | 'FE' | 'BE';
 
