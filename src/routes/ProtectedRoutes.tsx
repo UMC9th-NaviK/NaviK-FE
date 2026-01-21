@@ -15,6 +15,10 @@ import BoardDetailPage from '../pages/social/BoardDetailPage';
 import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
+import CoreKPIPage from '../pages/report/CoreKPIPage';
+import OvercomingKPIPage from '../pages/report/OvercomingKPIPage';
+import CoreKPIDetailPage from '../pages/report/CoreKPIDetailPage';
+import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
 import SetupLayout from '../layouts/SetupLayout';
 
 export const protectedRoutes: RouteObject[] = [
@@ -46,6 +50,10 @@ export const protectedRoutes: RouteObject[] = [
         children: [
           { index: true, element: <ReportMainPage /> },
           { path: 'mycard', element: <MyCardPage /> },
+          { path: 'core', element: <CoreKPIPage /> },
+          { path: 'core/detail', element: <CoreKPIDetailPage role={'designer'} /> },
+          { path: 'overcoming', element: <OvercomingKPIPage /> },
+          { path: 'overcoming/detail', element: <OvercomingKPIDetailPage role={'pm'} /> },
           { path: 'growth', element: <GrowthMainPage /> },
           { path: 'growth/write', element: <GrowthWritePage /> },
           { path: 'growth/timeline', element: <TimelinePage /> },
