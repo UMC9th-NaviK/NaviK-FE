@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react';
 import bedgeImg from '../../../public/images/mypage/bedgeImg.svg';
 import { type RoleType, bgStyles, roleImages } from '../myPage/profiledata';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   role: RoleType;
@@ -11,9 +12,12 @@ const ProfileHeader = ({ role }: HeaderProps) => {
     <div className={`relative flex h-64.25 flex-col gap-6 px-5 ${bgStyles[role]}`}>
       <div className="relative z-10 flex w-full items-center justify-between p-3 pt-5">
         <div className="text-2xl font-bold text-white">마이페이지</div>
-        <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/20">
+        <Link
+          className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/20"
+          to={'/mypage/edit'}
+        >
           <Icon icon="material-symbols:settings-rounded" className="h-6 w-6 text-white" />
-        </div>
+        </Link>
       </div>
 
       <img
