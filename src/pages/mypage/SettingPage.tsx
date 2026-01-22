@@ -8,7 +8,7 @@ const SettingPage = () => {
       <SubHeader title="설정" bgColor="bg-base-100" />
 
       <div className="z-10 flex w-full flex-col gap-5 px-5 pt-5">
-        {/* Q&A */}
+        {/* Q&A !*/}
         <section className="flex flex-col gap-3">
           <div className="text-base-900 text-heading-18SB px-1">Q&A</div>
           <button className="border-primary-blue-500 flex h-11.5 w-full items-center justify-between rounded-lg border bg-white p-5">
