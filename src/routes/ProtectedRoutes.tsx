@@ -23,6 +23,7 @@ import CoreKPIDetailPage from '../pages/report/CoreKPIDetailPage';
 import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
 import SetupLayout from '../layouts/SetupLayout';
 import EditProfilePage from '../pages/mypage/EditProfilePage';
+import SettingPage from '../pages/mypage/SettingPage';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -81,6 +82,10 @@ export const protectedRoutes: RouteObject[] = [
           {
             path: 'edit',
             element: <EditProfilePage />,
+          },
+          {
+            path: 'setting',
+            element: <SettingPage />,
           },
         ],
       },

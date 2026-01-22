@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 interface SubHeaderProps {
   title: string;
+  bgColor?: string;
 }
 
-const SubHeader = ({ title }: SubHeaderProps) => {
+const SubHeader = ({ title, bgColor = 'bg-[#F5F9FF]' }: SubHeaderProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full bg-[#F5F9FF] pb-20">
+    <div className={`w-full ${bgColor} h-18`}>
       <div className="relative flex h-18 w-full items-center justify-between px-4">
         <button
           onClick={() => navigate(-1)}
