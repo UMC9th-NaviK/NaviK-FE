@@ -15,9 +15,9 @@ const SplashScreen = () => {
           y: '-50%',
         }}
         animate={{
-          scale: 1,
+          scale: 0.8,
           top: 'auto',
-          bottom: '1.125rem',
+          bottom: '0.2rem',
           left: '-4.875rem',
           x: '0',
           y: '0',
@@ -30,7 +30,7 @@ const SplashScreen = () => {
         className="absolute h-98 w-99.75"
       />
       <motion.img
-        src="/icons/logo-white.svg"
+        src="/icons/reports/logo-white.svg"
         alt="NaviK Logo"
         initial={{
           scale: 0.421,
