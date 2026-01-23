@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import ButtonRound from '../common/ButtonRound';
 
 const JobSelect = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    // TODO: 실제 로직 추가
+    navigate(`/setup/category/:id`);
+  };
+
   return (
     <div className="relative flex min-h-dvh flex-col items-center gap-10 px-4 pt-6">
       <div className="flex flex-col items-center gap-2">
@@ -14,7 +21,7 @@ const JobSelect = () => {
       {/* 카테고리 선택 구역 */}
       {/* 버튼 - 하단 고정 */}
       <div className="absolute right-0 bottom-0 left-0 z-20 flex justify-center px-4 pb-6">
-        <ButtonRound onClick={() => {}} text="확인" />
+        <ButtonRound onClick={handleClick} text="확인" />
       </div>
     </div>
   );
