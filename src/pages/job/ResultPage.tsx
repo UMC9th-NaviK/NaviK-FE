@@ -12,14 +12,14 @@ const ResultPage = () => {
   const CurrentComponent = TABS[selected].component;
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       {/* TODO: 은솔 공통 컴포넌트로 변경 */}
       <BackHeader title="KPI 진단 결과" />
       <CardNavigate selected={selected} setSelected={setSelected} />
-      <div className="bg-white-background">
+      <div className="bg-white-background flex-1">
         <CurrentComponent />
       </div>
-    </>
+    </div>
   );
 };
 
