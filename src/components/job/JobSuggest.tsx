@@ -9,7 +9,7 @@ const JobSuggest = () => {
         {/* TODO: 공고 컴포넌트 슬라이더 */}
         <button className="text-opacity-black-60 text-caption-12M flex items-center gap-1 self-end">
           전체 공고 보러가기
-          <img src="/icons/arrow-right-gray.svg" className="h-4 w-4" />
+          <img src="/icons/reports/arrow-right-gray.svg" className="h-4 w-4" />
         </button>
       </div>
     </div>
