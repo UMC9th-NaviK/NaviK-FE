@@ -1,5 +1,3 @@
-import React from 'react'
-
 const GrowthSchedule = () => {
     return (
         <div className='flex flex-col rounded-[16px] p-[16px] gap-[10px] border-[1px] border-primary-blue-500'>
