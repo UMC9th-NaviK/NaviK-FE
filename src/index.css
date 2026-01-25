@@ -175,6 +175,13 @@ body {
   line-height: var(--line-height-140);
 }
 
+@utility text-body-16SB {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-16);
+  letter-spacing: var(--letter-spacing-2);
+  line-height: var(--line-height-140);
+}
+
 @utility text-body-16M {
   font-weight: var(--font-weight-medium);
   font-size: var(--text-16);
