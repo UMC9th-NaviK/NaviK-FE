@@ -1,7 +1,7 @@
 import JobSection from '../../components/myPage/JobSection';
-import EducationSection from '../../components/myPage/EducationSection';
 import ActivitySection from '../../components/myPage/ActivitySection';
 import SubHeader from '../../components/myPage/SubHeader';
+import { EducationSection } from '../../components/myPage/EducationSection';
 
 const EditProfilePage = () => {
   return (
