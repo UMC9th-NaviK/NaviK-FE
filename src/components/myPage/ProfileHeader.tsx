@@ -14,7 +14,7 @@ const ProfileHeader = ({ role }: HeaderProps) => {
         <div className="text-2xl font-bold text-white">마이페이지</div>
         <Link
           className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/20"
-          to={'/mypage/edit'}
+          to={'/mypage/setting'}
         >
           <Icon icon="material-symbols:settings-rounded" className="h-6 w-6 text-white" />
         </Link>
@@ -27,12 +27,12 @@ const ProfileHeader = ({ role }: HeaderProps) => {
       />
 
       <div className="relative z-10 flex h-16 items-center gap-5 pt-3">
-        <div className="relative h-20 w-20">
+        <Link className="relative h-20 w-20" to={'/mypage/edit'}>
           <div className="h-full w-full rounded-full bg-white opacity-20"></div>
           <div className="bg-base-200 absolute right-0 bottom-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full">
             <Icon icon="material-symbols:edit-outline" className="h-5 w-5" />
           </div>
-        </div>
+        </Link>
         <div className="flex flex-col">
           <div className="text-heading-18B text-white">응애개발자</div>
           <div className="text-body-16M text-[#DED6FF]">

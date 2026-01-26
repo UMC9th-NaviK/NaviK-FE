@@ -7,7 +7,8 @@ const EditProfilePage = () => {
   return (
     <div className="mb-4 flex min-h-screen w-full flex-col items-center">
       <SubHeader title="내 정보 수정" />
-
+      <div className="h-20 w-full"></div>
+      {/*레이아웃 맞추기용*/}
       <div className="relative flex-1 rounded-t-[30px] bg-white px-5">
         {/* 프로필 이미지 */}
         <div className="border-base-100 absolute -top-16 left-1/2 h-32 w-32 -translate-x-1/2 overflow-hidden rounded-full border-8 bg-gray-100">
