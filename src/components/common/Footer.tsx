@@ -15,7 +15,7 @@ const Footer = () => {
     { label: '홈', path: '/', offIcon: DOC, onIcon: DOCOn },
     { label: '리포트', path: '/report', offIcon: Graph, onIcon: GraphOn },
     { label: '소셜', path: '/social', offIcon: Chat, onIcon: ChatOn },
-    { label: '마이페이지', path: '/mypage/profile', offIcon: User, onIcon: UserOn },
+    { label: '마이페이지', path: '/mypage/', offIcon: User, onIcon: UserOn },
   ];
 
   const isActive = (path: string) => {
