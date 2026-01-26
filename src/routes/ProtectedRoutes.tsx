@@ -24,6 +24,7 @@ import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
 import SetupLayout from '../layouts/SetupLayout';
 import EditProfilePage from '../pages/mypage/EditProfilePage';
 import SettingPage from '../pages/mypage/SettingPage';
+import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -86,6 +87,10 @@ export const protectedRoutes: RouteObject[] = [
           {
             path: 'setting',
             element: <SettingPage />,
+          },
+          {
+            path: 'recommend',
+            element: <RecommendedJobsPage />,
           },
         ],
       },

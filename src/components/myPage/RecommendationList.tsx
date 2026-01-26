@@ -44,7 +44,7 @@ const RecommendationList = () => {
             ))}
           </div>
           <Link
-            to={'/'}
+            to={'/mypage/recommend'}
             className="text-body-16B bg-primary-blue-500 flex h-12 items-center justify-between rounded-xl px-4 font-bold text-white transition-all hover:bg-[#3b6ed9]"
           >
             맞춤 추천 공고 더보기
