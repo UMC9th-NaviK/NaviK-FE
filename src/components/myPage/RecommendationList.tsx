@@ -29,7 +29,7 @@ const RecommendationList = () => {
 
       <div className="mt-4 w-full">
         <div className="flex flex-col gap-y-3 rounded-2xl bg-white p-4 shadow-[0px_0px_15px_0px_rgba(78,131,249,0.15)]">
-          <div className="text-caption-12M mb-1 self-end px-3 py-1 text-[#111111]/40">
+          <div className="text-caption-12M text-opacity-black-40 mb-1 self-end px-3 py-1">
             {currentIndex} / {totalItems}
           </div>
           <div

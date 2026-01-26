@@ -22,6 +22,7 @@ import OvercomingKPIPage from '../pages/report/OvercomingKPIPage';
 import CoreKPIDetailPage from '../pages/report/CoreKPIDetailPage';
 import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
 import SetupLayout from '../layouts/SetupLayout';
+import EditProfilePage from '../pages/mypage/EditProfilePage';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -76,6 +77,10 @@ export const protectedRoutes: RouteObject[] = [
           {
             path: 'profile',
             element: <ProfilePage />,
+          },
+          {
+            path: 'edit',
+            element: <EditProfilePage />,
           },
         ],
       },
