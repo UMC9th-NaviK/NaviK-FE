@@ -29,13 +29,13 @@ const ProfileHeader = ({ role }: HeaderProps) => {
       <div className="relative z-10 flex h-16 items-center gap-5 pt-3">
         <div className="relative h-20 w-20">
           <div className="h-full w-full rounded-full bg-white opacity-20"></div>
-          <div className="absolute right-0 bottom-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-[#E3E3E3]">
+          <div className="bg-base-200 absolute right-0 bottom-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full">
             <Icon icon="material-symbols:edit-outline" className="h-5 w-5" />
           </div>
         </div>
         <div className="flex flex-col">
-          <div className="text-2xl font-bold text-white">응애개발자</div>
-          <div className="text-lg text-[#DED6FF]">
+          <div className="text-heading-18B text-white">응애개발자</div>
+          <div className="text-body-16M text-[#DED6FF]">
             {role === 'PM' && '프로덕트 매니저'}
             {role === 'DESIGNER' && '프로덕트 디자이너'}
             {role === 'FE' && '프론트엔드 개발자'}
@@ -45,7 +45,7 @@ const ProfileHeader = ({ role }: HeaderProps) => {
       </div>
 
       <div className="relative z-10 flex h-10 w-84 items-center justify-center gap-5 self-center rounded-3xl bg-white/30 px-5">
-        <span className="text-14 font-semibold tracking-wider text-white uppercase">
+        <span className="text-body-eng-14SB tracking-wider text-white uppercase">
           {role === 'PM' && 'PRODUCT MANAGER'}
           {role === 'DESIGNER' && 'PRODUCT DESIGNER'}
           {role === 'FE' && 'FRONTEND DEVELOPER'}
@@ -61,10 +61,10 @@ const ProfileHeader = ({ role }: HeaderProps) => {
         />
 
         <div className="relative z-10 pl-3">
-          <div className="text-Opacity/Black80 text-12 leading-[1.4]">
+          <div className="text-opacity-black-80 text-caption-12M">
             항해자님에 대해 더 알려주세요!
           </div>
-          <div className="text-Opacity/Black80 text-12 leading-[1.4]">
+          <div className="text-opacity-black-80 text-caption-12M">
             걸어오신 길을 토대로 꿈을 펼칠 수 있는 공고를 추천해드릴게요!
           </div>
         </div>
