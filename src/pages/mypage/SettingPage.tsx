@@ -25,7 +25,7 @@ const SettingPage = () => {
         {/* 개인정보 섹션 */}
         <section className="flex flex-col gap-3">
           <div className="text-base-900 text-heading-18SB px-1">개인정보</div>
-          <div className="text-opacity-black-40 flex min-h-13 w-full rounded-2xl bg-white p-5 shadow-[0px_0px_10px_0px_#DBEBFE]">
+          <div className="text-opacity-black-40 shadow-card flex min-h-13 w-full rounded-2xl bg-white p-5">
             본문
           </div>
           <p className="text-opacity-black-40 text-caption-10M px-1">
@@ -38,7 +38,7 @@ const SettingPage = () => {
         {/* 서비스 동의 / 약관 */}
         <section className="flex flex-col gap-3">
           <div className="text-base-900 text-heading-18B px-1">서비스 동의 / 약관</div>
-          <div className="text-opacity-black-40 flex min-h-13 w-full rounded-2xl bg-white p-5 shadow-[0px_0px_10px_0px_#DBEBFE]">
+          <div className="text-opacity-black-40 shadow-card flex min-h-13 w-full rounded-2xl bg-white p-5">
             본문
           </div>
         </section>
