@@ -45,7 +45,7 @@ const PolicyPage = () => {
             </div>
           </div>
           <div className="absolute right-0 bottom-0 left-0 z-20 flex justify-center px-4 pb-6">
-            <ButtonSquare onClick={handleNext} text="나의 직무 선택하기" disabled={!allChecked} />
+            <ButtonSquare onClick={handleNext} text="다음" disabled={!allChecked} />
           </div>
         </div>
       </div>
