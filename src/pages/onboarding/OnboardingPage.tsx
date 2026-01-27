@@ -1,10 +1,16 @@
 import { useSearchParams } from 'react-router-dom';
 import PolicyPage from './PolicyPage';
 import ProfileInputPage from './ProfileInputPage';
+import PolicyDetailView from './PolicyDetailPage';
 
 const OnboardingPage = () => {
   const [searchParams] = useSearchParams();
   const step = searchParams.get('step');
+  const detail = searchParams.get('detail');
+
+  if (detail && step === '1') {
+    return <PolicyDetailView policyId={detail} />;
+  }
 
   return (
     <div className="relative flex h-dvh flex-col overflow-hidden bg-white">
