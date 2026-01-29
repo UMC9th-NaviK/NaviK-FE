@@ -1,23 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ButtonRound from '../common/ButtonRound';
+import { CATEGORY_INFO, type CategoryId } from '../../constants/category';
 
-type JobCategory = 'pm' | 'de' | 'fe' | 'be';
-
-const JOB_CATEGORIES: JobCategory[] = ['pm', 'de', 'fe', 'be'];
-
-const JOB_SHADOWS: Record<JobCategory, string> = {
-  pm: 'drop-shadow-[0_0_5px_#9A84FF]',
-  de: 'drop-shadow-[0_0_5px_#FB9398]',
-  fe: 'drop-shadow-[0_0_5px_#F57CFC]',
-  be: 'drop-shadow-[0_0_5px_#1EE1A1]',
-};
+const JOB_CATEGORIES: CategoryId[] = ['pm', 'de', 'fe', 'be'];
 
 const JobSelect = () => {
   const navigate = useNavigate();
-  const [selectedJob, setSelectedJob] = useState<JobCategory | null>(null);
+  const [selectedJob, setSelectedJob] = useState<CategoryId | null>(null);
 
-  const handleJobSelect = (jobId: JobCategory) => {
+  const handleJobSelect = (jobId: CategoryId) => {
     setSelectedJob(jobId);
   };
 
@@ -31,9 +23,9 @@ const JobSelect = () => {
     <div className="relative flex min-h-dvh flex-col items-center gap-10 pt-6">
       <div className="flex flex-col items-center gap-2">
         <p className="text-heading-20B text-primary-blue-500">직무 선택</p>
-        <span className="text-opacity-black-80 text-body-16M flex">
+        <span className="text-opacity-black-60 text-body-16M flex">
           항해자님의&nbsp;
-          <span className="text-body-16B">커리어 출발점을&nbsp;</span>
+          <span className="text-body-16B text-base-600">커리어 출발지를&nbsp;</span>
           골라주세요
         </span>
       </div>
@@ -48,9 +40,9 @@ const JobSelect = () => {
           >
             <img
               src={`/images/category/${job}-${selectedJob === job ? 'selected' : 'unselected'}.png`}
-              alt={job.toUpperCase()}
+              alt={CATEGORY_INFO[job].label}
               className={`w-full transition-all duration-300 ${
-                selectedJob === job ? JOB_SHADOWS[job] : ''
+                selectedJob === job ? CATEGORY_INFO[job].shadowClass : ''
               }`}
             />
           </button>
