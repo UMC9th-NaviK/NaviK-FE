@@ -373,6 +373,14 @@ body {
   box-shadow: 0 0 10px 0 var(--color-primary-blue-100, #dbebfe);
 }
 
+.radial-blue {
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    var(--color-primary-blue-200, #b8d4fe) 0%,
+    rgba(184, 212, 254, 0) 100%
+  );
+}
+
 /* 스크롤바 숨김 (커스텀) */
 .scrollbar-hide {
   scrollbar-width: none; /* Firefox */
