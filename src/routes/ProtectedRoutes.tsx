@@ -77,7 +77,7 @@ export const protectedRoutes: RouteObject[] = [
         element: <MyPageLayout />,
         children: [
           {
-            path: 'profile',
+            index: true,
             element: <ProfilePage />,
           },
           {

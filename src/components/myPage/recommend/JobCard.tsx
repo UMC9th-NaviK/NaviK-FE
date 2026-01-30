@@ -83,7 +83,7 @@ export const JobCard = ({
                 #{tag}
               </span>
             ))}
-            {/* 지원 불가면 D-Day 배지도 흑백 필터 때문에 자동으로 회색이 됨 */}
+            {/* 지원 불가면 흑백 */}
             <span
               className={`text-caption-12M rounded-lg border px-2 py-1 transition-all ${
                 isApplicable

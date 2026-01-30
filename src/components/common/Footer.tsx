@@ -8,6 +8,7 @@ import GraphOn from '../../../public/icons/footer/GraphOn.svg';
 import ChatOn from '../../../public/icons/footer/ChatOn.svg';
 import UserOn from '../../../public/icons/footer/UsersOn.svg';
 
+export const FOOTERPB = 'pb-21';
 const Footer = () => {
   const { pathname } = useLocation();
 
@@ -15,7 +16,7 @@ const Footer = () => {
     { label: '홈', path: '/', offIcon: DOC, onIcon: DOCOn },
     { label: '리포트', path: '/report', offIcon: Graph, onIcon: GraphOn },
     { label: '소셜', path: '/social', offIcon: Chat, onIcon: ChatOn },
-    { label: '마이페이지', path: '/mypage/', offIcon: User, onIcon: UserOn },
+    { label: '마이페이지', path: '/mypage', offIcon: User, onIcon: UserOn },
   ];
 
   const isActive = (path: string) => {
@@ -25,22 +26,28 @@ const Footer = () => {
 
   return (
     <footer
-      className="z-50 h-21 w-full rounded-t-2xl bg-white"
-      style={{ boxShadow: '0px -5px 10px 0px rgba(219, 235, 254, 0.8)' }}
+      className="fixed bottom-0 left-0 z-50 h-21 w-93.75 rounded-t-2xl bg-white/70 backdrop-blur-md transition-all"
+      style={{ boxShadow: '0px -5px 15px 0px rgba(219, 235, 254, 0.6)' }}
     >
-      <div className="mx-auto grid h-full max-w-screen-xl grid-cols-4">
+      <div className="mx-auto grid h-full max-w-7xl grid-cols-4 px-2">
         {navItems.map((item) => {
           const active = isActive(item.path);
           return (
             <Link
               key={item.path}
-              className={`text-caption-12B flex flex-col items-center justify-center gap-y-2 p-1 transition-colors ${
-                active ? 'text-primary-blue-500' : 'text-opacity-black-60'
+              className={`flex flex-col items-center justify-center gap-y-1.5 transition-all active:scale-95 ${
+                active ? 'text-primary-blue-500' : 'text-opacity-black-40'
               }`}
               to={item.path}
             >
-              <img src={active ? item.onIcon : item.offIcon} className="h-7 w-7" alt={item.label} />
-              <span>{item.label}</span>
+              <div className="relative flex h-7 w-7 items-center justify-center">
+                <img
+                  src={active ? item.onIcon : item.offIcon}
+                  className="h-full w-full object-contain"
+                  alt={item.label}
+                />
+              </div>
+              <span className="text-caption-12B">{item.label}</span>
             </Link>
           );
         })}
