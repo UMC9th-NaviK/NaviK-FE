@@ -2,14 +2,15 @@ import JobSection from '../../components/myPage/JobSection';
 import ActivitySection from '../../components/myPage/ActivitySection';
 import SubHeader from '../../components/myPage/SubHeader';
 import { EducationSection } from '../../components/myPage/EducationSection';
+import { FOOTERPB } from '../../components/common/Footer';
 
 const EditProfilePage = () => {
   return (
-    <div className="mb-4 flex min-h-screen w-full flex-col items-center">
+    <div className={`mb-4 flex min-h-screen w-full flex-col items-center`}>
       <SubHeader title="내 정보 수정" />
       <div className="h-20 w-full"></div>
       {/*레이아웃 맞추기용*/}
-      <div className="relative flex-1 rounded-t-[30px] bg-white px-5">
+      <div className={`relative flex-1 gap-6 rounded-t-[30px] bg-white px-5 ${FOOTERPB}`}>
         {/* 프로필 이미지 */}
         <div className="border-base-100 absolute -top-16 left-1/2 h-32 w-32 -translate-x-1/2 overflow-hidden rounded-full border-8 bg-gray-100">
           <img className="h-full w-full" alt="프로필" />
@@ -29,11 +30,11 @@ const EditProfilePage = () => {
           <EducationSection />
           <ActivitySection />
         </div>
-      </div>
 
-      <button className="bg-primary-blue-500 text-body-16B text-base-100 mt-10 h-12 w-85.75 rounded-lg active:brightness-90">
-        저장하기
-      </button>
+        <button className="bg-primary-blue-500 text-body-16B text-base-100 h-12 w-85.75 rounded-lg active:brightness-90">
+          저장하기
+        </button>
+      </div>
     </div>
   );
 };
