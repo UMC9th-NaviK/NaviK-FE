@@ -1,6 +1,10 @@
 import React, { useRef, useState } from 'react';
 
-const FileInputButton = () => {
+interface FileInputButtonProps {
+  onFileChange?: (file: File | null) => void;
+}
+
+const FileInputButton = ({ onFileChange }: FileInputButtonProps) => {
   const [uploaded, setUploaded] = useState(false);
   const [fileName, setFileName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -11,15 +15,34 @@ const FileInputButton = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setUploaded(true);
-      setFileName(file.name);
+    if (!file) {
+      setUploaded(false);
+      setFileName('');
+      onFileChange?.(null);
+      return;
     }
+    if (file.type !== 'application/pdf') {
+      alert('PDF 파일만 업로드할 수 있습니다.');
+      e.target.value = '';
+      setUploaded(false);
+      setFileName('');
+      onFileChange?.(null);
+      return;
+    }
+    setUploaded(true);
+    setFileName(file.name);
+    onFileChange?.(file);
   };
 
   return (
     <div>
-      <input ref={inputRef} type="file" className="hidden" onChange={handleFileChange} />
+      <input
+        ref={inputRef}
+        type="file"
+        accept="application/pdf"
+        className="hidden"
+        onChange={handleFileChange}
+      />
       <button
         type="button"
         onClick={handleButtonClick}
