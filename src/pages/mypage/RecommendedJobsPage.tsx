@@ -92,7 +92,7 @@ const RecommendJobPage = () => {
         canReset={!!selectedValues[activeFilter || '']}
       >
         <div className="flex w-full flex-wrap gap-x-2 gap-y-3 px-4 py-6">
-          {FILTERS.find((f) => f.label === activeFilter)?.items.map((item) => (
+          {FILTERS.find((f) => f.label === activeFilter)?.items?.map((item) => (
             <button
               key={item}
               onClick={() => handleItemClick(activeFilter!, item)}
