@@ -35,13 +35,19 @@ const RecommendationList = () => {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="scrollbar-hide flex flex-nowrap gap-4 overflow-x-auto scroll-smooth pb-4"
+            className="scrollbar-hide flex snap-x snap-mandatory scroll-pl-4.5 flex-nowrap gap-4 overflow-x-auto scroll-smooth px-4 pb-4"
+            style={{
+              marginLeft: '-16px',
+              marginRight: '-16px',
+            }}
           >
             {Array.from({ length: totalItems }).map((_, idx) => (
-              <div key={idx} className="flex-none snap-center">
+              <div key={idx} className="w-71 shrink-0 snap-start snap-always">
                 <RecommandCard />
               </div>
             ))}
+
+            <div className="w-1 flex-none" />
           </div>
           <Link
             to={'/mypage/recommend'}
