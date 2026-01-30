@@ -33,7 +33,7 @@ const PeriodRow = () => {
     <div className="flex w-full items-start gap-2">
       <img src={CalendarIcon} alt="" className="mt-[3px] h-4 w-4" />
       <span className="w-[56px] text-[14px] leading-[160%] font-bold tracking-[-0.14px] text-[rgba(17,17,17,0.8)]">
-        진행기간d
+        진행기간
       </span>
       <span className="flex-1 text-[14px] leading-[160%] font-normal tracking-[-0.14px] text-[rgba(17,17,17,0.8)]">
         2025년 4월 10일 ~ 7월 10일
@@ -94,7 +94,6 @@ function BlueAccordion({ title, children }: AccordionProps) {
 
   return (
     <div className="w-full">
-      {/* Header */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -109,7 +108,6 @@ function BlueAccordion({ title, children }: AccordionProps) {
         />
       </button>
 
-      {/* Body */}
       <div
         className={`overflow-hidden transition-[max-height,opacity] duration-200 ease-out ${open ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'} `}
       >
@@ -132,7 +130,7 @@ const EvaluationSummary = ({ comment }: SummaryProps) => {
   return (
     <div className="flex w-full flex-col gap-2">
       <span className="text-body-16B leading-[140%] tracking-[-0.32px] text-[rgba(17,17,17,0.8)]">
-        📌 총평
+        📌 조언 및 별점 총평
       </span>
       <p className="text-body-14M leading-[140%] tracking-[-0.14px] text-[rgba(17,17,17,0.8)]">
         {comment}
@@ -211,7 +209,7 @@ const MyEvaluationPage = () => {
               <MemberRow />
               <div className="flex w-full flex-wrap gap-2">
                 <TagChip label="비대면" />
-                <TagChip label="이틀에 1회" />
+                <TagChip label="주 1회" />
                 <TagChip label="종료" variant="red" />
               </div>
               <EvaluationSectionTitle emoji="☺️" title="동료들이 평가한 나의 강점" />
@@ -238,7 +236,7 @@ const MyEvaluationPage = () => {
               <MemberRow />
               <div className="flex w-full flex-wrap gap-2">
                 <TagChip label="비대면" />
-                <TagChip label="이틀에 1회" />
+                <TagChip label="주 1회" />
                 <TagChip label="종료" variant="red" />
               </div>
               <EvaluationSectionTitle emoji="☺️" title="동료들이 평가한 나의 강점" />
@@ -265,7 +263,7 @@ const MyEvaluationPage = () => {
               <MemberRow />
               <div className="flex w-full flex-wrap gap-2">
                 <TagChip label="비대면" />
-                <TagChip label="이틀에 1회" />
+                <TagChip label="주 1회" />
                 <TagChip label="종료" variant="red" />
               </div>
               <EvaluationSectionTitle emoji="☺️" title="동료들이 평가한 나의 강점" />
