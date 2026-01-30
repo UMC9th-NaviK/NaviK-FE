@@ -1,26 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import NextIcon from '../../assets/social/material-symbols_arrow-back-ios-new-rounded (1).svg';
-
+import EvaluationItem from '../../components/social/EvaluationItem';
 export default function EvaluationPage() {
   const navigate = useNavigate();
-
-  function StrengthItem({ index, text }: { index: number; text: string }) {
-    return (
-      <div className="border-primary-blue-100 flex w-full items-stretch gap-2.5 self-stretch rounded-lg border bg-white p-2">
-        <span className="text-body-14M text-primary-blue-800">{index}</span>
-        <span className="text-body-14M text-primary-blue-800">{text}</span>
-      </div>
-    );
-  }
-
-  function EvaluationItem({ index, text }: { index: number; text: string }) {
-    return (
-      <div className="border-primary-blue-100 flex w-full items-stretch gap-2.5 self-stretch rounded-lg border bg-white p-2">
-        <span className="text-body-14M text-primary-blue-500">{index}</span>
-        <span className="text-body-14M text-primary-blue-500">{text}</span>
-      </div>
-    );
-  }
 
   return (
     <div className="mt-4">
@@ -44,18 +26,18 @@ export default function EvaluationPage() {
           <span className="text-body-16B text-primary-blue-800">강점 TOP 3</span>
           <div className="flex items-center gap-2">
             <div className="flex w-full flex-col gap-2">
-              <StrengthItem index={1} text="협업이 좋아요" />
-              <StrengthItem index={2} text="약속을 잘 지켜요" />
-              <StrengthItem index={3} text="과제 준비가 꼼꼼해요" />
+              <EvaluationItem index={1} text="협업이 좋아요" variant="strength" />
+              <EvaluationItem index={1} text="약속을 잘 지켜요" variant="strength" />
+              <EvaluationItem index={1} text="과제 준비가 꼼꼼해요" variant="strength" />
             </div>
           </div>
 
           <span className="text-body-16B text-primary-blue-500">보완 TOP 3</span>
           <div className="flex items-center gap-2">
             <div className="flex w-full flex-col gap-2">
-              <EvaluationItem index={1} text="협업이 좋아요" />
-              <EvaluationItem index={2} text="약속을 잘 지켜요" />
-              <EvaluationItem index={3} text="과제 준비가 꼼꼼해요" />
+              <EvaluationItem index={1} text="협업이 좋아요" variant="improvement" />
+              <EvaluationItem index={2} text="약속을 잘 지켜요" variant="improvement" />
+              <EvaluationItem index={3} text="과제 준비가 꼼꼼해요" variant="improvement" />
             </div>
           </div>
         </div>
