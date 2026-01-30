@@ -13,6 +13,7 @@ export interface RoleTheme {
     shadow: string;
     gradientVar: string;
     border: string;
+    surfaceBorder: string;
 
     surfaceVar: string;
     primaryVar: string;
