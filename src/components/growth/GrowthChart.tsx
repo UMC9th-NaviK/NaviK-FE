@@ -61,20 +61,34 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
     };
 
     const pathPoints = [virtualStart, ...dataPoints, virtualEnd];
-
     const buildSmoothPath = (pts: Point[]) => {
         if (pts.length < 2) return "";
+        
         let d = `M ${pts[0].x} ${pts[0].y}`;
-        const smoothing = 0.2; // 2차 함수 형태의 완만한 곡선
-
+        
+        // tension 값이 0.15~0.2 정도일 때 가장 자연스러운 곡선이 나옵니다.
+        const tension = 0.2; 
+    
         for (let i = 0; i < pts.length - 1; i++) {
-            const p1 = pts[i]; const p2 = pts[i + 1];
-            const p0 = pts[i - 1] || p1; const p3 = pts[i + 2] || p2;
-            const cp1x = p1.x + (p2.x - p0.x) * smoothing;
-            const cp1y = p1.y + (p2.y - p0.y) * smoothing;
-            const cp2x = p2.x - (p3.x - p1.x) * smoothing;
-            const cp2y = p2.y - (p3.y - p1.y) * smoothing;
-            d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+            const curr = pts[i];
+            const next = pts[i + 1];
+            
+            // 이전 포인트와 다음다음 포인트 정보를 가져옵니다 (경계값 처리)
+            const prev = pts[i - 1] || curr;
+            const nextNext = pts[i + 2] || next;
+    
+            /**
+             * 핵심 로직: Catmull-Rom 방식 기반 제어점 산출
+             * 1. cp1: 현재 점(curr)에서 나갈 때, 이전 점과 다음 점의 기울기를 반영합니다.
+             * 2. cp2: 다음 점(next)으로 들어올 때, 현재 점과 다음다음 점의 기울기를 반영합니다.
+             */
+            const cp1x = curr.x + (next.x - prev.x) * tension;
+            const cp1y = curr.y + (next.y - prev.y) * tension;
+    
+            const cp2x = next.x - (nextNext.x - curr.x) * tension;
+            const cp2y = next.y - (nextNext.y - curr.y) * tension;
+    
+            d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${next.x} ${next.y}`;
         }
         return d;
     };
@@ -91,7 +105,10 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
                 style={{ overflow: 'visible', display: 'block' }}
             >
                 <defs>
-                    <linearGradient id="lineGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#9BBEFF" /><stop offset="100%" stopColor="#4E83F9" /></linearGradient>
+                    <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#4E83F9" />
+                        <stop offset="100%" stopColor="#9BBEFF" />
+                    </linearGradient>
                     <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#DBEBFE" /><stop offset="100%" stopColor="#DBEBFE" stopOpacity={0} /></linearGradient>
                     <linearGradient id="dotGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#B8D4FE" /><stop offset="100%" stopColor="#4E83F9" /></linearGradient>
                     <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#94BBFD" stopOpacity={0} /><stop offset="100%" stopColor="#94BBFD" /></linearGradient>

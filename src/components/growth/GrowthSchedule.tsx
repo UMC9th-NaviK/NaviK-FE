@@ -1,7 +1,24 @@
+import { useEffect, useState } from "react";
+
+type Status = 'yet' | 'deadline';
+
 const GrowthSchedule = () => {
+    const [status, setStatus] = useState<Status>('deadline');
+
+    const deadlineDate = new Date(2026, 0, 30);
+
+    useEffect(() => {
+        const today = new Date();
+        const diffMs = deadlineDate.getTime() - today.getTime();
+        const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    
+        if (diffDays <= 7) setStatus("deadline");
+        else setStatus("yet");
+    }, [deadlineDate]);
+
     return (
-        <div className='flex flex-col rounded-[16px] p-[16px] gap-[10px] border-[1px] border-primary-blue-500'>
-            <div className='flex flex-col gap-[5px]'>
+        <div className={`flex flex-col rounded-[16px] p-[16px] gap-[10px] border-[1px] ${status === "yet" ? "border-primary-blue-100" : "border-primary-blue-500"}`}>
+            <div className={`flex flex-col gap-[5px] ${status === "yet" ? "opacity-50" : "opacity-100"}`}>
                 <div className='flex flex-1 items-center gap-[12px]'>
                     <div className='w-[11px] h-[11px] bg-primary-blue-500 rounded-full'>  </div>
                     <p className='text-heading-20B text-base-800'> 11/11 </p>
