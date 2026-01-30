@@ -204,7 +204,7 @@ const MyEvaluationPage = () => {
           <p className="text-body-16B text-base-900">스터디별 평가 요약을 모아봤어요!</p>
 
           <div className="mt-4 flex w-full flex-col gap-4 rounded-2xl border border-white bg-white p-4 shadow-[0_0_10px_0_#DBEBFE]">
-            <BlueAccordion title="[백엔드 포트폴리오 리뷰 스터디]">
+            <BlueAccordion title="[백엔드 포트폴리오 리뷰] 스터디">
               <PeriodRow />
               <MemberRow />
               <div className="flex w-full flex-wrap gap-2">
@@ -231,7 +231,7 @@ const MyEvaluationPage = () => {
               <EvaluationSummary comment="발표를 더 많이 해보면 좋을 것 같아요!" />
               <StarRating rating={4.3} />
             </BlueAccordion>
-            <BlueAccordion title="[알고리즘 스터디]">
+            <BlueAccordion title="[알고리즘] 스터디">
               <PeriodRow />
               <MemberRow />
               <div className="flex w-full flex-wrap gap-2">
@@ -258,7 +258,7 @@ const MyEvaluationPage = () => {
               <EvaluationSummary comment="발표를 더 많이 해보면 좋을 것 같아요!" />
               <StarRating rating={4.3} />
             </BlueAccordion>
-            <BlueAccordion title="[실전 DB 구조 설계 스터디]">
+            <BlueAccordion title="[실전 DB 구조 설계] 스터디">
               <PeriodRow />
               <MemberRow />
               <div className="flex w-full flex-wrap gap-2">
