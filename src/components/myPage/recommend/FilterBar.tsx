@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import type { FilterItem } from './filterData';
+import type { FilterItem } from '../../../constants/filterData';
 
 interface FilterBarProps {
   filters: FilterItem[];

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { BottomSheet } from '../../components/myPage/recommend/BottomSheet';
 import { FilterBar } from '../../components/myPage/recommend/FilterBar';
-import { FILTERS } from '../../components/myPage/recommend/filterData';
+import { FILTERS } from '../../constants/filterData';
 import { Icon } from '@iconify/react';
 import { JobCard } from '../../components/myPage/recommend/JobCard';
-import { MOCK_JOBS } from '../../components/myPage/recommend/mockJobData';
+import { MOCK_JOBS } from '../../constants/mockJobData';
 
 const RecommendJobPage = () => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
