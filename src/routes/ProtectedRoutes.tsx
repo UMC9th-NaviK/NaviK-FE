@@ -20,6 +20,10 @@ import OvercomingKPIPage from '../pages/report/OvercomingKPIPage';
 import CoreKPIDetailPage from '../pages/report/CoreKPIDetailPage';
 import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
 import SetupLayout from '../layouts/SetupLayout';
+import SettingGoalsPage from '../pages/goals/SettingGoalsPage';
+import ModifyingGoalsPage from '../pages/goals/ModifyingGoalsPage';
+import AddingGoalsPage from '../pages/goals/AddingGoalsPage';
+import GoalsLayout from '../layouts/GoalsLayout';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -57,6 +61,15 @@ export const protectedRoutes: RouteObject[] = [
           { path: 'growth', element: <GrowthMainPage role={'designer'} /> },
           { path: 'growth/write', element: <GrowthWritePage /> },
           { path: 'growth/timeline', element: <TimelinePage /> },
+        ],
+      },
+      {
+        path: '/goals',
+        element: <GoalsLayout />,
+        children: [
+          { index: true, element: <SettingGoalsPage /> },
+          { path: 'modify', element: <ModifyingGoalsPage /> },
+          { path: 'add', element: <AddingGoalsPage /> },
         ],
       },
       {
