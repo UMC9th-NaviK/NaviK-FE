@@ -20,7 +20,7 @@ const RecommendationList = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col bg-white p-5 pt-12">
+    <div className="flex flex-col bg-white p-5 pt-12">
       <div className="text-heading-20B font-bold text-gray-800">내가 찾는 공고</div>
       <div className="text-body-14M mt-4 text-gray-500">
         <div>핵심 역량 카드를 기반으로 추천되는 공고들이에요.</div>
@@ -44,7 +44,7 @@ const RecommendationList = () => {
             ))}
           </div>
           <Link
-            to={'/'}
+            to={'/mypage/recommend'}
             className="text-body-16B bg-primary-blue-500 flex h-12 items-center justify-between rounded-xl px-4 font-bold text-white transition-all hover:bg-[#3b6ed9]"
           >
             맞춤 추천 공고 더보기
