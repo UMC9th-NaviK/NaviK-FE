@@ -20,8 +20,8 @@ const LoginButton = ({ platform }: LoginButtonProps) => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // TODO: 실제 로그인 로직 구현
-    navigate('/onboarding');
+    // TODO: 실제 로그인 로직 구현, 신규회원일 시 온보딩, 기존회원일 시 메인페이지로 이동
+    navigate('/onboarding?step=1');
   };
 
   return (

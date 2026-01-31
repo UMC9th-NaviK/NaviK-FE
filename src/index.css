@@ -175,6 +175,13 @@ body {
   line-height: var(--line-height-140);
 }
 
+@utility text-body-16SB {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-16);
+  letter-spacing: var(--letter-spacing-2);
+  line-height: var(--line-height-140);
+}
+
 @utility text-body-16M {
   font-weight: var(--font-weight-medium);
   font-size: var(--text-16);
@@ -301,6 +308,62 @@ body {
   background: linear-gradient(180.02deg, #ffffff 8.57%, #4e83f9 45.49%);
 }
 
+@utility gradient-bg-pm {
+  background: linear-gradient(180deg, #f5f8ff 0%, #ded6ff 21.87%, var(--color-deep-blue-100) 100%);
+}
+
+@utility gradient-bg-circle {
+  background: linear-gradient(180deg, #dbebfe 0%, #4e83f9 39.17%);
+}
+
+@utility text-gradient-pm {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-blue-500, #4e83f9) 0%,
+    var(--color-deep-blue-500, #5133ff) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@utility text-gradient-de {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-blue-500, #4e83f9) 0%,
+    var(--color-pink-500, #f24b74) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@utility text-gradient-fe {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-blue-500, #4e83f9) 0%,
+    var(--color-violet-500, #cc27f5) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@utility text-gradient-be {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-blue-500, #4e83f9) 0%,
+    var(--color-green-500, #1ee1a1) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 /* Shadow */
 .shadow-career-active {
   box-shadow: 0 0 5px 0 var(--color-opacity-black-20, rgba(17, 17, 17, 0.2));
@@ -308,6 +371,14 @@ body {
 
 .shadow-card {
   box-shadow: 0 0 10px 0 var(--color-primary-blue-100, #dbebfe);
+}
+
+.radial-blue {
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    var(--color-primary-blue-200, #b8d4fe) 0%,
+    rgba(184, 212, 254, 0) 100%
+  );
 }
 
 /* 스크롤바 숨김 (커스텀) */
