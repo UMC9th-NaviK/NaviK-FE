@@ -17,7 +17,7 @@ const JobKpi = ({ categoryId }: JobKpiProps) => {
   return (
     <div className="flex flex-col gap-3">
       <p className="text-heading-20B text-base-900 flex">
-        <span className="text-primary-blue-500">{categoryInfo.labelKo}&nbsp;</span>핵심 KPI
+        <span className="text-primary-blue-500">{categoryInfo.label}&nbsp;</span>핵심 KPI
       </p>
       <div className="shadow-card bg-base-100 rounded-2xl px-4 py-2">
         <div className="flex flex-col">
