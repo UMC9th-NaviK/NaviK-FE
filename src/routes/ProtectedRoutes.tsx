@@ -33,6 +33,10 @@ import OvercomingKPIPage from '../pages/report/OvercomingKPIPage';
 import CoreKPIDetailPage from '../pages/report/CoreKPIDetailPage';
 import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
 import SetupLayout from '../layouts/SetupLayout';
+import SettingGoalsPage from '../pages/goals/SettingGoalsPage';
+import ModifyingGoalsPage from '../pages/goals/ModifyingGoalsPage';
+import AddingGoalsPage from '../pages/goals/AddingGoalsPage';
+import GoalsLayout from '../layouts/GoalsLayout';
 import EditProfilePage from '../pages/mypage/EditProfilePage';
 import SettingPage from '../pages/mypage/SettingPage';
 import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
@@ -70,9 +74,18 @@ export const protectedRoutes: RouteObject[] = [
           { path: 'core/detail', element: <CoreKPIDetailPage role={'designer'} /> },
           { path: 'overcoming', element: <OvercomingKPIPage /> },
           { path: 'overcoming/detail', element: <OvercomingKPIDetailPage role={'pm'} /> },
-          { path: 'growth', element: <GrowthMainPage /> },
+          { path: 'growth', element: <GrowthMainPage role={'designer'} /> },
           { path: 'growth/write', element: <GrowthWritePage /> },
           { path: 'growth/timeline', element: <TimelinePage /> },
+        ],
+      },
+      {
+        path: '/goals',
+        element: <GoalsLayout />,
+        children: [
+          { index: true, element: <SettingGoalsPage /> },
+          { path: 'modify', element: <ModifyingGoalsPage /> },
+          { path: 'add', element: <AddingGoalsPage /> },
         ],
       },
       {
