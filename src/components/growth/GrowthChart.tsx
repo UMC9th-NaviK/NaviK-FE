@@ -32,9 +32,6 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
     const SVG_WIDTH = containerWidth - 28; 
     const SVG_HEIGHT = 175;
 
-    if (height === 275) {
-        const SVG_HEIGHT = 208.15;
-    }
 
     // 1. [핵심] Y축 스케일 보정
     const values = data.map(d => d.value);
