@@ -15,6 +15,17 @@ import BoardDetailPage from '../pages/social/BoardDetailPage';
 import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
+import SocialTabLayout from '../layouts/SocialTabLayout';
+// import BoardEditPage from '../pages/social/BoardEditPage';
+import EvaluationPage from '../pages/social/EvaluationPage';
+import MyEvaluationPage from '../pages/social/MyEvaluationPage';
+// import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
+// import StudyRecommendPage from '../pages/social/StudyRecommendPage';
+// import NewStudyPage from '../pages/social/NewStudyPage';
+// import StudyLayout from '../layouts/StudyLayout';
+// import MyStudyLayout from '../layouts/MyStudyLayout';
+// import MyParticipatingPage from '../pages/social/MyParticipatingPage';
+// import MyOperatingPage from '../pages/social/MyOperatingPage';
 import MyPageLayout from '../layouts/MyPageLayout';
 import ProfilePage from '../pages/mypage/ProfilePage';
 import CoreKPIPage from '../pages/report/CoreKPIPage';
@@ -22,6 +33,9 @@ import OvercomingKPIPage from '../pages/report/OvercomingKPIPage';
 import CoreKPIDetailPage from '../pages/report/CoreKPIDetailPage';
 import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
 import SetupLayout from '../layouts/SetupLayout';
+import EditProfilePage from '../pages/mypage/EditProfilePage';
+import SettingPage from '../pages/mypage/SettingPage';
+import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
 import NoticePage from '../pages/home/NoticePage';
 
 export const protectedRoutes: RouteObject[] = [
@@ -67,8 +81,42 @@ export const protectedRoutes: RouteObject[] = [
         path: '/social',
         element: <SocialLayout />,
         children: [
-          { path: 'board', element: <BoardPage /> },
+          {
+            element: <SocialTabLayout />,
+            children: [
+              { index: true, element: <Navigate to="study/recommend" replace /> },
+              {
+                path: 'study',
+                // element: <StudyLayout />,
+                children: [
+                  { index: true, element: <Navigate to="recommend" replace /> },
+                  {
+                    path: 'recommend',
+                    // element: <StudyRecommendPage />,
+                  },
+                  {
+                    path: 'new',
+                    // element: <NewStudyPage />,
+                  },
+                  {
+                    path: 'my',
+                    // element: <MyStudyLayout />,
+                    children: [
+                      { index: true, element: <Navigate to="participate" replace /> },
+                      // { path: 'participate', element: <MyParticipatingPage /> },
+                      // { path: 'operate', element: <MyOperatingPage /> },
+                    ],
+                  },
+                ],
+              },
+              { path: 'board', element: <BoardPage /> },
+              { path: 'evaluation', element: <EvaluationPage /> },
+            ],
+          },
           { path: 'board/:postId', element: <BoardDetailPage /> },
+          // { path: 'board/:postId/edit', element: <BoardEditPage /> },
+          { path: 'evaluation/my', element: <MyEvaluationPage /> },
+          // { path: 'study/evaluation', element: <StudyEvaluationPage /> },
         ],
       },
       {
@@ -76,8 +124,20 @@ export const protectedRoutes: RouteObject[] = [
         element: <MyPageLayout />,
         children: [
           {
-            path: 'profile',
+            index: true,
             element: <ProfilePage />,
+          },
+          {
+            path: 'edit',
+            element: <EditProfilePage />,
+          },
+          {
+            path: 'setting',
+            element: <SettingPage />,
+          },
+          {
+            path: 'recommend',
+            element: <RecommendedJobsPage />,
           },
         ],
       },
