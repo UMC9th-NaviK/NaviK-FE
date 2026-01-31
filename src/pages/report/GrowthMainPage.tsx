@@ -1,5 +1,79 @@
-const GrowthMainPage = () => {
-  return <div>GrowthMainPage</div>;
+import { useNavigate } from "react-router-dom";
+import { ROLE_THEME_MAP } from "../../constants/roleTheme";
+import type { Role } from "../../types/role";
+import LevelCard from "../../components/growth/LevelCard";
+import GrowthRecordInput from "../../components/growth/GrowthRecordInput";
+import GrowthTimeline from "../../components/growth/GrowthTimeline";
+
+interface GrowthMainPageProps {
+  role : Role;
+}
+
+const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
+  const navigate = useNavigate();
+
+  const theme = ROLE_THEME_MAP[role] || ROLE_THEME_MAP['pm']; 
+
+  return (
+    <div className="bg-[#4E83F9]">
+      <div className="relative z-0 w-full h-[150px] bg-linear-to-b from-[#FFFFFF] to-[#4E83F9]">
+        <nav className='relative flex items-center p-[24px] gap-[10px]'>
+          <div className='flex flex-1 justify-between'>
+            <button>
+              <img 
+              src="/icons/reports/prevButton.svg"
+              alt="뒤로가기 버튼"
+              className='w-[24px] h-[24px]'
+              onClick={() => navigate(-1)}
+              />
+            </button>
+            <h1 className='text-heading-20B'> { "Growth Log" } </h1>
+            <div className='w-[24px] h-[24px] border-white'>  </div>
+          </div>
+        </nav>
+
+        <img 
+        src="/images/growth/logo.png"
+        alt="나빅 로고"
+        className="absolute top-[-25px] right-[0px] w-[257px] h-[252px] p-[10px]"
+        />
+      </div>
+
+      <div className="relative z-20 bg-gray-background rounded-t-[30px] -mt-[0px] min-h-screen shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.05)]">
+        <div className="relative -translate-y-[45%] flex flex-1 z-20 w-full py-[10px] px-[26px] gap-[20px] justify-between">
+          <div 
+          className={`flex items-center justify-center w-[115px] h-[115px] rounded-full`} 
+          style={{ background: `conic-gradient(from 30deg, var(--role-${role}-surface), var(--role-${role}-primary))` }} >
+            <img 
+            alt="프로필 이미지"
+            className="flex items-center justify-center w-[100px] h-[100px] rounded-full bg-white" />
+          </div>
+          <div className={`flex justify-end items-end mb-[10px]`}>
+            <span className={`bg-base-100 px-[16px] py-[8px] border border-1 ${theme.border} rounded-[50px] text-body-eng-14SB ${theme.primaryText}`}> PRODUCT MANAGER </span>
+          </div>
+        </div>
+
+        <div className="flex flex-1 items-center justify-between -mt-[65px] pt-[10px] px-[24px] pb-[10px]">
+          <div className="flex flex-1 items-center gap-[9px]">
+            <p className="text-heading-20B text-black-900"> 김나비 </p>
+            <p className="text-body-eng-16SB text-[#11111199]"> KIM NA VI </p>
+          </div>
+          <button>
+            <img 
+            src="/icons/reports/material-symbols_settings-rounded.svg"
+            alt="톱니바퀴"
+            />
+          </button> 
+        </div>
+
+        <div className="flex flex-col px-[16px] gap-[24px]">
+          <LevelCard role={"designer"} />
+          <GrowthRecordInput />
+          <GrowthTimeline />
+        </div> 
+      </div>
+    </div>
+  )
 };
 
 export default GrowthMainPage;
