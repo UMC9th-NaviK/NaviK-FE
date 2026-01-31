@@ -3,7 +3,7 @@ import ReportNavbar from "../../components/report/ReportNavbar";
 
 const GrowthWritePage = () => {
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden bg-slate-50">
+    <div className="min-h-screen bg-white relative overflow-hidden bg-slate-50 pb-[16px]">
       <ReportNavbar />
 
       <div className="absolute w-[618px] h-[494px] left-1/2 -translate-x-1/2 bottom-[-100px] bg-[radial-gradient(50%_50%_at_50%_50%,#94BBFD_0%,rgba(219,235,254,0)_100%)] z-10 opacity-60"></div>
@@ -67,8 +67,8 @@ const GrowthWritePage = () => {
                     />
                   </div>
                   <div className="flex flex-col items-center justify-center gap-[4px]">
-                    <p className="text-center text-heading-18B text-[#111111]"> 정확도 <br /> <span className="text-primary-blue-500"> UP! </span> </p>
-                    <p className="text-caption-10M text-[#11111199]"> 핵심 정보가 있으면 <br /> 정확도가 높아져요 </p>
+                    <p className="text-center text-heading-18B text-[#111111]"> 오류 <br /> <span className="text-primary-blue-500"> DOWN! </span> </p>
+                    <p className="text-caption-10M text-[#11111199] w-[83px]"> 구조화된 기록을 더 <br /> 안정적으로 분석해요 </p>
                   </div>
                 </div>
               </div>
