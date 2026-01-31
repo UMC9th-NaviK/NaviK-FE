@@ -5,12 +5,13 @@ const ModifyingGoalsPage = () => {
     const today = new Date();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isClick, setIsClick] = useState(false);
+    const [currentDate, setCurrentDate] = useState(new Date());
 
     const week = ['일', '월', '화', '수', '목', '금', '토'];
 
     const renderCalendar = () => {
-        const year = today.getFullYear();
-        const month = today.getMonth();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
 
         const firstDayOfMonth = new Date(year, month, 1).getDay();
         const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
@@ -42,9 +43,34 @@ const ModifyingGoalsPage = () => {
 
     const handleClick = () => setIsClick(prev => !prev);
 
+    const handleMonthDown = () => {
+        if (currentDate.getFullYear() < today.getFullYear() || 
+            (currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() <= today.getMonth())) {
+            return;
+        }
+
+        const newDate = new Date(currentDate);
+
+        newDate.setMonth(currentDate.getMonth() - 1);
+
+        setCurrentDate(newDate);
+    };
+    
+    const handleMonthUp = () => {
+        const newDate = new Date(currentDate);
+
+        newDate.setMonth(currentDate.getMonth() + 1);
+        
+        setCurrentDate(newDate);
+    };
+
     const formatDate = (date: Date) => {
         return `${date.getFullYear()}년 ${String(date.getMonth() + 1).padStart(2, '0')}월 ${String(date.getDate()).padStart(2, '0')}일`;
     };
+
+    const selectMonth = 
+    currentDate.getFullYear() > today.getFullYear() || 
+    (currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() > today.getMonth());
 
     return (
         <div>
@@ -78,9 +104,28 @@ const ModifyingGoalsPage = () => {
 
                             {isClick && (
                                 <div className="flex flex-col gap-[13.73px] animate-fade-in">
-                                    <p className="text-body-14B text-[#111111CC]">
-                                        {today.getFullYear()}년 {today.getMonth() + 1}월
-                                    </p>
+                                    <div className="flex flex-1 items-center justify-center gap-[8px]">
+                                        <button 
+                                        onClick={handleMonthDown}
+                                        className={`${selectMonth ? "text-primary-blue-300" : "text-base-300"}`}>
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.45103 10.975C7.30103 11.075 7.1887 11.2 7.11403 11.35C7.03937 11.5 7.00137 11.6583 7.00003 11.825C6.9987 11.9917 7.03637 12.15 7.11303 12.3C7.1897 12.45 7.30203 12.575 7.45003 12.675L15.6 17.85C15.6834 17.9 15.771 17.9373 15.863 17.962C15.955 17.9867 16.0427 17.9993 16.126 18C16.3927 18 16.626 17.904 16.826 17.712C17.026 17.52 17.126 17.2827 17.126 17V6.65C17.126 6.36667 17.026 6.129 16.826 5.937C16.626 5.745 16.3927 5.64933 16.126 5.65C16.0427 5.65 15.9554 5.66267 15.864 5.688C15.7727 5.71333 15.685 5.75067 15.601 5.8L7.45103 10.975Z" fill="currentColor"/>
+                                            </svg>
+
+                                        </button>
+
+                                        <p className="text-center text-body-14B text-[#111111CC]">
+                                            {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
+                                        </p>
+
+                                        <button 
+                                        onClick={handleMonthUp}
+                                        className="rotate-180 text-primary-blue-300">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.45103 10.975C7.30103 11.075 7.1887 11.2 7.11403 11.35C7.03937 11.5 7.00137 11.6583 7.00003 11.825C6.9987 11.9917 7.03637 12.15 7.11303 12.3C7.1897 12.45 7.30203 12.575 7.45003 12.675L15.6 17.85C15.6834 17.9 15.771 17.9373 15.863 17.962C15.955 17.9867 16.0427 17.9993 16.126 18C16.3927 18 16.626 17.904 16.826 17.712C17.026 17.52 17.126 17.2827 17.126 17V6.65C17.126 6.36667 17.026 6.129 16.826 5.937C16.626 5.745 16.3927 5.64933 16.126 5.65C16.0427 5.65 15.9554 5.66267 15.864 5.688C15.7727 5.71333 15.685 5.75067 15.601 5.8L7.45103 10.975Z" fill="currentColor"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                     
                                     <div className="grid grid-cols-7 items-center h-[35px] border-b-[0.8px] border-primary-blue-200">
                                         {week.map((day) => (
@@ -92,12 +137,12 @@ const ModifyingGoalsPage = () => {
 
                                     <div className="grid grid-cols-7 gap-[13.73px]">
                                         {calendarDays.map((item) => {
-                                            const isSelected = item.currentMonth && selectedDate.getDate() === item.date && selectedDate.getMonth() === today.getMonth();
+                                            const isSelected = item.currentMonth && selectedDate.getDate() === item.date && selectedDate.getMonth() === currentDate.getMonth();
                                             
                                             return (
                                                 <div 
                                                     key={item.id}
-                                                    onClick={() => item.currentMonth && setSelectedDate(new Date(today.getFullYear(), today.getMonth(), item.date))}
+                                                    onClick={() => item.currentMonth && setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))}
                                                     className="flex items-center justify-center cursor-pointer"
                                                 >
                                                     <div className={`
