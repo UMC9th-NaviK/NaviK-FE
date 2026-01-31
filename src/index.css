@@ -321,46 +321,46 @@ body {
 
 :root {
   /* PM */
-  --color-blue-100: #DED6FF;
-  --color-blue-500: #5133FF;
-  --color-blue-200: #9A84FF;
+  --color-blue-100: #ded6ff;
+  --color-blue-500: #5133ff;
+  --color-blue-200: #9a84ff;
 
   /* Designer */
-  --color-pink-100: #FEE0DB;
-  --color-pink-500: #F24B74;
-  --color-pink-300: #FB9398;
+  --color-pink-100: #fee0db;
+  --color-pink-500: #f24b74;
+  --color-pink-300: #fb9398;
 
   /* Front */
-  --color-violet-100: #FED3FA;
-  --color-violet-500: #CC27F5;
-  --color-violet-200: #FEA8FB;
+  --color-violet-100: #fed3fa;
+  --color-violet-500: #cc27f5;
+  --color-violet-200: #fea8fb;
 
   /* Back */
-  --color-green-100: #D1FDDD;
-  --color-green-200: #A4FCC5;
-  --color-green-600: #15C19A;
-  --color-green-400: #52ECAB;
+  --color-green-100: #d1fddd;
+  --color-green-200: #a4fcc5;
+  --color-green-600: #15c19a;
+  --color-green-400: #52ecab;
 
-    /* PM */
-  --role-pm-surface:   var(--color-blue-100);
-  --role-pm-primary:   var(--color-blue-500);
+  /* PM */
+  --role-pm-surface: var(--color-blue-100);
+  --role-pm-primary: var(--color-blue-500);
   --role-pm-secondary: var(--color-blue-200);
 
   /* Designer */
-  --role-designer-surface:   var(--color-pink-100);
-  --role-designer-primary:   var(--color-pink-500);
+  --role-designer-surface: var(--color-pink-100);
+  --role-designer-primary: var(--color-pink-500);
   --role-designer-secondary: var(--color-pink-300);
 
   /* Frontend */
-  --role-frontend-surface:   var(--color-violet-100);
-  --role-frontend-primary:   var(--color-violet-500);
+  --role-frontend-surface: var(--color-violet-100);
+  --role-frontend-primary: var(--color-violet-500);
   --role-frontend-secondary: var(--color-violet-200);
 
   /* Backend */
-  --role-backend-surface:   var(--color-green-100);
-  --role-backend-primary:   var(--color-green-600);
+  --role-backend-surface: var(--color-green-100);
+  --role-backend-primary: var(--color-green-600);
   --role-backend-secondary: var(--color-green-200);
-  --role-backend-tertiary:  var(--color-green-400); /* 뒷 배경 그라데이션 색상 다름 */
+  --role-backend-tertiary: var(--color-green-400); /* 뒷 배경 그라데이션 색상 다름 */
 }
 
 /* PM */
@@ -487,4 +487,28 @@ body {
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
+}
+
+@theme {
+  --animate-fade-in: fade-in 0.2s ease-out;
+
+  --animate-slide-up: slide-up 0.3s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
 }
