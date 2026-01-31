@@ -17,12 +17,12 @@ const GoalsNavbar = () => {
     return (
         <nav className='flex bg-white items-center p-[24px] gap-[10px]'>
             <div className='flex flex-1 items-center justify-between'>
-                <button>
+                <button
+                onClick={() => navigate(-1)}>
                     <img 
                     src="/icons/reports/prevButton.svg"
                     alt="뒤로가기 버튼"
                     className='w-[24px] h-[24px]'
-                    onClick={() => navigate(-1)}
                     />
                 </button>
                 <h1 className='text-heading-20B'> { getTitle } </h1>
