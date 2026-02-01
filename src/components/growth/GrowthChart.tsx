@@ -30,7 +30,8 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
 
     const containerWidth = typeof width === 'number' ? width : 343; 
     const SVG_WIDTH = containerWidth - 28; 
-    const SVG_HEIGHT = typeof height === 'number' ? height - 100 : 175;
+    const SVG_HEIGHT = 175;
+
 
     // 1. [핵심] Y축 스케일 보정
     const values = data.map(d => d.value);
@@ -105,7 +106,7 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
                 style={{ overflow: 'visible', display: 'block' }}
             >
                 <defs>
-                    <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                    <linearGradient id="lineGradient" x1="0" y1="1" x2="0" y2="0">
                         <stop offset="0%" stopColor="#4E83F9" />
                         <stop offset="100%" stopColor="#9BBEFF" />
                     </linearGradient>
@@ -121,7 +122,7 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
                 <line x1={0} y1={SVG_HEIGHT} x2={SVG_WIDTH} y2={SVG_HEIGHT} stroke="#E3E3E3" strokeWidth={1} />
             </svg>
 
-            <div style={{ display: "flex", width: SVG_WIDTH, marginTop: 12 }}>
+            <div style={{ display: "flex", width: SVG_WIDTH, marginTop: 8 }}>
                 {data.map((d, i) => (
                     <div key={d.label} onClick={() => setActiveIndex(i)} style={{ flex: 1, display: 'flex', justifyContent: 'center', cursor: "pointer" }}>
                         <div className="text-caption-12M" style={{ padding: "2px 8px", borderRadius: 16, color: i === activeIndex ? "#fff" : "#79A6FB", background: i === activeIndex ? "#79A6FB" : "transparent", whiteSpace: 'nowrap' }}>

@@ -43,13 +43,13 @@ const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
         <div className="relative -translate-y-[45%] flex flex-1 z-20 w-full py-[10px] px-[26px] gap-[20px] justify-between">
           <div 
           className={`flex items-center justify-center w-[115px] h-[115px] rounded-full`} 
-          style={{ background: `conic-gradient(from 30deg, var(--role-${role}-surface), var(--role-${role}-primary))` }} >
+          style={{ background: `var(--role-${role}-secondary)`}} >
             <img 
             alt="프로필 이미지"
             className="flex items-center justify-center w-[100px] h-[100px] rounded-full bg-white" />
           </div>
           <div className={`flex justify-end items-end mb-[10px]`}>
-            <span className={`bg-base-100 px-[16px] py-[8px] border border-1 ${theme.border} rounded-[50px] text-body-eng-14SB ${theme.primaryText}`}> PRODUCT MANAGER </span>
+            <span className={`bg-base-100 px-[16px] py-[8px] border border-1 ${theme.surfaceBorder} rounded-[50px] text-body-eng-14SB ${theme.primaryText}`}> PRODUCT MANAGER </span>
           </div>
         </div>
 
@@ -58,7 +58,8 @@ const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
             <p className="text-heading-20B text-black-900"> 김나비 </p>
             <p className="text-body-eng-16SB text-[#11111199]"> KIM NA VI </p>
           </div>
-          <button>
+          <button
+          onClick={() => navigate("/mypage")}>
             <img 
             src="/icons/reports/material-symbols_settings-rounded.svg"
             alt="톱니바퀴"
@@ -66,7 +67,7 @@ const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
           </button> 
         </div>
 
-        <div className="flex flex-col px-[16px] gap-[24px]">
+        <div className="flex flex-col px-[16px] pb-[16px] gap-[24px]">
           <LevelCard role={"designer"} />
           <GrowthRecordInput />
           <GrowthTimeline />
