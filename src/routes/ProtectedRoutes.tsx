@@ -40,11 +40,13 @@ import GoalsLayout from '../layouts/GoalsLayout';
 import EditProfilePage from '../pages/mypage/EditProfilePage';
 import SettingPage from '../pages/mypage/SettingPage';
 import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
+import NoticePage from '../pages/home/NoticePage';
 
 export const protectedRoutes: RouteObject[] = [
   {
     children: [
       { path: '/home', element: <HomePage /> },
+      { path: '/notice', element: <NoticePage /> },
       // 초기 설정 flow, 1회 접근 가능
       {
         path: '/setup',
