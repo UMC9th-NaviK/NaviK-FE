@@ -61,8 +61,8 @@ const GrowthWritePage = () => {
                 <div className="flex flex-col items-center justify-center gap-[14px]">
                   <div className="flex items-center justify-center w-[40px] h-[40px] rounded-full p-[5px] bg-gradient-to-b from-[#B8D4FE] to-[#79A6FB]">
                     <img 
-                    src="/icons/growth/material-symbols_target.svg"
-                    alt="target"
+                    src="/icons/growth/material-symbols_warning-outline-rounded.svg"
+                    alt="warning"
                     className=""
                     />
                   </div>
