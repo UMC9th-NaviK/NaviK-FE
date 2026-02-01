@@ -9,9 +9,10 @@ const OvercomingKPIPage = () => {
         <div>
             <ReportNavbar />
             <KPILocalNavbar />
-            <KPISearchBar />
-            <div className='flex flex-col bg-white-background gap-[16px]'>
+
+            <div className='flex flex-col bg-white-background gap-[32px] pb-[16px]'>
                 <CardSlider title={'극복 역량'} />
+
                 <div className='flex flex-col px-[16px] gap-[16px]'>
                     <div className='flex flex-1 gap-[8px]'>
                         <img 
