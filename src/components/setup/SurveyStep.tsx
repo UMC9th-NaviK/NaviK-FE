@@ -1,11 +1,14 @@
-// components/setup/SurveyStep.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ButtonRound from '../common/ButtonRound';
 import { useNavigate } from 'react-router-dom';
 import SurveyItem from './SurveyItem';
 import { getSurveyQuestions } from '../../constants/survey';
 
 const SurveyStep = ({ categoryId }: { categoryId: string }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const navigate = useNavigate();
   const questions = getSurveyQuestions(categoryId);
   const [answers, setAnswers] = useState<Record<number, number>>({});
