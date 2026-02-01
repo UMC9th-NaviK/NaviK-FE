@@ -10,6 +10,7 @@ const PolicyItem = ({ id, title, checked, onToggle, onView }: PolicyItemProps) =
   return (
     <div className="flex items-center gap-2 py-3">
       <button
+        type="button"
         onClick={() => onToggle(id)}
         className="flex h-6 w-6 shrink-0 items-center justify-center rounded"
       >
@@ -26,6 +27,7 @@ const PolicyItem = ({ id, title, checked, onToggle, onView }: PolicyItemProps) =
           <span className="text-opacity-black-40">(필수)</span>
         </p>
         <button
+          type="button"
           onClick={() => onView(id)}
           className="text-body-14R text-opacity-black-60 flex items-center"
         >
