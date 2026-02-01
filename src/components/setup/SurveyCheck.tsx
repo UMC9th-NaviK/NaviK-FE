@@ -8,7 +8,11 @@ type SurveyCheckProps = {
 const SurveyCheck = ({ value, label, isSelected, onSelect }: SurveyCheckProps) => {
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-1">
-      <button className="h-6 w-6 shrink-0 cursor-pointer" onClick={() => onSelect(value)}>
+      <button
+        type="button"
+        className="h-6 w-6 shrink-0 cursor-pointer"
+        onClick={() => onSelect(value)}
+      >
         <img
           src={isSelected ? '/icons/jobs/checked.svg' : '/icons/jobs/unchecked.svg'}
           alt={label}

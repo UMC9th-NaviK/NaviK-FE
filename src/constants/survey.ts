@@ -14,6 +14,7 @@ export const SURVEY_OPTIONS = [
 ] as const;
 
 export const SURVEY_QUESTIONS: Record<CategoryId, SurveyQuestion[]> = {
+  // TODO: id 실제 값으로 변경
   pm: [
     { id: 1, question: 'PM 질문 1' },
     { id: 2, question: 'PM 질문 2' },

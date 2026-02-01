@@ -14,7 +14,7 @@ const StudySuggest = () => {
         {/* TODO: 스터디 컴포넌트 슬라이더*/}
         <div
           ref={scrollRef}
-          className="scrollbar-hide flex flex-nowrap gap-4 overflow-x-auto scroll-smooth px-4"
+          className="scrollbar-hide flex snap-x snap-mandatory flex-nowrap gap-4 overflow-x-auto scroll-smooth px-4"
         >
           {Array.from({ length: totalItems }).map((_, idx) => (
             <div key={idx} className="flex-none snap-center">

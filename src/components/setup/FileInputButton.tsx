@@ -21,7 +21,8 @@ const FileInputButton = ({ onFileChange }: FileInputButtonProps) => {
       onFileChange?.(null);
       return;
     }
-    if (file.type !== 'application/pdf') {
+    const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+    if (!isPdf) {
       alert('PDF 파일만 업로드할 수 있습니다.');
       e.target.value = '';
       setUploaded(false);
@@ -48,7 +49,11 @@ const FileInputButton = ({ onFileChange }: FileInputButtonProps) => {
         onClick={handleButtonClick}
         className={`flex w-full gap-2 rounded-lg border p-4 ${uploaded ? 'bg-white-background justify-start border-0' : 'border-base-400 justify-center border-dashed bg-[#F5F5F580]'} `}
       >
-        <img src={`/icons/jobs/${uploaded ? 'folder-up' : 'folder'}.svg`} />
+        <img
+          src={`/icons/jobs/${uploaded ? 'folder-up' : 'folder'}.svg`}
+          alt={uploaded ? 'folder up' : 'folder'}
+          aria-hidden="true"
+        />
         <p className={`text-body-14R ${uploaded ? 'text-opacity-black-80' : 'text-base-400'}`}>
           {uploaded ? fileName : 'PDF 파일 추가'}
         </p>

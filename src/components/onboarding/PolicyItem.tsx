@@ -30,7 +30,7 @@ const PolicyItem = ({ id, title, checked, onToggle, onView }: PolicyItemProps) =
           className="text-body-14R text-opacity-black-60 flex items-center"
         >
           <p>보기</p>
-          <img src="icons/login/gray-arrow.svg" alt="arrow" className="inline-block h-4 w-4" />
+          <img src="/icons/login/gray-arrow.svg" alt="arrow" className="inline-block h-4 w-4" />
         </button>
       </span>
     </div>

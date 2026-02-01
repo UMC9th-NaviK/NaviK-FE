@@ -14,7 +14,7 @@ const AllKpiCard = () => {
         ))}
       </div>
       <div className="bg-base-200 text-base-500 text-caption-12M flex items-center gap-1 rounded-lg px-4 py-3">
-        <img src="/icons/reports/warning.svg" className="h-3.5 w-3.5" />
+        <img src="/icons/reports/warning.svg" alt="" className="h-3.5 w-3.5" />
         <p>AI 검사 결과 유의사항</p>
       </div>
     </div>

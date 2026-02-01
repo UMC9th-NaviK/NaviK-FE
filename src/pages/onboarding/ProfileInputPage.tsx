@@ -13,6 +13,7 @@ const ProfileInputPage = () => {
   const navigate = useNavigate();
 
   const onSubmit = () => {
+    console.log({ name, nickname, career });
     navigate('/setup/job');
   };
   return (

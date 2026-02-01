@@ -30,9 +30,11 @@ const NoteActivity = ({ onInputChange }: NoteActivityProps) => {
       <div className="shadow-card bg-base-100 text-body-14M shadow-card flex flex-col gap-6 rounded-2xl p-4">
         {/* 높이 지정 */}
         <textarea
+          aria-label="나의 경험 기록하기"
           className="border-primary-blue-300 bg-base-100 text-body-14R placeholder:text-opacity-black-40 text-opacity-black-80 min-h-55 resize-none overflow-y-auto rounded-lg border p-4 focus:outline-none"
           value={text}
           onChange={handleTextChange}
+          placeholder="나의 활동을 입력해주세요."
         />
         <FileInputButton onFileChange={handleFileChange} />
       </div>
