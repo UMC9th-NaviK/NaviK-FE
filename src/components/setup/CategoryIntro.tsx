@@ -19,8 +19,7 @@ const CategoryIntro = ({ categoryId }: { categoryId: string }) => {
       <img
         src={`/images/category/${categoryId}-round.svg`}
         alt={categoryInfo.label}
-        className="pointer-events-none absolute -top-40 right-0 z-0"
-        style={{ width: '100%', height: '100%' }}
+        className="pointer-events-none absolute -top-10 right-0 z-0 w-full"
       />
       {/* 하단 고정 영역 */}
       <div className="absolute right-0 bottom-0 left-0 z-20 pb-6">
