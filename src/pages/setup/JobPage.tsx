@@ -27,7 +27,7 @@ export default function JobPage() {
           transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
         />
         <motion.img
-          src="/icons/logo-gradient.svg"
+          src="/icons/reports/logo-gradient.svg"
           alt="logo gradient"
           className="absolute left-1/2 -translate-x-1/2"
           style={{ width: 310, height: 48, top: 72 }}
