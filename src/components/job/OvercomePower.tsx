@@ -1,5 +1,5 @@
-import ButtonRound from '../common/ButtonRound';
 import CardSlider from '../common/CardSlider';
+import ResultButton from './ResultButton';
 import StudySuggest from './StudySuggest';
 
 const OvercomePower = () => {
@@ -17,7 +17,7 @@ const OvercomePower = () => {
         </span>
         <StudySuggest />
         <div className="pt-2">
-          <ButtonRound text="분석 결과 활용하기" onClick={() => {}} />
+          <ResultButton />
         </div>
       </div>
     </div>

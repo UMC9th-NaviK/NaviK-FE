@@ -1,6 +1,6 @@
-import ButtonRound from '../common/ButtonRound';
 import CardSlider from '../common/CardSlider';
 import JobSuggest from './JobSuggest';
+import ResultButton from './ResultButton';
 
 const CorePower = () => {
   return (
@@ -17,7 +17,7 @@ const CorePower = () => {
         </span>
         <JobSuggest />
         <div className="pt-2">
-          <ButtonRound text="분석 결과 활용하기" onClick={() => {}} />
+          <ResultButton />
         </div>
       </div>
     </div>
