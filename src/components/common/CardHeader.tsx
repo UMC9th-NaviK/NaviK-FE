@@ -10,7 +10,7 @@ const CardHeader = () => {
   return (
     <div className="relative flex w-full items-center justify-between px-6 pt-6 pb-4">
       <p className="text-heading-20B text-base-900">KPI 진단 결과</p>
-      <button onClick={onInfoClick}>
+      <button onClick={onInfoClick} className="z-20">
         <img src="/icons/reports/info.svg" className="h-6 w-6" />
       </button>
       {clickInfo && (
