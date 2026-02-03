@@ -1,7 +1,14 @@
 import sklogo from '../../../public/images/mypage/SKlogo.svg';
-const RecommandCard = () => {
+
+type RecommandCardProps = {
+  className?: string;
+};
+
+const RecommandCard = ({ className }: RecommandCardProps) => {
   return (
-    <div className="flex h-auto w-72 flex-col gap-3 rounded-lg border border-[#D6D6D6] px-4 py-3">
+    <div
+      className={`flex h-auto w-72 flex-col gap-3 rounded-lg border border-[#D6D6D6] px-4 py-3 ${className}`}
+    >
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-center gap-2">
           <img src={sklogo} />
