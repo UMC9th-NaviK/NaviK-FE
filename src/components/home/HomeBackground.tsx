@@ -1,6 +1,10 @@
 export const HomeBackground = () => {
   return (
     <div className="absolute inset-0 z-10 flex justify-center">
+      <img
+        src="/images/small-symbol-white.svg"
+        className="absolute top-5.75 right-4 z-10 opacity-20"
+      />
       <div className="relative w-full max-w-106.25">
         {/* TODO: Lottie 애니메이션 */}
         <div className="absolute inset-0 bg-gray-200" />
