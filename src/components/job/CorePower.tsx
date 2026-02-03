@@ -1,10 +1,11 @@
+import ButtonRound from '../common/ButtonRound';
 import CardSlider from '../common/CardSlider';
 import JobSuggest from './JobSuggest';
 
 const CorePower = () => {
   return (
-    <div className="flex flex-col gap-8">
-      <CardSlider title="핵심 역량" />
+    <div className="flex flex-col">
+      <CardSlider />
       <div className="mb-6.75 flex flex-col gap-4 p-4">
         <span className="flex items-center gap-2">
           <img src="/icons/jobs/circle-rounded.svg" className="h-6 w-6" />
@@ -15,6 +16,9 @@ const CorePower = () => {
           </span>
         </span>
         <JobSuggest />
+        <div className="pt-2">
+          <ButtonRound text="분석 결과 활용하기" onClick={() => {}} />
+        </div>
       </div>
     </div>
   );
