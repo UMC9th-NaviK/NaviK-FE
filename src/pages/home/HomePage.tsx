@@ -1,6 +1,7 @@
 import { HomeBackground } from '../../components/home/HomeBackground';
 import HomeHeader from '../../components/home/HomeHeader';
 import HomeJobSuggest from '../../components/home/HomeJobSuggest';
+import HotBoardSection from '../../components/home/HotBoardSection';
 
 const HomePage = () => {
   return (
@@ -15,7 +16,7 @@ const HomePage = () => {
               <br /> 커리어 항해를 시작할까요?
             </p>
             <div>강점 보완KPI 파일</div>
-            <div>🔥 이번 주 HOT 게시판 </div>
+            <HotBoardSection />
             <HomeJobSuggest />
           </div>
         </div>
