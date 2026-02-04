@@ -14,8 +14,12 @@ const KpiFile = () => {
   return (
     <div className="relative px-4">
       {/* 배경 폴더 이미지 */}
-      <div className="relative">
-        <img src={`/images/home/folder-${activeTab}.png`} alt="KPI Folder" className="w-full" />
+      <div className="relative w-full" style={{ aspectRatio: '343 / 278' }}>
+        <img
+          src={`/images/home/folder-${activeTab}.png`}
+          alt="KPI Folder"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         {/* 클릭 영역 */}
         <button
           onClick={() => setActiveTab('core')}
@@ -31,6 +35,22 @@ const KpiFile = () => {
         >
           보완 KPI
         </button>
+
+        {/* 카드 영역 */}
+        <div
+          className="absolute overflow-hidden"
+          style={{
+            left: '4.37%',
+            right: '4.37%',
+            top: '21.22%',
+            bottom: '9.35%',
+          }}
+        >
+          <div className="h-full">
+            {/* 내부 카드 영역 */}
+            hi
+          </div>
+        </div>
       </div>
     </div>
   );
