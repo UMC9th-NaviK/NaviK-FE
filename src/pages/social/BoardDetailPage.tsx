@@ -24,6 +24,7 @@ type EditState = {
   title?: string;
   content?: string;
 };
+
 type Reply = {
   id: string;
   author: string;
@@ -31,6 +32,7 @@ type Reply = {
   content: string;
   timeAgo: string;
 };
+
 type Comment = {
   id: string;
   author: string;
@@ -39,14 +41,54 @@ type Comment = {
   timeAgo: string;
   replies: Reply[];
 };
+
 type ComposerMode = 'comment' | 'reply' | null;
+
 const BoardDetailPage = () => {
   const location = useLocation();
   const editState = location.state as EditState | null;
 
   const navigate = useNavigate();
   const { postId } = useParams();
+
   const post = useMemo(() => MOCK_POSTS.find((p) => p.id === postId), [postId]);
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const [comments, setComments] = useState<Comment[]>([
+    {
+      id: '1',
+      author: post?.author ?? '',
+      authorMeta: post?.authorMeta ?? '',
+      content: '기존 댓글입니다',
+      timeAgo: '방금 전',
+      replies: [],
+    },
+  ]);
+
+  const [replyTargetId, setReplyTargetId] = useState<string | null>(null);
+  const [composerMode, setComposerMode] = useState<ComposerMode>(null);
+  const [composerValue, setComposerValue] = useState('');
+
+  const commentCount = useMemo(() => {
+    return comments.reduce((acc, c) => acc + 1 + c.replies.length, 0);
+  }, [comments]);
+
+  const baseLikeCount = post?.likeCount ?? 0;
+  const [liked, setLiked] = useState(false);
+  const likeCount = baseLikeCount + (liked ? 1 : 0);
+
+  useEffect(() => {
+    if (!post) return;
+    setTitle(editState?.title ?? post.title);
+    setContent(editState?.content ?? post.content);
+  }, [editState, postId, post]);
+
+  useEffect(() => {
+    setLiked(false);
+  }, [postId]);
+
   if (!post) {
     return (
       <div className="px-6 pt-6">
@@ -55,26 +97,6 @@ const BoardDetailPage = () => {
       </div>
     );
   }
-
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [comments, setComments] = useState<Comment[]>([
-    {
-      id: '1',
-      author: post.author,
-      authorMeta: post.authorMeta,
-      content: '기존 댓글입니다',
-      timeAgo: '방금 전',
-      replies: [],
-    },
-  ]);
-  const [replyTargetId, setReplyTargetId] = useState<string | null>(null);
-  const [composerMode, setComposerMode] = useState<ComposerMode>(null);
-  const [composerValue, setComposerValue] = useState('');
-
-  const commentCount = useMemo(() => {
-    return comments.reduce((acc, c) => acc + 1 + c.replies.length, 0);
-  }, [comments]);
 
   const handleDeleteComment = (commentId: string) => {
     setComments((prev) => prev.filter((c) => c.id !== commentId));
@@ -97,18 +119,6 @@ const BoardDetailPage = () => {
       ),
     );
   };
-  const baseLikeCount = post.likeCount;
-  const [liked, setLiked] = useState(false);
-  const likeCount = baseLikeCount + (liked ? 1 : 0);
-
-  useEffect(() => {
-    setTitle(editState?.title ?? post.title);
-    setContent(editState?.content ?? post.content);
-  }, [editState, post.title, post.content]);
-
-  useEffect(() => {
-    setLiked(false);
-  }, [post.id]);
 
   return (
     <div className="bg-[#F5F8FF] pb-[170px]">
