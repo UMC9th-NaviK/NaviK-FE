@@ -1,7 +1,6 @@
 import KPILocalNavbar from '../../components/report/KPILocalNavbar'
 import ReportNavbar from '../../components/report/ReportNavbar'
 import CardSlider from '../../components/common/CardSlider'
-import RecommandCard from '../../components/myPage/RecommandCard'
 import { useNavigate } from 'react-router-dom'
 import RecruitmentCard from '../../components/report/RecruitmentCard'
 

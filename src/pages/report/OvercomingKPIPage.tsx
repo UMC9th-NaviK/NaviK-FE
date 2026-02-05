@@ -1,6 +1,5 @@
 import KPILocalNavbar from '../../components/report/KPILocalNavbar'
 import ReportNavbar from '../../components/report/ReportNavbar'
-import KPISearchBar from '../../components/report/KPISearchBar'
 import CardSlider from '../../components/common/CardSlider'
 import RecommendationNotice from '../../components/report/RecommendationNotice'
 
@@ -24,7 +23,7 @@ const OvercomingKPIPage = () => {
                     <div className='flex flex-col rounded-[8px] p-[16px] gap-[16px] bg-white shadow-[0_0_10px_0_#DBEBFE]'>
                         <p className='text-heading-18B text-[#1B1B1B]'> <span className='text-[#4E83F9]'> 김나비</span>님을 위한 추천 스터디 📚 </p>
                         <div className="overflow-x-auto">
-                            <div className='flex flex-nowrap box-border w-full gap-[16px] snap-x snap-mandatory scrollbar-hide scroll-smooth'>
+                            <div className='flex flex-nowrap w-max box-border gap-[16px] scroll-smooth'>
                                 <RecommendationNotice role={'pm'} />
                                 <RecommendationNotice role={'pm'} />
                                 <RecommendationNotice role={'pm'} />

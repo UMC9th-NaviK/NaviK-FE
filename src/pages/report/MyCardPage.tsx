@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import KPILocalNavbar from "../../components/report/KPILocalNavbar";
-import KPISearchBar from "../../components/report/KPISearchBar";
 import ReportNavbar from "../../components/report/ReportNavbar";
 
 const MyCardPage = () => {
