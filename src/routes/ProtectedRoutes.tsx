@@ -19,13 +19,13 @@ import SocialTabLayout from '../layouts/SocialTabLayout';
 import BoardEditPage from '../pages/social/BoardEditPage';
 import EvaluationPage from '../pages/social/EvaluationPage';
 import MyEvaluationPage from '../pages/social/MyEvaluationPage';
-import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
-import StudyRecommendPage from '../pages/social/StudyRecommendPage';
-import NewStudyPage from '../pages/social/NewStudyPage';
-import StudyLayout from '../layouts/StudyLayout';
-import MyStudyLayout from '../layouts/MyStudyLayout';
-import MyParticipatingPage from '../pages/social/MyParticipatingPage';
-import MyOperatingPage from '../pages/social/MyOperatingPage';
+// import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
+// import StudyRecommendPage from '../pages/social/StudyRecommendPage';
+// import NewStudyPage from '../pages/social/NewStudyPage';
+// import StudyLayout from '../layouts/StudyLayout';
+// import MyStudyLayout from '../layouts/MyStudyLayout';
+// import MyParticipatingPage from '../pages/social/MyParticipatingPage';
+// import MyOperatingPage from '../pages/social/MyOperatingPage';
 import MyPageLayout from '../layouts/MyPageLayout';
 import ProfilePage from '../pages/mypage/ProfilePage';
 import CoreKPIPage from '../pages/report/CoreKPIPage';
@@ -85,24 +85,24 @@ export const protectedRoutes: RouteObject[] = [
               { index: true, element: <Navigate to="study/recommend" replace /> },
               {
                 path: 'study',
-                element: <StudyLayout />,
+                // element: <StudyLayout />,
                 children: [
                   { index: true, element: <Navigate to="recommend" replace /> },
                   {
                     path: 'recommend',
-                    element: <StudyRecommendPage />,
+                    // element: <StudyRecommendPage />,
                   },
                   {
                     path: 'new',
-                    element: <NewStudyPage />,
+                    // element: <NewStudyPage />,
                   },
                   {
                     path: 'my',
-                    element: <MyStudyLayout />,
+                    // element: <MyStudyLayout />,
                     children: [
                       { index: true, element: <Navigate to="participate" replace /> },
-                      { path: 'participate', element: <MyParticipatingPage /> },
-                      { path: 'operate', element: <MyOperatingPage /> },
+                      // { path: 'participate', element: <MyParticipatingPage /> },
+                      // { path: 'operate', element: <MyOperatingPage /> },
                     ],
                   },
                 ],
@@ -114,7 +114,7 @@ export const protectedRoutes: RouteObject[] = [
           { path: 'board/:postId', element: <BoardDetailPage /> },
           { path: 'board/:postId/edit', element: <BoardEditPage /> },
           { path: 'evaluation/my', element: <MyEvaluationPage /> },
-          { path: 'study/evaluation', element: <StudyEvaluationPage /> },
+          // { path: 'study/evaluation', element: <StudyEvaluationPage /> },
         ],
       },
       {
