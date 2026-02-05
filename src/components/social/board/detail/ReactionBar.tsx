@@ -8,7 +8,7 @@ type Props = {
   MessageIcon: string;
 
   onToggleLike: () => void;
-  onClickComment?: () => void;
+  // onClickComment?: () => void;
 };
 
 export default function ReactionBar({
@@ -19,7 +19,7 @@ export default function ReactionBar({
   FavoriteIcon2,
   MessageIcon,
   onToggleLike,
-  onClickComment,
+  // onClickComment,
 }: Props) {
   return (
     <div className="mt-4 flex w-full items-center gap-[13px] self-stretch">
@@ -38,7 +38,7 @@ export default function ReactionBar({
 
       <button
         type="button"
-        onClick={onClickComment}
+        // onClick={onClickComment}
         className="flex cursor-pointer items-center gap-2"
       >
         <img src={MessageIcon} alt="댓글" className="aspect-square h-4 w-4" />
