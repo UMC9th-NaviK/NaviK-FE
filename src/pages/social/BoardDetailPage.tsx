@@ -102,14 +102,9 @@ const BoardDetailPage = () => {
   const likeCount = baseLikeCount + (liked ? 1 : 0);
 
   useEffect(() => {
-    setTitle(post.title);
-    setContent(post.content);
-  }, [editState]);
-
-  useEffect(() => {
-    if (editState?.title !== undefined) setTitle(editState.title);
-    if (editState?.content !== undefined) setContent(editState.content);
-  }, [editState]);
+    setTitle(editState?.title ?? post.title);
+    setContent(editState?.content ?? post.content);
+  }, [editState, post.title, post.content]);
 
   useEffect(() => {
     setLiked(false);
