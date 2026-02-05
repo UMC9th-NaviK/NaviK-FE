@@ -2,6 +2,9 @@ import { useState } from "react";
 import GoalsNavbar from "../../components/goals/GoalsNavbar";
 
 const ModifyingGoalsPage = () => {
+    const [goalTitle, setGoalTitle] = useState("");
+    const MAX_LENGTH = 10;
+    
     const today = new Date();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isClick, setIsClick] = useState(false);
@@ -79,7 +82,15 @@ const ModifyingGoalsPage = () => {
                 <div className="flex flex-col bg-white shadow-[0_0_10px_0_#DBEBFE] rounded-[16px] p-[16px] gap-[24px]">
                     <div className="flex flex-col gap-[16px]">
                         <div className="flex flex-col gap-[12px]">
-                            <p className="text-body-16B text-base-900"> 목표를 입력해주세요. </p>
+                            <p className="text-body-16B text-base-900"> 목표 제목을 입력해주세요. </p>
+                            <input 
+                            type="text"
+                            className="bg-white h-[49px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-[12px]">
+                            <p className="text-body-16B text-base-900"> 목표 내용을 입력해주세요. </p>
                             <textarea 
                                 className="bg-white h-[83px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
                                 placeholder="나의 목표를 작성하고, 성장의 첫 계단을 나아가보세요."

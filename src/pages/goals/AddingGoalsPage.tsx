@@ -2,6 +2,9 @@ import { useState } from "react";
 import GoalsNavbar from "../../components/goals/GoalsNavbar"
 
 const AddingGoalsPage = () => {
+    const [goalTitle, setGoalTitle] = useState("");
+    const MAX_LENGTH = 10;
+
     const today = new Date();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isClick, setIsClick] = useState(false);
@@ -78,6 +81,17 @@ const AddingGoalsPage = () => {
             <div className="bg-white-background flex flex-col p-[16px]">
                 <div className="flex flex-col bg-white shadow-[0_0_10px_0_#DBEBFE] rounded-[16px] p-[16px] gap-[24px]">
                     <div className="flex flex-col gap-[16px]">
+                        <div className="flex flex-col gap-[12px]">
+                            <p className="text-body-16B text-base-900"> 목표 제목을 입력해주세요. </p>
+                            <input 
+                            type="text"
+                            value={goalTitle}
+                            onChange={(e) => setGoalTitle(e.target.value)}
+                            maxLength={MAX_LENGTH}
+                            className="bg-white h-[49px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
+                            />
+                        </div>
+
                         <div className="flex flex-col gap-[12px]">
                             <p className="text-body-16B text-base-900"> 목표를 입력해주세요. </p>
                             <textarea 
