@@ -8,7 +8,7 @@ const LoginPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 3000);
+    }, 3600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,7 +20,7 @@ const LoginPage = () => {
     <div className="flex h-dvh items-center justify-center px-4">
       <div className="flex w-full flex-col gap-20">
         <div className="flex flex-col items-center gap-4">
-          <img src="/icons/logo-blue.svg" alt="NaviK Logo" className="h-7.6 w-49" />
+          <img src="/icons/reports/logo-blue.svg" alt="NaviK Logo" className="h-7.6 w-49" />
           <p className="text-body-14M text-primary-blue-500">
             성장의 방향을 설계하는 커리어 나침반, 나빅
           </p>

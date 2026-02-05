@@ -15,6 +15,17 @@ import BoardDetailPage from '../pages/social/BoardDetailPage';
 import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
+import SocialTabLayout from '../layouts/SocialTabLayout';
+// import BoardEditPage from '../pages/social/BoardEditPage';
+import EvaluationPage from '../pages/social/EvaluationPage';
+import MyEvaluationPage from '../pages/social/MyEvaluationPage';
+// import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
+// import StudyRecommendPage from '../pages/social/StudyRecommendPage';
+// import NewStudyPage from '../pages/social/NewStudyPage';
+// import StudyLayout from '../layouts/StudyLayout';
+// import MyStudyLayout from '../layouts/MyStudyLayout';
+// import MyParticipatingPage from '../pages/social/MyParticipatingPage';
+// import MyOperatingPage from '../pages/social/MyOperatingPage';
 import MyPageLayout from '../layouts/MyPageLayout';
 import ProfilePage from '../pages/mypage/ProfilePage';
 import CoreKPIPage from '../pages/report/CoreKPIPage';
@@ -22,14 +33,20 @@ import OvercomingKPIPage from '../pages/report/OvercomingKPIPage';
 import CoreKPIDetailPage from '../pages/report/CoreKPIDetailPage';
 import OvercomingKPIDetailPage from '../pages/report/OvercomingKPIDetailPage';
 import SetupLayout from '../layouts/SetupLayout';
+import SettingGoalsPage from '../pages/goals/SettingGoalsPage';
+import ModifyingGoalsPage from '../pages/goals/ModifyingGoalsPage';
+import AddingGoalsPage from '../pages/goals/AddingGoalsPage';
+import GoalsLayout from '../layouts/GoalsLayout';
 import EditProfilePage from '../pages/mypage/EditProfilePage';
 import SettingPage from '../pages/mypage/SettingPage';
 import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
+import NoticePage from '../pages/home/NoticePage';
 
 export const protectedRoutes: RouteObject[] = [
   {
     children: [
       { path: '/home', element: <HomePage /> },
+      { path: '/notice', element: <NoticePage /> },
       // 초기 설정 flow, 1회 접근 가능
       {
         path: '/setup',
@@ -59,17 +76,60 @@ export const protectedRoutes: RouteObject[] = [
           { path: 'core/detail', element: <CoreKPIDetailPage role={'designer'} /> },
           { path: 'overcoming', element: <OvercomingKPIPage /> },
           { path: 'overcoming/detail', element: <OvercomingKPIDetailPage role={'pm'} /> },
-          { path: 'growth', element: <GrowthMainPage /> },
+          { path: 'growth', element: <GrowthMainPage role={'designer'} /> },
           { path: 'growth/write', element: <GrowthWritePage /> },
           { path: 'growth/timeline', element: <TimelinePage /> },
+        ],
+      },
+      {
+        path: '/goals',
+        element: <GoalsLayout />,
+        children: [
+          { index: true, element: <SettingGoalsPage /> },
+          { path: 'modify', element: <ModifyingGoalsPage /> },
+          { path: 'add', element: <AddingGoalsPage /> },
         ],
       },
       {
         path: '/social',
         element: <SocialLayout />,
         children: [
-          { path: 'board', element: <BoardPage /> },
+          {
+            element: <SocialTabLayout />,
+            children: [
+              { index: true, element: <Navigate to="study/recommend" replace /> },
+              {
+                path: 'study',
+                // element: <StudyLayout />,
+                children: [
+                  { index: true, element: <Navigate to="recommend" replace /> },
+                  {
+                    path: 'recommend',
+                    // element: <StudyRecommendPage />,
+                  },
+                  {
+                    path: 'new',
+                    // element: <NewStudyPage />,
+                  },
+                  {
+                    path: 'my',
+                    // element: <MyStudyLayout />,
+                    children: [
+                      { index: true, element: <Navigate to="participate" replace /> },
+                      // { path: 'participate', element: <MyParticipatingPage /> },
+                      // { path: 'operate', element: <MyOperatingPage /> },
+                    ],
+                  },
+                ],
+              },
+              { path: 'board', element: <BoardPage /> },
+              { path: 'evaluation', element: <EvaluationPage /> },
+            ],
+          },
           { path: 'board/:postId', element: <BoardDetailPage /> },
+          // { path: 'board/:postId/edit', element: <BoardEditPage /> },
+          { path: 'evaluation/my', element: <MyEvaluationPage /> },
+          // { path: 'study/evaluation', element: <StudyEvaluationPage /> },
         ],
       },
       {
