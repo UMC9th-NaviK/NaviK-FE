@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import KpiCard from './KpiCard';
 
 type KPITab = 'core' | 'overcome';
 
@@ -47,8 +48,7 @@ const KpiFile = () => {
           }}
         >
           <div className="h-full">
-            {/* 내부 카드 영역 */}
-            hi
+            <KpiCard />
           </div>
         </div>
       </div>
