@@ -35,6 +35,7 @@ const BoardEditPage = () => {
         BackIcon={BackIcon}
         title="게시글 수정"
         onDone={() => {
+          if (!stateId) return;
           navigate(`/social/board/${stateId}`, {
             state: { title, content },
             replace: true,
