@@ -6,7 +6,11 @@ const RecruitmentCard = () => {
             <div className='flex flex-col gap-[16px]'>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-center gap-2">
-                        <img src={sklogo} />
+                        <img 
+                        src={sklogo} 
+                        alt="sk 로고"
+                        className=''
+                        />
                         <div className="text-body-14M text-[#111111CC]">SK 쉘더스</div>
                     </div>
 

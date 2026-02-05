@@ -22,7 +22,7 @@ const ComparisonIncrease = ({ type, percentage } : ComparisonProps) => {
         <div className="relative inline-block">
             <img 
                 src={getImagePath()} 
-                alt={`${percentage}% 증가`}
+                alt={`${percentage}% ${type === 'up' ? '증가' : '감소'}`}
                 className="w-full h-auto"
             />
         </div>
