@@ -153,7 +153,7 @@ const BoardDetailPage = () => {
           MessageIcon={MessageIcon}
           onToggleLike={() => setLiked((p) => !p)}
         />
-        <br className="pt-6" />
+        <div className="pt-6" />
       </div>
 
       <div className="px-6 pt-4">
