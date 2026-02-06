@@ -15,7 +15,7 @@ const CoreKPIPage = () => {
       <ReportNavbar />
       <KPILocalNavbar />
 
-      <div className="bg-white-background flex flex-col gap-[32px] pb-[16px]">
+      <div className="bg-white-background flex flex-col gap-[16px] pb-[16px]">
         <CardSlider />
         <div className="flex flex-col gap-[16px] px-[16px]">
           <div className="flex flex-1 gap-[8px]">
