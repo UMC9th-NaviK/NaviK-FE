@@ -1,5 +1,5 @@
-import CalendarIcon from '../../../assets/social/material-symbols_calendar-today-rounded.svg';
-import PersonIcon from '../../../assets/social/material-symbols_person-rounded.svg';
+import CalendarIcon from '../../../../assets/social/material-symbols_calendar-today-rounded.svg';
+import PersonIcon from '../../../../assets/social/material-symbols_person-rounded.svg';
 
 type InfoRowProps = {
   icon: 'calendar' | 'person';
