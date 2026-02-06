@@ -30,7 +30,7 @@ const BoardEditPage = () => {
   }, [state.title, state.content]);
 
   return (
-    <div>
+    <div className="min-h-screen">
       <BoardEditHeader
         BackIcon={BackIcon}
         title="게시글 수정"

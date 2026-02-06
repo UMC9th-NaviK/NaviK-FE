@@ -121,7 +121,7 @@ const BoardDetailPage = () => {
   };
 
   return (
-    <div className="bg-[#F5F8FF] pb-[170px]">
+    <div className="min-h-screen bg-[#F5F8FF] pb-[170px]">
       <BoardDetailHeader BackIcon={BackIcon} />
       <div className="bg-white px-6">
         <AuthorCard ProfileIcon={ProfileIcon} author={post.author} authorMeta={post.authorMeta} />

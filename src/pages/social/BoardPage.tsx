@@ -134,7 +134,7 @@ export default function BoardPage() {
   const [query, setQuery] = useState('');
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 min-h-screen">
       <div className="flex items-center gap-2">
         <FilterChip label="전체" active={filter === '전체'} onClick={() => setFilter('전체')} />
         <FilterChip
@@ -156,8 +156,8 @@ export default function BoardPage() {
       <SearchBar value={query} onChange={setQuery} placeholder="검색" />
 
       <div className="mt-4 flex flex-col gap-4">
-        {MOCK_POSTS.map((post) => (
-          <PostCard key={post.id} post={post} />
+        {MOCK_POSTS.map((c) => (
+          <PostCard key={c.id} post={c} />
         ))}
       </div>
     </div>
