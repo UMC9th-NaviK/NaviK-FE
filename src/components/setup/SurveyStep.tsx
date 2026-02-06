@@ -24,7 +24,7 @@ const SurveyStep = ({ categoryId }: { categoryId: string }) => {
 
   const handleNext = () => {
     setIsLoading(true);
-    // 테스트용: 30초 후 페이지 이동
+    // 테스트용: 3초 후 페이지 이동
     setTimeout(() => {
       setIsLoading(false);
       navigate(`/job/result`);

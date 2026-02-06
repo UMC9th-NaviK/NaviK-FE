@@ -13,6 +13,7 @@ const HomeJobSuggest = () => {
             님을 위한 추천 공고
           </span>
           <button className="text-opacity-black-60 text-caption-12M flex items-center gap-1">
+            {/* TODO: 연결 링크 추가 */}
             더보기
             <img src="/icons/reports/arrow-right-gray.svg" className="h-4 w-4" />
           </button>

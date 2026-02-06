@@ -52,7 +52,7 @@ const AnalysisPage = () => {
             ease: 'easeInOut',
           }}
         >
-          <img src="/images/small-symbol-white.svg" width={57} height={56} />
+          <img src="/images/small-symbol-white.svg" width={57} height={56} alt="" />
         </motion.div>
       </div>
 

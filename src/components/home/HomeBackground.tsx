@@ -3,10 +3,11 @@ import animationData from '../../assets/animation.json';
 
 export const HomeBackground = () => {
   return (
-    <div className="absolute inset-0 z-10 flex justify-center">
+    <div className="absolute inset-0 z-0 flex justify-center">
       <img
         src="/images/small-symbol-white.svg"
         className="absolute top-5.75 right-4 z-10 opacity-20"
+        alt=""
       />
       <div className="relative w-full max-w-106.25">
         <Lottie animationData={animationData} loop className="w-full" />
