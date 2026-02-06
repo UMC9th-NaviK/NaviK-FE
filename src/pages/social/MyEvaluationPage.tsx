@@ -85,7 +85,7 @@ const MyEvaluationPage = () => {
   ];
 
   return (
-    <div className="bg-base-50 min-h-dvh min-h-screen bg-[#F5F8FF]">
+    <div className="bg-base-50 min-h-dvh bg-[#F5F8FF]">
       <EvaluationHeader BackIcon={BackIcon} />
 
       <div className="flex items-start justify-center gap-[10px] self-stretch p-4">
