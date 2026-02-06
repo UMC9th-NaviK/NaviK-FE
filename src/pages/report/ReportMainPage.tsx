@@ -1,6 +1,12 @@
+import { useNavigate } from "react-router-dom";
+import ComparisonIncrease from "../../components/report/ComparisonIncrease";
+import { FOOTERPB } from "../../components/common/Footer";
+
 const ReportMainPage = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex flex-col w-full bg-white-background bg-[radial-gradient(circle,_#94BBFD_0%,_rgba(184,212,254,0)_100%)]">
+    <div className={`flex flex-col w-full min-h-screen bg-white-background bg-[radial-gradient(circle,_#94BBFD_0%,_rgba(184,212,254,0)_100%)] ${FOOTERPB}`}>
       <header className="pl-[24px] pt-[16px] pb-[24px] pr-[24px]">
         <h1 className="text-heading-24B"> 리포트 </h1>
       </header>
@@ -39,7 +45,9 @@ const ReportMainPage = () => {
       <main className="flex flex-col items-center pt-[20px] pr-[16px] pb-[20px] pl-[16px] gap-[16px]">
         <div className="w-full flex flex-1 gap-[16px] items-center justify-center">
           <div className="flex flex-col gap-[16px] w-[50%]">
-            <button className="relative flex items-start justify-start bg-gradient-to-b from-[#79A6FB] to-[#3964D6] h-[111px] rounded-[7px] p-4 overflow-hidden">
+            <button 
+            onClick={() => navigate("/report/core")}
+            className="relative flex items-start justify-start bg-gradient-to-b from-[#79A6FB] to-[#3964D6] h-[111px] rounded-[7px] p-4 overflow-hidden">
               <p className="relative z-10 h-full text-heading-20B text-white text-left"> 내 카드 <br /> 보러가기 </p>
               <img 
               src="/images/reports/goingMyCard.png"
@@ -47,7 +55,10 @@ const ReportMainPage = () => {
               className="absolute w-[120px] h-[130px] right-[-10px] bottom-[-10px] p-[10px] z-0 opacity-70"
               />
             </button>
-            <button className="flex flex-col relative bg-white h-[111px] rounded-[7px] p-4 gap-[5px]">
+
+            <button 
+            onClick={() => navigate("/social/evaluation")}
+            className="flex flex-col relative bg-white h-[111px] rounded-[7px] p-4 gap-[5px]">
               <p className="text-heading-20B text-black relative z-10 text-left"> 동료 피드백 </p>
               <p className="text-body-14M relative z-10 text-left"> <span className="text-[#4E83F9]">협업 커뮤니케이션</span>이 <br /> 뛰어나요👍🏻 </p>
               <img 
@@ -58,17 +69,12 @@ const ReportMainPage = () => {
             </button>
           </div>
           
-          <div className="flex flex-col w-[50%] bg-[rgba(255,255,255,0.5)] h-[238px] rounded-[7px] border-[0.5px] border-white p-4 gap-[32px] pt-[8px] pr-[16px] pb-[8px] pl-[16px]">
+          <button 
+          onClick={() => navigate("/goals")}
+          className="flex flex-col w-[50%] bg-[rgba(255,255,255,0.5)] h-[238px] rounded-[7px] border-[0.5px] border-white p-4 gap-[32px] pt-[8px] pr-[16px] pb-[8px] pl-[16px]">
             <div className="flex flex-col gap-[10px]">
               <div className="flex flex-1 items-center justify-between">
                 <p className="text-heading-20B text-black"> 목표 설정 </p>
-                <button>
-                  <img 
-                  src="/icons/reports/material-symbols_settings-rounded.svg"
-                  alt=""
-                  className="w-[24px] h-[24px]"
-                  />
-                </button>
               </div>
 
               <div className="flex flex-col gap-[8px] text-body-14M text-center">
@@ -82,15 +88,17 @@ const ReportMainPage = () => {
               <p className="text-body-16M text-black"> 완료할 목표 </p>
               <span className="text-heading-20B text-[#4E83F9]"> 2개 </span>
             </div>
-          </div>
+          </button>
         </div>
 
-        <div className="flex w-full bg-[rgba(255,255,255,0.5)] h-[254px] rounded-[7px] border-[0.5px] border-white p-4">
+        <div className="flex w-full bg-[rgba(255,255,255,0.5)] h-[274px] rounded-[7px] border-[0.5px] border-white p-4">
           <div className="flex flex-col w-full gap-[14px]">
             <p className="text-heading-20B text-black"> 성장 로그 </p>
             <div className="flex flex-1 w-full justify-between gap-[7px]">
-              <div className="relative w-[62%] flex flex-col bg-white rounded-[7px] pt-[11px] pr-[12px] pb-[11px] pl-[12px] gap-[58px] overflow-hidden">
-                <div className="relative z-10">
+              <button 
+              onClick={() => navigate("/report/growth")}
+              className="relative w-[62%] flex flex-col bg-white rounded-[7px] pt-[11px] pr-[12px] pb-[11px] pl-[12px] gap-[58px] overflow-hidden">
+                <div className="relative flex flex-col z-10 items-start">
                   <p className="text-body-16B z-10"> 직무 레벨 배지 </p>
                   <span className="text-heading-24B text-[#4E83F9] relative z-10"> LV. 3 </span>
                   <img 
@@ -99,21 +107,32 @@ const ReportMainPage = () => {
                   className="absolute w-[120px] h-[140px] right-[-22px] bottom-[-75px] p-[10px] z-0"
                   />
                 </div>
-                <p className="text-body-14M text-[#11111199] "> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
-              </div>
+                <p className="absolute bottom-0 text-start pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
+              </button>
 
-              <div className="relative w-[77%] flex flex-col justify-between bg-white rounded-[7px] pt-[11px] pr-[12px] pb-[11px] pl-[12px]">
-                <div className="flex justify-end items-center gap-1">
-                  <span className="text-body-16B text-[#4E83F9]"> 11% </span>
-                  <span className="text-[#4E83F9] text-xs"> ▲ </span>
+              <button 
+              onClick={() => navigate("/report/growth/timeline")}
+              className="relative w-[77%] flex flex-col justify-between bg-white rounded-[7px] gap-[10px] pt-[11px] pr-[12px] pb-[11px] pl-[12px]">
+                <div className="flex flex-col gap-[5px]">
+                  <div className="flex flex-col gap-[6px]">
+                    <div className="flex justify-end items-center gap-1">
+                      <span className="text-body-16B text-[#4E83F9]"> 11% </span>
+                      <span className="text-[#4E83F9] text-xs"> ▲ </span>
+                    </div>
+
+                    <div className="flex-1 flex items-center justify-center">
+                      <ComparisonIncrease type={'up'} percentage={30} />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 justify-between"> 
+                    <p className="text-caption-12R text-[#11111166]"> 11월 </p>
+                    <p className="text-caption-12R text-[#11111166]"> 12월 </p>
+                  </div>
                 </div>
 
-                <div className="flex-1 flex items-center justify-center">
-                  <div className="w-full h-[60px] bg-gradient-to-t from-[#4E83F910] to-transparent border-b border-dashed border-gray-300"> </div>
-                </div>
-
-                <p className="text-body-14M text-[#11111199] "> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
-              </div>
+                <p className="text-body-14M text-[#11111199] text-start"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
+              </button>
             </div>
           </div>
         </div>

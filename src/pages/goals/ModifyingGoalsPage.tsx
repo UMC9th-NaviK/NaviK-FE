@@ -2,6 +2,9 @@ import { useState } from "react";
 import GoalsNavbar from "../../components/goals/GoalsNavbar";
 
 const ModifyingGoalsPage = () => {
+    const [goalTitle, setGoalTitle] = useState("");
+    const MAX_LENGTH = 10;
+
     const today = new Date();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isClick, setIsClick] = useState(false);
@@ -75,11 +78,22 @@ const ModifyingGoalsPage = () => {
     return (
         <div>
             <GoalsNavbar />
-            <div className="bg-white-background flex flex-col p-[16px]">
+            <div className="bg-white-background min-h-screen flex flex-col p-[16px]">
                 <div className="flex flex-col bg-white shadow-[0_0_10px_0_#DBEBFE] rounded-[16px] p-[16px] gap-[24px]">
                     <div className="flex flex-col gap-[16px]">
                         <div className="flex flex-col gap-[12px]">
-                            <p className="text-body-16B text-base-900"> 목표를 입력해주세요. </p>
+                            <p className="text-body-16B text-base-900"> 목표 제목을 입력해주세요. </p>
+                            <input 
+                            type="text"
+                            value={goalTitle}
+                            onChange={(e) => setGoalTitle(e.target.value)}
+                            maxLength={MAX_LENGTH}
+                            className="bg-white h-[49px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-[12px]">
+                            <p className="text-body-16B text-base-900"> 목표 내용을 입력해주세요. </p>
                             <textarea 
                                 className="bg-white h-[83px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
                                 placeholder="나의 목표를 작성하고, 성장의 첫 계단을 나아가보세요."
@@ -162,11 +176,11 @@ const ModifyingGoalsPage = () => {
                     </div>
 
                     <div className="flex flex-1 items-center justify-center gap-[16px]">
-                        <button className="flex items-center justify-center h-[48px] w-[147.5px] rounded-[8px] px-[40px] py-[12px] bg-base-200">
+                        <button className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[20px] py-[12px] bg-base-200">
                             <p className="text-center text-body-16B text-base-600"> 취소 </p>
                         </button>
 
-                        <button className="flex items-center justify-center h-[48px] w-[147.5px] rounded-[8px] px-[20px] py-[12px] bg-primary-blue-500">
+                        <button className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[20px] py-[12px] bg-primary-blue-500">
                             <p className="text-center text-body-16B text-base-100"> 변경 사항 저장 </p>
                         </button>
                     </div>

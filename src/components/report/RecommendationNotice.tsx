@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ROLE_THEME_MAP } from "../../constants/roleTheme";
 import type { Role } from "../../types/role"
 
@@ -8,12 +8,16 @@ interface RecommendationNoticeProps {
 
 const RecommendationNotice = ({ role } : RecommendationNoticeProps) => {
     const location = useLocation();
+    const navigate = useNavigate();
+
     const isOvercomingDetailPage = location.pathname.startsWith("/report/overcoming/detail");
 
     const theme = ROLE_THEME_MAP[role] || ROLE_THEME_MAP['pm'];
 
     return (
-        <button className={`appearance-none flex flex-shrink-0 snap-center snap-start snap-always flex-col w-[240px] bg-white border border-[1px] ${isOvercomingDetailPage ? `${theme.border}` : "text-[#B8D4FE]"} rounded-[8px] p-[16px] gap-[8px]`}>
+        <button 
+        onClick={() => navigate("/")}
+        className={`appearance-none flex flex-shrink-0 snap-start snap-always flex-col w-[240px] bg-white border border-[1px] ${isOvercomingDetailPage ? `${theme.border}` : "text-[#B8D4FE]"} rounded-[8px] p-[16px] gap-[8px]`}>
             <div className="relative w-full h-[140px] rounded-lg overflow-hidden">
                 <img
                 src="/images/reports/studyExampleImages.png"
@@ -29,7 +33,9 @@ const RecommendationNotice = ({ role } : RecommendationNoticeProps) => {
                     <p className='text-body-14B text-[#111111]'> 스터디명 </p>
                     <p className={`text-caption-12M ${isOvercomingDetailPage ? `${theme.secondaryText}` : "text-[#B8D4FE]"}`}> (3/5) </p>
                 </div>
-                <hr className='text-[#D6D6D6] w-full' />
+
+                <hr className='text-[#D6D6D6] w-[208px]' />
+
                 <div className='flex items-start flex-col gap-[4px]'>
                     <p className='text-caption-12M text-[#111111CC]'> 스터디에 관한 간단한 소개 </p>
                     <p className='text-caption-12R text-[#11111199]'> 1월 7일 - 1월 14일 / 5명 </p>
