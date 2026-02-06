@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ClickIcon from '../../../assets/social/material-symbols_arrow-back-ios-new-rounded (1).svg';
+import ClickIcon from '../../../../assets/social/material-symbols_arrow-back-ios-new-rounded (1).svg';
 
 type AccordionProps = {
   title: string;
@@ -14,11 +14,11 @@ export default function BlueAccordion({ title, children }: AccordionProps) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className={`bg-primary-blue-500 flex h-12 w-full -rotate-[0.015deg] cursor-pointer items-center justify-between px-3 py-2 ${
+        className={`bg-primary-blue-500 flex h-12 w-full -rotate-[0.015deg] cursor-pointer items-center justify-between self-stretch px-3 py-2 ${
           open ? 'rounded-t-lg' : 'rounded-lg'
         }`}
       >
-        <span className="text-body-16B text-white">{title}</span>
+        <span className="text-body-16B text-white">[{title}] 스터디</span>
 
         <img
           src={ClickIcon}
@@ -34,7 +34,7 @@ export default function BlueAccordion({ title, children }: AccordionProps) {
           open ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="flex w-full flex-col items-start gap-4 self-stretch rounded-b-lg border border-[#DBEBFE] px-3 py-4">
+        <div className="flex w-full flex-col items-start self-stretch rounded-b-lg border border-[#B8D4FE] bg-white px-4 py-4">
           {children}
         </div>
       </div>

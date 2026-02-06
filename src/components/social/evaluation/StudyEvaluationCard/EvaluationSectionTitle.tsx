@@ -5,11 +5,9 @@ type SectionTitleProps = {
 
 export default function EvaluationSectionTitle({ emoji, title }: SectionTitleProps) {
   return (
-    <div className="flex w-full items-center gap-2">
+    <div className="mt-4 flex w-full items-center gap-1">
       <span>{emoji}</span>
-      <span className="text-body-14B leading-[160%] tracking-[-0.14px] text-[rgba(17,17,17,0.8)]">
-        {title}
-      </span>
+      <span className="text-body-14B text-opacity-black-80">{title}</span>
     </div>
   );
 }
