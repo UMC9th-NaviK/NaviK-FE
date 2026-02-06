@@ -23,7 +23,7 @@ export const JobCard = ({
 }: JobCardProps) => {
   return (
     <div
-      className={`border-primary-blue-100 bg-base-100 shadow-card mb-4 w-full rounded-2xl border p-5 transition-all ${
+      className={`border-primary-blue-100 bg-base-100 shadow-card w-full rounded-2xl border p-5 transition-all ${
         !isApplicable ? 'opacity-50' : 'opacity-100'
       }`}
     >
