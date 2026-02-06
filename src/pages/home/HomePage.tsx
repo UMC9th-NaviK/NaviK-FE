@@ -1,3 +1,4 @@
+import Footer from '../../components/common/Footer';
 import { HomeBackground } from '../../components/home/HomeBackground';
 import HomeHeader from '../../components/home/HomeHeader';
 import HomeJobSuggest from '../../components/home/HomeJobSuggest';
@@ -21,7 +22,8 @@ const HomePage = () => {
             <HomeJobSuggest />
           </div>
         </div>
-        {/* TODO: 아래 파도 이미지 및 푸터 첨부 */}
+        <img src="/images/home/wave.svg" alt="" className="absolute bottom-8 left-0 z-1 w-full" />
+        <Footer />
       </div>
     </>
   );
