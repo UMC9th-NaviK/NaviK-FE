@@ -41,6 +41,7 @@ import EditProfilePage from '../pages/mypage/EditProfilePage';
 import SettingPage from '../pages/mypage/SettingPage';
 import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
 import NoticePage from '../pages/home/NoticePage';
+import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -111,6 +112,7 @@ export const protectedRoutes: RouteObject[] = [
                     path: 'new',
                     // element: <NewStudyPage />,
                   },
+                  { path: ':studyId/evaluation', element: <StudyEvaluationPage /> },
                   {
                     path: 'my',
                     // element: <MyStudyLayout />,
@@ -129,7 +131,6 @@ export const protectedRoutes: RouteObject[] = [
           { path: 'board/:postId', element: <BoardDetailPage /> },
           // { path: 'board/:postId/edit', element: <BoardEditPage /> },
           { path: 'evaluation/my', element: <MyEvaluationPage /> },
-          // { path: 'study/evaluation', element: <StudyEvaluationPage /> },
         ],
       },
       {
