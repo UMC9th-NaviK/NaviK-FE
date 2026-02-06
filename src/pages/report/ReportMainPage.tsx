@@ -95,10 +95,10 @@ const ReportMainPage = () => {
           <div className="flex flex-col w-full gap-[14px]">
             <p className="text-heading-20B text-black"> 성장 로그 </p>
             <div className="flex flex-1 w-full justify-between gap-[7px]">
-              <div className="relative w-[62%] flex flex-col bg-white rounded-[7px] pt-[11px] pr-[12px] pb-[11px] pl-[12px] gap-[58px] overflow-hidden">
-                <button 
-                onClick={() => navigate("/report/growth")}
-                className="relative flex flex-col z-10 items-start">
+              <button 
+              onClick={() => navigate("/report/growth")}
+              className="relative w-[62%] flex flex-col bg-white rounded-[7px] pt-[11px] pr-[12px] pb-[11px] pl-[12px] gap-[58px] overflow-hidden">
+                <div className="relative flex flex-col z-10 items-start">
                   <p className="text-body-16B z-10"> 직무 레벨 배지 </p>
                   <span className="text-heading-24B text-[#4E83F9] relative z-10"> LV. 3 </span>
                   <img 
@@ -106,9 +106,9 @@ const ReportMainPage = () => {
                   alt=""
                   className="absolute w-[120px] h-[140px] right-[-22px] bottom-[-75px] p-[10px] z-0"
                   />
-                </button>
-                <p className="absolute bottom-0 pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
-              </div>
+                </div>
+                <p className="absolute bottom-0 text-start pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
+              </button>
 
               <button 
               onClick={() => navigate("/report/growth/timeline")}
