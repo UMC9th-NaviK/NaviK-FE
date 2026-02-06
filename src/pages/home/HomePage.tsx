@@ -21,7 +21,7 @@ const HomePage = () => {
             <HomeJobSuggest />
           </div>
         </div>
-        {/* 아래 파도 이미지 및 푸터 첨부 */}
+        {/* TODO: 아래 파도 이미지 및 푸터 첨부 */}
       </div>
     </>
   );
