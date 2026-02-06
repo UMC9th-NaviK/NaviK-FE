@@ -9,8 +9,8 @@ interface HeaderProps {
 
 const ProfileHeader = ({ role }: HeaderProps) => {
   return (
-    <div className={`relative flex h-64.25 flex-col gap-6 px-5 ${bgStyles[role]}`}>
-      <div className="relative z-10 flex w-full items-center justify-between p-3 pt-5">
+    <div className={`relative flex h-64.25 w-full flex-col gap-6 px-5 ${bgStyles[role]}`}>
+      <div className="relative z-10 flex w-full items-center justify-between pt-5 pb-1">
         <div className="text-2xl font-bold text-white">마이페이지</div>
         <Link
           className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/20"
