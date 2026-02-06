@@ -1,20 +1,26 @@
 import { useState } from 'react';
-import TeamMemberOn from '../../../public/images/social/TeamMemberOn.svg';
-import TeamMemberOff from '../../../public/images/social/TeamMemeberOff.svg';
 import { EVALUATION_DATA } from '../../constants/evaluationData';
-import { EvaluationAccordion } from '../../components/social/evaludate/EvaluationAccordion';
+import { TagSection } from '../../components/social/evaludate/TagSection';
+import { StarRating } from '../../components/social/evaludate/StarRating';
+import { MemberSelect } from '../../components/social/evaludate/MemberSelect';
 
-// 멤버 데이터 타입 정의
+// 인터페이스 정의
 interface Member {
   id: number;
   name: string;
 }
 
 const StudyEvaluationPage = () => {
-  // 상태 관리: 선택된 멤버 ID와 선택된 태그 리스트
   const [selectedMember, setSelectedMember] = useState<number | null>(null);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+  // 강점과 보완 태그 관리
+  const [strengthTags, setStrengthTags] = useState<string[]>([]);
+  const [improvementTags, setImprovementTags] = useState<string[]>([]);
+
+  // 별점 및 조언 상태
+  const [rating, setRating] = useState<number>(0);
+  const [comment, setComment] = useState<string>('');
+  const [errorItem, setErrorItem] = useState<string | null>(null);
   // 임시 멤버 데이터
   const members: Member[] = [
     { id: 1, name: '김나비' },
@@ -25,113 +31,112 @@ const StudyEvaluationPage = () => {
     { id: 6, name: '김나비' },
   ];
 
-  // 태그 선택/해제 핸들러
-  const handleToggleItem = (item: string) => {
-    setSelectedTags(
-      (prev) =>
-        prev.includes(item)
-          ? prev.filter((t) => t !== item) // 이미 있으면 제거
-          : [...prev, item], // 없으면 추가
-    );
+  // 태그 선택/해제 로직
+  const handleToggleTag = (type: 'STRENGTH' | 'IMPROVEMENT', clickedItem: string) => {
+    const isStrength = type === 'STRENGTH';
+    const currentTags = isStrength ? strengthTags : improvementTags;
+    const setTags = isStrength ? setStrengthTags : setImprovementTags;
+
+    if (currentTags.includes(clickedItem)) {
+      setTags(currentTags.filter((t) => t !== clickedItem));
+    } else {
+      if (currentTags.length >= 5) {
+        setErrorItem(clickedItem);
+        // 0.5초 뒤에 에러 상태 해제 (애니메이션 시간 고려)
+        setTimeout(() => setErrorItem(null), 500);
+        return;
+      }
+      setTags([...currentTags, clickedItem]);
+    }
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-6 pb-20">
-      <div className="text-heading-18B">스터디 평가</div>
+    <div className="flex flex-col gap-4 pt-6 pb-24">
+      <div className="text-heading-18B px-1 font-bold">스터디 평가</div>
 
-      {/* 상단 카드: 스터디 정보 및 팀원 선택 */}
+      {/* 스터디 정보, 팀원 선택 카드 */}
       <div className="shadow-card flex min-h-max w-full flex-col gap-4 rounded-2xl bg-white p-4">
-        {/* 스터디 제목 부분 */}
         <div className="flex w-full items-center justify-between">
-          <div className="text-primary-blue-500 text-heading-18B">DB 설계 스터디</div>
-          <div className="text-caption-12M flex h-7.25 items-center justify-center rounded-full border border-[#E72326]/10 bg-[#E72326]/10 px-3 py-1.5 text-[#E72326]">
+          <div className="text-primary-blue-500 text-heading-18B font-bold">
+            DB 설계 스터디 (이름)
+          </div>
+          <div className="text-caption-12M flex h-7.25 w-14 items-center justify-center rounded-full border border-[#E72326]/10 bg-[#E72326]/10 px-3 py-1.5 text-[#E72326]">
             종료
           </div>
         </div>
 
-        {/* 구분선 */}
         <div className="border-primary-blue-100 w-full border-t" />
+        <MemberSelect
+          members={members}
+          selectedMember={selectedMember}
+          onSelect={setSelectedMember}
+        />
 
-        {/* 스터디 팀원 선택 부분 */}
-        <div className="flex w-full flex-col gap-4">
-          <div className="text-body-16B">평가할 스터디원을 선택하세요.</div>
+        {/* 평가 상세 영역 */}
+        {selectedMember && (
+          <div className="animate-fadeIn mt-4 flex flex-col gap-6">
+            <div className="text-caption-12B text-[#E72326]">
+              * 카테고리와 상관없이 5개를 선택해 주세요!
+            </div>
 
-          {/* 팀원 프로필 그리드 */}
-          <div className="grid grid-cols-3 gap-4 py-4">
-            {members.map((member) => (
-              <div
-                key={member.id}
-                className="flex cursor-pointer flex-col items-center"
-                onClick={() => setSelectedMember(member.id)}
-              >
-                <div className="relative z-0 -mb-5.25 aspect-square w-full">
-                  <img
-                    src={selectedMember === member.id ? TeamMemberOn : TeamMemberOff}
-                    alt="profile"
-                    className="h-full w-full object-contain"
-                  />
+            {/* 강점 섹션 */}
+            <TagSection
+              title={EVALUATION_DATA.STRENGTH.title}
+              tags={strengthTags}
+              sections={EVALUATION_DATA.STRENGTH.sections}
+              onToggle={(item) => handleToggleTag('STRENGTH', item)}
+              errorItem={errorItem}
+            />
+
+            {/* 보완 섹션 */}
+            <TagSection
+              title={EVALUATION_DATA.IMPROVEMENT.title}
+              tags={improvementTags}
+              sections={EVALUATION_DATA.IMPROVEMENT.sections}
+              onToggle={(item) => handleToggleTag('IMPROVEMENT', item)}
+              errorItem={errorItem}
+            />
+
+            {/* 조언 */}
+            <section className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <div className="text-body-16B text-base-900 font-bold">
+                  조금 더 도움이 될 조언이 있다면 적어주세요!
                 </div>
-
-                <div
-                  className={`z-10 h-9.5 w-full rounded-lg border py-2 text-center transition-all ${
-                    selectedMember === member.id
-                      ? 'bg-primary-blue-100 border-primary-blue-200 text-primary-blue-600 text-body-16B'
-                      : 'border-base-300 bg-base-100 text-base-400 text-body-14B'
-                  }`}
-                >
-                  {member.name}
-                </div>
+                <span className="text-caption-12M text-base-400">선택</span>
               </div>
-            ))}
+              <input
+                type="text"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="border-primary-blue-200 text-caption-12R focus:ring-primary-blue-500 h-11 w-full rounded-lg border px-5.25 focus:ring-1 focus:outline-none"
+                placeholder="본문 내용"
+              />
+            </section>
+
+            {/* 별점 평가 */}
+            <section className="flex flex-col gap-4 px-1">
+              <div className="flex items-center justify-between">
+                <div className="text-body-16B text-base-900 font-bold">별점 평가</div>
+                <span className="text-caption-12M text-[#E72326]">필수</span>
+              </div>
+              <StarRating rating={rating} setRating={setRating} />
+            </section>
+
+            {/* 제출 버튼 */}
+            <button
+              disabled={strengthTags.length < 5 || improvementTags.length < 5 || rating === 0}
+              className={`text-body-16B flex h-12 w-full items-center justify-center rounded-lg transition-all ${
+                strengthTags.length === 5 && improvementTags.length === 5 && rating > 0
+                  ? 'bg-primary-blue-500 text-base-100 active:scale-95'
+                  : 'bg-base-200 text-base-600 cursor-not-allowed'
+              }`}
+            >
+              평가 제출하기
+            </button>
           </div>
-        </div>
+        )}
       </div>
-
-      {/* 팀원이 선택되었을 때만 평가 섹션 표시 */}
-      {selectedMember && (
-        <div className="animate-fadeIn mt-4 flex flex-col gap-8 px-1">
-          {/* 강점 섹션 */}
-          <section className="flex flex-col gap-4">
-            <div className="text-heading-18B text-base-900">{EVALUATION_DATA.STRENGTH.title}</div>
-            <div className="flex flex-col gap-3">
-              {EVALUATION_DATA.STRENGTH.sections.map((cat) => (
-                <EvaluationAccordion
-                  key={cat.id}
-                  category={cat}
-                  selectedItems={selectedTags}
-                  onToggleItem={handleToggleItem}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* 보완 섹션 */}
-          <section className="flex flex-col gap-4">
-            <div className="text-heading-18B text-base-900">
-              {EVALUATION_DATA.IMPROVEMENT.title}
-            </div>
-            <div className="flex flex-col gap-2">
-              {EVALUATION_DATA.IMPROVEMENT.sections.map((cat) => (
-                <EvaluationAccordion
-                  key={cat.id}
-                  category={cat}
-                  selectedItems={selectedTags}
-                  onToggleItem={handleToggleItem}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      )}
-
-      {/* 하단 플로팅 버튼 (선택 사항) */}
-      {selectedTags.length > 0 && (
-        <div className="fixed right-0 bottom-6 left-0 px-4">
-          <button className="bg-primary-blue-500 text-body-16B w-full rounded-xl py-4 text-white shadow-lg transition-transform active:scale-95">
-            평가 완료하기 ({selectedTags.length})
-          </button>
-        </div>
-      )}
     </div>
   );
 };
