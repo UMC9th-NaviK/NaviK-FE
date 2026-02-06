@@ -3,6 +3,7 @@ import ReportNavbar from '../../components/report/ReportNavbar'
 import CardSlider from '../../components/common/CardSlider'
 import { useNavigate } from 'react-router-dom'
 import RecruitmentCard from '../../components/report/RecruitmentCard'
+import { FOOTERPB } from '../../components/common/Footer'
 
 const CoreKPIPage = () => {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ const CoreKPIPage = () => {
     const totalItems = 20;
 
     return (
-        <div>
+        <div className={`${FOOTERPB}`}>
             <ReportNavbar />
             <KPILocalNavbar />
 

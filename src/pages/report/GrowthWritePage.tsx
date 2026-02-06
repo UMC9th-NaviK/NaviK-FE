@@ -1,14 +1,15 @@
+import { FOOTERPB } from "../../components/common/Footer";
 import GrowthRecord from "../../components/growth/GrowthRecord";
 import ReportNavbar from "../../components/report/ReportNavbar";
 
 const GrowthWritePage = () => {
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden bg-slate-50 pb-[16px]">
+    <div className={`min-h-screen bg-white relative overflow-hidden bg-slate-50 ${FOOTERPB}`}>
       <ReportNavbar />
 
       <div className="absolute w-[618px] h-[494px] left-1/2 -translate-x-1/2 bottom-[-100px] bg-[radial-gradient(50%_50%_at_50%_50%,#94BBFD_0%,rgba(219,235,254,0)_100%)] z-10 opacity-60"></div>
 
-      <div className="relative z-20 flex flex-col gap-[8px]">
+      <div className="relative z-20 flex flex-col gap-[8px] pb-[16px]">
         <div className="flex flex-col pt-[16px] px-[16px] gap-[10px]">
           <div className="relative flex flex-1 p-[16px] rounded-[16px] gap-[10px] bg-gradient-to-b from-[#94BBFD] to-[#4E83F9] shadow-[0_0_10px_0_#DBEBFE]">
             <div className="flex flex-col gap-[8px]">
@@ -24,8 +25,8 @@ const GrowthWritePage = () => {
           </div>
 
           <div className="flex flex-col gap-[16px]">
-            <div className="flex flex-1 justify-between">
-              <div className="flex-col w-[106px] px-[12px] py-[16px] gap-[10px] rounded-[16px] border border-[1px] border-primary-blue-200">
+            <div className="flex flex-1 w-full gap-[8px]">
+              <div className="flex-col w-full px-[12px] py-[16px] gap-[10px] rounded-[16px] border border-[1px] border-primary-blue-200">
                 <div className="flex flex-col items-center justify-center gap-[14px]">
                   <div className="flex items-center justify-center w-[40px] h-[40px] rounded-full p-[5px] bg-gradient-to-b from-[#B8D4FE] to-[#79A6FB]">
                     <img 
@@ -41,7 +42,7 @@ const GrowthWritePage = () => {
                 </div>
               </div>
 
-              <div className="flex-col w-[106px] px-[12px] py-[16px] gap-[10px] rounded-[16px] border border-[1px] border-primary-blue-200">
+              <div className="flex-col w-full px-[12px] py-[16px] gap-[10px] rounded-[16px] border border-[1px] border-primary-blue-200">
                 <div className="flex flex-col items-center justify-center gap-[14px]">
                   <div className="flex items-center justify-center w-[40px] h-[40px] rounded-full p-[5px] bg-gradient-to-b from-[#B8D4FE] to-[#79A6FB]">
                     <img 
@@ -57,7 +58,7 @@ const GrowthWritePage = () => {
                 </div>
               </div>
 
-              <div className="flex-col w-[106px] px-[12px] py-[16px] gap-[10px] rounded-[16px] border border-[1px] border-primary-blue-200">
+              <div className="flex-col w-full px-[12px] py-[16px] gap-[10px] rounded-[16px] border border-[1px] border-primary-blue-200">
                 <div className="flex flex-col items-center justify-center gap-[14px]">
                   <div className="flex items-center justify-center w-[40px] h-[40px] rounded-full p-[5px] bg-gradient-to-b from-[#B8D4FE] to-[#79A6FB]">
                     <img 

@@ -78,7 +78,7 @@ const AddingGoalsPage = () => {
     return (
         <div>
             <GoalsNavbar />
-            <div className="bg-white-background flex flex-col p-[16px]">
+            <div className="bg-white-background min-h-screen flex flex-col p-[16px]">
                 <div className="flex flex-col bg-white shadow-[0_0_10px_0_#DBEBFE] rounded-[16px] p-[16px] gap-[24px]">
                     <div className="flex flex-col gap-[16px]">
                         <div className="flex flex-col gap-[12px]">
@@ -177,16 +177,16 @@ const AddingGoalsPage = () => {
 
                     <div className="flex flex-1 items-center justify-center gap-[16px]">
                         <button 
-                        className="flex items-center justify-center h-[48px] w-[147.5px] rounded-[8px] px-[40px] py-[12px] bg-base-200">
+                        className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[40px] py-[12px] bg-base-200">
                             <p className="text-center text-body-16B text-base-600"> 취소 </p>
                         </button>
 
                         {isClick ? (
-                            <button className="flex items-center justify-center h-[48px] w-[147.5px] rounded-[8px] px-[40px] py-[12px] bg-primary-blue-500">
+                            <button className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[40px] py-[12px] bg-primary-blue-500">
                                 <p className="text-center text-body-16B text-base-100"> 목표 저장 </p>
                             </button>
                         ) : (
-                            <button className="flex items-center justify-center h-[48px] w-[147.5px] rounded-[8px] px-[40px] py-[12px] bg-primary-blue-500">
+                            <button className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[40px] py-[12px] bg-primary-blue-500">
                                 <p className="text-center text-body-16B text-base-100"> 작성 완료 </p>
                             </button>
                         )}

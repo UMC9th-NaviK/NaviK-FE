@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import ComparisonIncrease from "../../components/report/ComparisonIncrease";
+import { FOOTERPB } from "../../components/common/Footer";
 
 const ReportMainPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col w-full bg-white-background bg-[radial-gradient(circle,_#94BBFD_0%,_rgba(184,212,254,0)_100%)]">
+    <div className={`flex flex-col w-full min-h-screen bg-white-background bg-[radial-gradient(circle,_#94BBFD_0%,_rgba(184,212,254,0)_100%)] ${FOOTERPB}`}>
       <header className="pl-[24px] pt-[16px] pb-[24px] pr-[24px]">
         <h1 className="text-heading-24B"> 리포트 </h1>
       </header>
@@ -90,7 +91,7 @@ const ReportMainPage = () => {
           </button>
         </div>
 
-        <div className="flex w-full bg-[rgba(255,255,255,0.5)] h-[254px] rounded-[7px] border-[0.5px] border-white p-4">
+        <div className="flex w-full bg-[rgba(255,255,255,0.5)] h-[274px] rounded-[7px] border-[0.5px] border-white p-4">
           <div className="flex flex-col w-full gap-[14px]">
             <p className="text-heading-20B text-black"> 성장 로그 </p>
             <div className="flex flex-1 w-full justify-between gap-[7px]">
@@ -106,12 +107,12 @@ const ReportMainPage = () => {
                   className="absolute w-[120px] h-[140px] right-[-22px] bottom-[-75px] p-[10px] z-0"
                   />
                 </button>
-                <p className="text-body-14M text-[#11111199] "> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
+                <p className="absolute bottom-0 pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
               </div>
 
               <button 
               onClick={() => navigate("/report/growth/timeline")}
-              className="relative w-[77%] flex flex-col justify-between bg-white rounded-[7px] pt-[11px] pr-[12px] pb-[11px] pl-[12px]">
+              className="relative w-[77%] flex flex-col justify-between bg-white rounded-[7px] gap-[10px] pt-[11px] pr-[12px] pb-[11px] pl-[12px]">
                 <div className="flex flex-col gap-[5px]">
                   <div className="flex flex-col gap-[6px]">
                     <div className="flex justify-end items-center gap-1">
@@ -130,7 +131,7 @@ const ReportMainPage = () => {
                   </div>
                 </div>
 
-                <p className="text-body-14M text-[#11111199] "> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
+                <p className="text-body-14M text-[#11111199] text-start"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> 12% </span> 상승했어요! </p>
               </button>
             </div>
           </div>

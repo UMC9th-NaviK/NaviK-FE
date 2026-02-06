@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import KPILocalNavbar from "../../components/report/KPILocalNavbar";
 import ReportNavbar from "../../components/report/ReportNavbar";
+import { FOOTERPB } from "../../components/common/Footer";
 
 const MyCardPage = () => {
   const [cardCount] = useState(10);
@@ -17,7 +18,7 @@ const MyCardPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className={`${FOOTERPB}`}>
       <ReportNavbar />
       <KPILocalNavbar />
 

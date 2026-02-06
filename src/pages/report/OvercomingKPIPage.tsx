@@ -2,10 +2,11 @@ import KPILocalNavbar from '../../components/report/KPILocalNavbar'
 import ReportNavbar from '../../components/report/ReportNavbar'
 import CardSlider from '../../components/common/CardSlider'
 import RecommendationNotice from '../../components/report/RecommendationNotice'
+import { FOOTERPB } from '../../components/common/Footer'
 
 const OvercomingKPIPage = () => {
     return (
-        <div>
+        <div className={`${FOOTERPB}`}>
             <ReportNavbar />
             <KPILocalNavbar />
 

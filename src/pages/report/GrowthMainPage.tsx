@@ -15,7 +15,7 @@ const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
   const theme = ROLE_THEME_MAP[role] || ROLE_THEME_MAP['pm']; 
 
   return (
-    <div className="bg-[#4E83F9]">
+    <div className={`bg-[#4E83F9]`}>
       <div className="relative z-0 w-full h-[150px] bg-linear-to-b from-[#FFFFFF] to-[#4E83F9]">
         <nav className='relative flex items-center p-[24px] gap-[10px]'>
           <div className='flex flex-1 justify-between'>
@@ -39,7 +39,7 @@ const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
         />
       </div>
 
-      <div className="relative z-20 bg-gray-background rounded-t-[30px] -mt-[0px] min-h-screen shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.05)]">
+      <div className="relative h-full z-20 bg-gray-background pb-[84px] rounded-t-[30px] -mt-[0px] min-h-screen shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.05)]">
         <div className="relative -translate-y-[45%] flex flex-1 z-20 w-full py-[10px] px-[26px] gap-[20px] justify-between">
           <div 
           className={`flex items-center justify-center w-[115px] h-[115px] rounded-full`} 

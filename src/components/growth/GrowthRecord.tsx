@@ -90,12 +90,12 @@ const GrowthRecord = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-1 gap-[16px]">
-                    <button className="flex items-center justify-center w-[147.5px] h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-base-200">
-                        <p className="w-[28px] text-body-16B text-base-600 text-center"> 취소 </p>
+                <div className="flex flex-1 items-center justify-center gap-[16px]">
+                    <button className="flex items-center justify-center w-full h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-base-200">
+                        <p className="text-body-16B text-base-600 text-center"> 취소 </p>
                     </button>
-                    <button className="flex items-center justify-center w-[147.5px] h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-primary-blue-500">
-                        <p className="w-[58px] text-body-16B text-base-100 text-center"> 작성 완료 </p>
+                    <button className="flex items-center justify-center w-full h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-primary-blue-500">
+                        <p className="text-body-16B text-base-100 text-center"> 작성 완료 </p>
                     </button>
                 </div>
             </div>
