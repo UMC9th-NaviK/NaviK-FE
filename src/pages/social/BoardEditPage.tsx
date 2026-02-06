@@ -11,8 +11,8 @@ const BoardEditPage = () => {
   const location = useLocation();
   const state = (location.state as EditState) ?? {};
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState(state.title ?? '');
+  const [content, setContent] = useState(state.content ?? '');
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   function autoResize() {
     const el = textareaRef.current;
@@ -23,11 +23,6 @@ const BoardEditPage = () => {
   useEffect(() => {
     autoResize();
   }, [content]);
-
-  useEffect(() => {
-    if (state.title) setTitle(state.title);
-    if (state.content) setContent(state.content ?? '');
-  }, [state.title, state.content]);
 
   return (
     <div className="min-h-screen">
