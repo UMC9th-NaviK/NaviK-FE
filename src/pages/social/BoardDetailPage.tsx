@@ -87,6 +87,16 @@ const BoardDetailPage = () => {
 
   useEffect(() => {
     setLiked(false);
+    setComments([
+      {
+        id: '1',
+        author: post?.author ?? '',
+        authorMeta: post?.authorMeta ?? '',
+        content: '기존 댓글입니다',
+        timeAgo: '방금 전',
+        replies: [],
+      },
+    ]);
   }, [postId]);
 
   if (!post) {
