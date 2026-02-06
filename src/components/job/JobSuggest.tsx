@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import RecommandCard from '../myPage/RecommandCard';
+import RecruitmentCard from '../report/RecruitmentCard';
 
 const JobSuggest = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -25,7 +25,7 @@ const JobSuggest = () => {
         >
           {Array.from({ length: totalItems }).map((_, idx) => (
             <div key={idx} className="flex-none snap-center">
-              <RecommandCard />
+              <RecruitmentCard />
             </div>
           ))}
         </div>
