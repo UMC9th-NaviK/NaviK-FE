@@ -3,7 +3,6 @@ import HomePage from '../pages/home/HomePage';
 import JobPage from '../pages/setup/JobPage';
 import CategoryPage from '../pages/setup/CategoryPage';
 import CategoryDetailPage from '../pages/setup/CategoryDetailPage';
-import AnalysisPage from '../pages/job/AnalysisPage';
 import ResultPage from '../pages/job/ResultPage';
 import ReportMainPage from '../pages/report/ReportMainPage';
 import MyCardPage from '../pages/report/MyCardPage';
@@ -61,10 +60,7 @@ export const protectedRoutes: RouteObject[] = [
       {
         path: '/job',
         element: <JobLayout />,
-        children: [
-          { path: 'analysis', element: <AnalysisPage /> },
-          { path: 'result', element: <ResultPage /> },
-        ],
+        children: [{ path: 'result', element: <ResultPage /> }],
       },
       {
         path: '/report',
