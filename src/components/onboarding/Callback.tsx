@@ -1,44 +1,32 @@
 import { Suspense, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../apis/axios';
-import type { CommonResponse } from '../../types/common';
+import { refreshAccessToken } from '../../apis/auth';
+import { redirectByUserStatus } from '../../utils/authRedirect';
 
 const OAuthCallbackContent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchAccessToken = async () => {
+    const handleOAuthCallback = async () => {
       console.log('=== OAuth Callback Started ===');
 
       try {
-        // refresh_token 쿠키로 access_token 발급 요청
-        const response = await axiosInstance.post<CommonResponse<string>>('/auth/refresh', null, {
-          withCredentials: true,
-        });
+        // accessToken과 status 발급
+        const { accessToken, status } = await refreshAccessToken();
 
-        console.log('Token Response:', response.data);
-
-        if (!response.data?.isSuccess) {
-          throw new Error('Token refresh failed');
-        }
-
-        const accessToken = response.data.result;
+        // accessToken 저장
         localStorage.setItem('accessToken', accessToken);
+        console.log('✅ Access token saved');
 
-        // TODO: 가입 여부 확인 후 리다이렉트 경로 설정
-        const redirectPath = localStorage.getItem('redirectAfterLogin');
-        localStorage.removeItem('redirectAfterLogin');
-
-        console.log('Redirecting to:', redirectPath || '/home');
-
-        navigate(redirectPath || '/home', { replace: true });
+        // 사용자 상태에 따라 분기
+        redirectByUserStatus(status, navigate);
       } catch (error) {
         console.error('❌ OAuth login failed:', error);
         navigate('/login', { replace: true });
       }
     };
 
-    fetchAccessToken();
+    handleOAuthCallback();
   }, [navigate]);
 
   return <p>로그인중</p>;
