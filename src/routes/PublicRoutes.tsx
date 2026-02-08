@@ -13,7 +13,7 @@ export const publicRoutes: RouteObject[] = [
       { index: true, element: <LoginPage /> },
       { path: 'onboarding', element: <OnboardingPage /> },
       { path: 'login', element: <LoginPage /> },
-      { path: '/oauth2/redirect', element: <OAuthCallback /> },
+      { path: 'oauth2/redirect', element: <OAuthCallback /> },
     ],
   },
 ];
