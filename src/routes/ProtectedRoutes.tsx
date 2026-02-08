@@ -15,7 +15,7 @@ import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
 import SocialTabLayout from '../layouts/SocialTabLayout';
-// import BoardEditPage from '../pages/social/BoardEditPage';
+import BoardEditPage from '../pages/social/BoardEditPage';
 import EvaluationPage from '../pages/social/EvaluationPage';
 import MyEvaluationPage from '../pages/social/MyEvaluationPage';
 // import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
@@ -123,7 +123,7 @@ export const protectedRoutes: RouteObject[] = [
             ],
           },
           { path: 'board/:postId', element: <BoardDetailPage /> },
-          // { path: 'board/:postId/edit', element: <BoardEditPage /> },
+          { path: 'board/:postId/edit', element: <BoardEditPage /> },
           { path: 'evaluation/my', element: <MyEvaluationPage /> },
           // { path: 'study/evaluation', element: <StudyEvaluationPage /> },
         ],
