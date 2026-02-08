@@ -10,7 +10,7 @@ export default function StarRating({ rating, max = 5 }: StarRatingProps) {
   const filledCount = Math.floor(rating);
 
   return (
-    <div className="flex w-full items-center">
+    <div className="mt-1 flex w-full items-center">
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-1">
           {Array.from({ length: max }).map((_, idx) => (

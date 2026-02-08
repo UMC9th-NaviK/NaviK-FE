@@ -26,7 +26,7 @@ const Footer = () => {
 
   return (
     <footer
-      className="fixed bottom-0 left-0 z-50 h-21 w-full rounded-t-2xl bg-white/70 backdrop-blur-md transition-all"
+      className="fixed bottom-0 left-1/2 z-50 h-21 w-full max-w-106.25 -translate-x-1/2 rounded-t-2xl bg-white/70 backdrop-blur-md transition-all"
       style={{ boxShadow: '0px -5px 15px 0px rgba(219, 235, 254, 0.6)' }}
     >
       <div className="mx-auto grid h-full max-w-7xl grid-cols-4 px-2">
