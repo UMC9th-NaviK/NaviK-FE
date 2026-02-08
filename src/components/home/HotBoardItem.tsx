@@ -1,17 +1,56 @@
-type HotBoardItemProps = {
-  index?: number;
-};
+import { useNavigate } from 'react-router-dom';
+import type { BoardPost } from '../../mocks/social/boardPosts';
+import { makeExcerpt } from '../../utils/makeExcerpt';
+import FavoriteIcon from '../../assets/social/material-symbols_favorite-outline-rounded.svg';
+import ChatIcon from '../../assets/social/material-symbols_chat-outline-rounded.svg';
+import ProfileIcon from '../../assets/social/Ellipse 30.svg';
 
-const HotBoardItem = ({ index }: HotBoardItemProps) => {
+const HotBoardItem = ({ post }: { post: BoardPost }) => {
+  const navigate = useNavigate();
+
   return (
-    // TODO: 추후 5-2 컴포넌트 가져와서 사용
-    <div className="bg-base-100 border-primary-blue-100 flex cursor-pointer flex-col gap-4 rounded-2xl border p-4">
-      <p className="text-base-900 text-body-16B">컴공 저학년의 커리어 고민 {index}</p>
-      <p className="text-base-900 text-caption-12M line-clamp-2">
-        안녕하세요 이제 막 컴공 2학년이 된 학생입니다. 백엔드와 프론트엔드 사이에서 어떤 직무를 해야
-        할 지 고민입니다. 어떻게 해야할까요 어떡할까요 어떠콸까요
+    <article
+      role="button"
+      tabIndex={0}
+      onClick={() => navigate(`/social/board/${post.id}`)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') navigate(`/social/board/${post.id}`);
+      }}
+      className="shadow-card border-primary-blue-100 flex w-full cursor-pointer flex-col items-start gap-4 self-stretch rounded-lg border bg-white p-4"
+    >
+      <h3 className="text-body-16B text-base-900 h-6 self-stretch">{post.title}</h3>
+      <p className="text-caption-12M text-base-900 line-clamp-2 self-stretch">
+        {makeExcerpt(post.content)}
       </p>
-    </div>
+
+      <div className="flex h-6 items-center gap-3.25">
+        <div className="text-caption-12M text-opacity-black-40 flex items-center gap-1">
+          <img src={FavoriteIcon} alt="좋아요" className="h-4 w-4" />
+          <span>{post.likeCount}</span>
+        </div>
+
+        <div className="text-caption-12M text-opacity-black-40 flex items-center gap-1">
+          <img src={ChatIcon} alt="댓글" className="h-4 w-4" />
+          <span>{post.commentCount}</span>
+        </div>
+      </div>
+
+      <div className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center gap-2">
+          <img src={ProfileIcon} alt="프로필" className="h-8 w-8 rounded-full object-cover" />
+          <div className="flex min-w-0 flex-1 flex-col">
+            <span className="text-base-900 text-caption-12B">{post.author}</span>
+
+            <div className="flex w-full items-center justify-between">
+              <span className="text-caption-12R text-opacity-black-40 leading-[140%]">
+                {post.authorMeta}
+              </span>
+              <span className="text-caption-12M text-opacity-black-20">{post.timeAgo}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
   );
 };
 

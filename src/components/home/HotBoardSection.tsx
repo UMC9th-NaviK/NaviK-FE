@@ -3,10 +3,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import HotBoardItem from './HotBoardItem';
+import { MOCK_POSTS } from '../../mocks/social/boardPosts';
+import { useNavigate } from 'react-router-dom';
 
 const SLIDE_COUNT = 5;
 
 const HotBoardSection = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
 
@@ -24,7 +27,10 @@ const HotBoardSection = () => {
     <div className="flex flex-col gap-4 px-4">
       <div className="flex items-center justify-between">
         <span className="text-heading-18B text-base-900">🔥 이번 주 HOT 게시판</span>
-        <button className="text-opacity-black-60 text-caption-12M flex items-center gap-1">
+        <button
+          className="text-opacity-black-60 text-caption-12M flex items-center gap-1"
+          onClick={() => navigate('/social/board')}
+        >
           더보기
           <img src="/icons/reports/arrow-right-gray.svg" className="h-4 w-4" alt="" />
         </button>
@@ -41,9 +47,9 @@ const HotBoardSection = () => {
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           className="w-full"
         >
-          {Array.from({ length: SLIDE_COUNT }).map((_, idx) => (
-            <SwiperSlide key={idx}>
-              <HotBoardItem index={idx} />
+          {MOCK_POSTS.slice(0, SLIDE_COUNT).map((post) => (
+            <SwiperSlide key={post.id}>
+              <HotBoardItem post={post} />
             </SwiperSlide>
           ))}
         </Swiper>
