@@ -18,3 +18,15 @@ export const roleImages: Record<RoleType, string> = {
   FE: FeImg,
   BE: BeImg,
 };
+
+export const convertJobToRole = (job: string): RoleType => {
+  //맵핑 함수
+  const jobMap: Record<string, RoleType> = {
+    '프로덕트 매니저': 'PM',
+    '프로덕트 디자이너': 'DESIGNER',
+    '프론트엔드 개발자': 'FE',
+    '백엔드 개발자': 'BE',
+  };
+
+  return jobMap[job] || 'FE';
+};
