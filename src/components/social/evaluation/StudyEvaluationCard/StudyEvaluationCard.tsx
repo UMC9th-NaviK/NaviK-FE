@@ -1,6 +1,6 @@
-import TagChip from '../../common/TagChip';
-import Divider from '../../common/Divider';
-import StarRating from '../../common/StarRating';
+import TagChip from '../../../common/TagChip';
+import Divider from '../../../common/Divider';
+import StarRating from '../../../common/StarRating';
 import BlueAccordion from './BlueAccordion';
 import InfoRow from './InfoRow';
 import EvaluationSectionTitle from './EvaluationSectionTitle';
@@ -32,16 +32,13 @@ export default function StudyEvaluationCard({
     <BlueAccordion title={title}>
       <InfoRow icon="calendar" label="진행기간" value={periodText} />
       <InfoRow icon="person" label="인원" value={memberText} />
-
-      <div className="flex w-full flex-wrap gap-2">
+      <div className="mt-2 flex w-full flex-wrap gap-2">
         {tags.map((t, idx) => (
           <TagChip key={`${t.label}-${idx}`} label={t.label} variant={t.variant} />
         ))}
       </div>
-
       <EvaluationSectionTitle emoji="☺️" title="동료들이 평가한 나의 강점" />
       <EvaluationList items={strengths} />
-
       <EvaluationSectionTitle emoji="🙁" title="동료들이 평가한 나의 약점" />
       <EvaluationList items={improvements} />
 

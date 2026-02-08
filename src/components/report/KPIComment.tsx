@@ -60,7 +60,7 @@ const KPIComment = ({ role } : KPICommentProps) => {
                 </div>
             </div>
             <span className='text-center text-body-16M text-[#111111CC]'> 
-                전체 PM 취준생이 100명이라면, <br /> 김나비님은 그 중 하위 <span className={`text-heading-20B ${theme.primaryText}`}> 20% </span>이에요 🥲
+                전체 PM 취준생이 100명이라면, <br /> 김나비님은 그 중 하위 <span className={`text-heading-20B ${theme.primaryText}`}> 20% </span>이에요
             </span>
         </div>
     )

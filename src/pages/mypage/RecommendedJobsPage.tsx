@@ -5,6 +5,7 @@ import { FILTERS } from '../../constants/filterData';
 import { Icon } from '@iconify/react';
 import { JobCard } from '../../components/myPage/recommend/JobCard';
 import { MOCK_JOBS } from '../../constants/mockJobData';
+import SubHeader from '../../components/myPage/SubHeader';
 
 const RecommendJobPage = () => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
@@ -27,7 +28,7 @@ const RecommendJobPage = () => {
   const handleResetAll = () => setSelectedValues({});
 
   return (
-    <div className="relative flex h-screen flex-col overflow-hidden bg-white pt-7">
+    <div className="relative flex h-screen flex-col overflow-hidden bg-white">
       {/* 배경 원 */}
       <div
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 opacity-60"
@@ -43,11 +44,12 @@ const RecommendJobPage = () => {
 
       {/* 헤더 + 필터바 영역 (고정) */}
       <div className="relative z-10 shrink-0">
-        <div className="px-6 py-4">
-          <div className="text-heading-24B">추천 공고</div>
-          <div className="text-body-14R text-opacity-black-60">맞춤형 공고를 보여드려요!</div>
-        </div>
-
+        <SubHeader
+          title={'추천 공고'}
+          bgColor="bg-white"
+          showInfo={true}
+          infoContent="나의 강점 KPI를 가장 잘 살릴 수 있는 공고를 추천해요. 희망 직무, 고용 형태 등 원하는 조건을 설정하면 더 정확한 공고를 확인할 수 있어요."
+        />
         <FilterBar
           filters={FILTERS}
           selectedValues={selectedValues}

@@ -16,7 +16,7 @@ import JobLayout from '../layouts/JobLayout';
 import ReportLayout from '../layouts/ReportLayout';
 import SocialLayout from '../layouts/SocialLayout';
 import SocialTabLayout from '../layouts/SocialTabLayout';
-// import BoardEditPage from '../pages/social/BoardEditPage';
+import BoardEditPage from '../pages/social/BoardEditPage';
 import EvaluationPage from '../pages/social/EvaluationPage';
 import MyEvaluationPage from '../pages/social/MyEvaluationPage';
 // import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
@@ -40,11 +40,13 @@ import GoalsLayout from '../layouts/GoalsLayout';
 import EditProfilePage from '../pages/mypage/EditProfilePage';
 import SettingPage from '../pages/mypage/SettingPage';
 import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
+import NoticePage from '../pages/home/NoticePage';
 
 export const protectedRoutes: RouteObject[] = [
   {
     children: [
       { path: '/home', element: <HomePage /> },
+      { path: '/notice', element: <NoticePage /> },
       // 초기 설정 flow, 1회 접근 가능
       {
         path: '/setup',
@@ -125,7 +127,7 @@ export const protectedRoutes: RouteObject[] = [
             ],
           },
           { path: 'board/:postId', element: <BoardDetailPage /> },
-          // { path: 'board/:postId/edit', element: <BoardEditPage /> },
+          { path: 'board/:postId/edit', element: <BoardEditPage /> },
           { path: 'evaluation/my', element: <MyEvaluationPage /> },
           // { path: 'study/evaluation', element: <StudyEvaluationPage /> },
         ],

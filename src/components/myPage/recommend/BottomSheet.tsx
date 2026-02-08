@@ -20,7 +20,7 @@ export const BottomSheet = ({
   if (!isOpen) return null;
 
   return (
-    <div className="animate-fade-in bg-opacity-black-40 fixed inset-0 z-50 flex items-end justify-center">
+    <div className="animate-fade-in bg-opacity-black-40 fixed inset-0 z-500 flex items-end justify-center">
       <div className="absolute inset-0 z-0" onClick={onClose} />
 
       <div className="animate-slide-up bg-base-100 relative z-10 w-full max-w-md rounded-t-2xl pb-8.5">
