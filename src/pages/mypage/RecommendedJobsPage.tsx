@@ -1,16 +1,65 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BottomSheet } from '../../components/myPage/recommend/BottomSheet';
 import { FilterBar } from '../../components/myPage/recommend/FilterBar';
 import { FILTERS } from '../../constants/filterData';
 import { Icon } from '@iconify/react';
 import { JobCard } from '../../components/myPage/recommend/JobCard';
-import { MOCK_JOBS } from '../../constants/mockJobData';
 import SubHeader from '../../components/myPage/SubHeader';
+import { searchPositions } from '../../apis/recruit';
+import { FILTER_MAP } from '../../constants/filterMapper';
+import type { Recruitment } from '../../types/recruits';
 
 const RecommendJobPage = () => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
   const [isExcludeExpired, setIsExcludeExpired] = useState(false);
+
+  // --- API 데이터 상태 관리 ---
+  const [jobs, setJobs] = useState<Recruitment[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // --- 데이터 변환 및 API 호출 로직 ---
+  const fetchJobs = async () => {
+    setIsLoading(true);
+    try {
+      const body = {
+        // 값이 있으면 배열에 담고, 없으면 null/undefined 대신 빈 배열([])을 할당!
+        jobTypes: selectedValues['희망 직무']
+          ? [FILTER_MAP['희망 직무'][selectedValues['희망 직무']]]
+          : [],
+        experienceTypes: selectedValues['경력 요건']
+          ? [FILTER_MAP['경력 요건'][selectedValues['경력 요건']]]
+          : [],
+        employmentTypes: selectedValues['고용 형태']
+          ? [FILTER_MAP['고용 형태'][selectedValues['고용 형태']]]
+          : [],
+        companySizes: selectedValues['회사 규모']
+          ? [FILTER_MAP['회사 규모'][selectedValues['회사 규모']]]
+          : [],
+        educationLevels: selectedValues['학력'] ? [FILTER_MAP['학력'][selectedValues['학력']]] : [],
+        areaTypes: selectedValues['근무 지역']
+          ? [FILTER_MAP['근무 지역'][selectedValues['근무 지역']]]
+          : [],
+        industryTypes: selectedValues['관심 산업']
+          ? [FILTER_MAP['관심 산업'][selectedValues['관심 산업']]]
+          : [],
+        withEnded: !isExcludeExpired,
+      };
+
+      const result = await searchPositions(body, undefined, 20);
+      setJobs(result.content);
+      console.log(result.content);
+    } catch (error) {
+      console.error('공고 로드 실패:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 필터나 마감 공고 제외 여부가 바뀔 때마다 실행
+  useEffect(() => {
+    fetchJobs();
+  }, [selectedValues, isExcludeExpired]);
 
   const handleItemClick = (filterLabel: string, value: string) => {
     setSelectedValues((prev) => ({ ...prev, [filterLabel]: value }));
@@ -29,7 +78,7 @@ const RecommendJobPage = () => {
 
   return (
     <div className="relative flex h-screen flex-col overflow-hidden bg-white">
-      {/* 배경 원 */}
+      {/* 배경 원 - 디자인 유지 */}
       <div
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 opacity-60"
         style={{
@@ -42,7 +91,7 @@ const RecommendJobPage = () => {
         }}
       />
 
-      {/* 헤더 + 필터바 영역 (고정) */}
+      {/* 헤더 + 필터바 영역 (고정) - 디자인 유지 */}
       <div className="relative z-10 shrink-0">
         <SubHeader
           title={'추천 공고'}
@@ -59,7 +108,8 @@ const RecommendJobPage = () => {
         />
 
         <div className="flex w-full items-center justify-between px-4 pt-4 pb-2">
-          <div className="text-body-14B">공고 {MOCK_JOBS.length}건</div>
+          {/* MOCK_JOBS 대신 실제 받아온 jobs 개수 표시 */}
+          <div className="text-body-14B">공고 {jobs.length}건</div>
           <button
             onClick={() => setIsExcludeExpired(!isExcludeExpired)}
             className="text-primary-blue-500 flex items-center gap-1"
@@ -77,15 +127,21 @@ const RecommendJobPage = () => {
         </div>
       </div>
 
-      {/* 리스트 -> 스크롤 가능!*/}
+      {/* 리스트 - 실제 데이터 매핑 */}
       <div className="scrollbar-hide relative z-10 flex-1 overflow-y-auto px-4 pb-20">
         <div className="flex flex-col gap-4 pt-2">
-          {MOCK_JOBS.map((job, index) => (
-            <JobCard key={`${job.id}-${index}`} {...job} />
-          ))}
+          {isLoading ? (
+            <div className="py-20 text-center text-gray-400">공고를 불러오는 중입니다...</div>
+          ) : (
+            jobs.map((job) => <JobCard key={job.id} data={job} />)
+          )}
+          {!isLoading && jobs.length === 0 && (
+            <div className="py-20 text-center text-gray-400">조건에 맞는 공고가 없습니다.</div>
+          )}
         </div>
       </div>
 
+      {/* 바텀시트 - 디자인 유지 */}
       <BottomSheet
         title={activeFilter || ''}
         isOpen={!!activeFilter}
