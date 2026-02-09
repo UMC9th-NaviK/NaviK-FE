@@ -1,5 +1,12 @@
 export type CategoryId = 'pm' | 'de' | 'fe' | 'be';
 
+export const CATEGORY_TO_JOB_ID: Record<CategoryId, number> = {
+  pm: 1,
+  de: 2,
+  fe: 3,
+  be: 4,
+} as const;
+
 export interface CategoryInfo {
   id: CategoryId;
   label: string;

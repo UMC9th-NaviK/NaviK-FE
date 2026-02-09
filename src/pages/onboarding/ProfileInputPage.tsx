@@ -1,21 +1,28 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BackHeader from '../../components/common/BackHeader';
 import Input from '../../components/onboarding/Input';
 import Career from '../../components/onboarding/Career';
 import ButtonSquare from '../../components/common/ButtonSquare';
-import { useNavigate } from 'react-router-dom';
+import { useOnboardingStore } from '../../store/useOnboardingStore';
 
 const ProfileInputPage = () => {
-  const [career, setCareer] = useState<'신입' | '경력'>('신입');
-  const [name, setName] = useState('');
-  const [nickname, setNickname] = useState('');
-
   const navigate = useNavigate();
+  const { data, setBasicInfo } = useOnboardingStore();
+
+  const [isEntryLevel, setIsEntryLevel] = useState(data.isEntryLevel);
+  const [name, setName] = useState(data.name);
+  const [nickname, setNickname] = useState(data.nickname);
 
   const onSubmit = () => {
-    console.log({ name, nickname, career });
+    setBasicInfo({
+      name,
+      nickname,
+      isEntryLevel,
+    });
     navigate('/setup/job');
   };
+
   return (
     <>
       {/* 헤더 */}
@@ -35,7 +42,7 @@ const ProfileInputPage = () => {
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />
-            <Career value={career} onChange={setCareer} />
+            <Career value={isEntryLevel} onChange={setIsEntryLevel} />
           </div>
           <ButtonSquare text="다음" disabled={!name} onClick={onSubmit} />
         </div>
