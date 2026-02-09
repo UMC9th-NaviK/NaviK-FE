@@ -22,7 +22,7 @@ const GoalsNavbar = ({ goalId, goalTitle, content, endDate } : GoalsNavbarProps)
 
     const getTitle = title[location.pathname];
 
-    const deleteIcon = location.pathname === '/goals/modify' || location.pathname === '/goals/add';
+    const deleteIcon = location.pathname === '/goals/modify';
 
     const handleDeleteGoals = () => {
         if (!goalId || goalId === -1) {
