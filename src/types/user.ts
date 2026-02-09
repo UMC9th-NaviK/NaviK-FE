@@ -1,6 +1,6 @@
 export type RequestBasicInfo = {
   name: string;
-  nickname: string;
+  nickname?: string;
   jobId: number;
   isEntryLevel: boolean;
 };
@@ -8,7 +8,7 @@ export type RequestBasicInfo = {
 export type ResponseBasicInfo = {
   id: number;
   name: string;
-  nickname: string;
+  nickname?: string;
   jobId: number;
   isEntryLevel: boolean;
 };
