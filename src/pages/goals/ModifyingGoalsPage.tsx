@@ -98,9 +98,12 @@ const ModifyingGoalsPage = () => {
 
                 const { title, content, endDate } = response.result;
 
+                const targetDate = new Date(endDate);
+
                 setGoalTitle(title);
                 setGoalContent(content); 
-                setSelectedDate(new Date(endDate));
+                setSelectedDate(new Date(targetDate));
+                setCurrentDate(targetDate);
 
                 setOriginData({
                     title,
@@ -122,11 +125,14 @@ const ModifyingGoalsPage = () => {
             return;
         }
 
+        const offset = selectedDate.getTimezoneOffset() * 60000; 
+        const localTime = new Date(selectedDate.getTime() - offset).toISOString();
+
         try {
             await patchGoals(goalId, {
                 title : goalTitle,
                 content : goalContent,
-                endDate : selectedDate.toISOString()
+                endDate : localTime
             })
 
             console.log("수정 완료");
