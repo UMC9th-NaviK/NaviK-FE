@@ -34,8 +34,15 @@ const JobSelect = () => {
       });
 
       // 새 토큰 발급
-      const { accessToken } = await refreshAccessToken();
-      localStorage.setItem('accessToken', accessToken);
+      try {
+        const { accessToken } = await refreshAccessToken();
+        localStorage.setItem('accessToken', accessToken);
+      } catch (error) {
+        console.error('❌ Token refresh failed:', error);
+        alert('토큰 갱신에 실패했습니다. 다시 로그인해주세요.');
+        navigate('/login', { replace: true });
+        return;
+      }
 
       reset();
 

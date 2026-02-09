@@ -4,7 +4,7 @@ import axiosInstance from './axios';
 
 export async function postBasicInfo(user: RequestBasicInfo): Promise<ResponseBasicInfo> {
   const { data } = await axiosInstance.post<CommonResponse<ResponseBasicInfo>>(
-    `users/me/basic-info`,
+    `/users/me/basic-info`,
     {
       ...user,
     },
