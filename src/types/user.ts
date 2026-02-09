@@ -12,3 +12,13 @@ export type ResponseBasicInfo = {
   jobId: number;
   isEntryLevel: boolean;
 };
+
+export type JobType = 'pm' | 'de' | 'fe' | 'be';
+
+export type ResponseUserProfile = {
+  id: number;
+  profileImageUrl: string;
+  nickname: string;
+  job: string;
+  isEntryLevel: boolean;
+};
