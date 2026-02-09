@@ -1,15 +1,11 @@
-import type { Recruitment } from '../../types/recruits';
 import CardSlider from '../common/CardSlider';
 import JobSuggest from './JobSuggest';
+import ResultButton from './ResultButton';
 
-interface CorePowerProps {
-  recruitments: Recruitment[];
-}
-
-const CorePower = ({ recruitments }: CorePowerProps) => {
+const CorePower = () => {
   return (
-    <div className="flex flex-col gap-8">
-      <CardSlider title="핵심 역량" />
+    <div className="flex flex-col">
+      <CardSlider />
       <div className="mb-6.75 flex flex-col gap-4 p-4">
         <span className="flex items-center gap-2">
           <img src="/icons/jobs/circle-rounded.svg" className="h-6 w-6" />
@@ -19,8 +15,10 @@ const CorePower = ({ recruitments }: CorePowerProps) => {
             하면 좋아요!
           </span>
         </span>
-
-        <JobSuggest recruitments={recruitments} />
+        <JobSuggest />
+        <div className="pt-2">
+          <ResultButton />
+        </div>
       </div>
     </div>
   );
