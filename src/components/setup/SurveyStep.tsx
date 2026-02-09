@@ -3,6 +3,7 @@ import ButtonRound from '../common/ButtonRound';
 import { useNavigate } from 'react-router-dom';
 import SurveyItem from './SurveyItem';
 import { getSurveyQuestions } from '../../constants/survey';
+import AnalysisPage from '../../pages/job/AnalysisPage';
 
 const SurveyStep = ({ categoryId }: { categoryId: string }) => {
   useEffect(() => {
@@ -12,6 +13,7 @@ const SurveyStep = ({ categoryId }: { categoryId: string }) => {
   const navigate = useNavigate();
   const questions = getSurveyQuestions(categoryId);
   const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAnswerChange = (questionId: number, value: number) => {
     setAnswers((prev) => ({
@@ -21,12 +23,19 @@ const SurveyStep = ({ categoryId }: { categoryId: string }) => {
   };
 
   const handleNext = () => {
-    // TODO: 답변 데이터 전송
-    console.log('Survey answers:', answers);
-    navigate(`/job/analysis`);
+    setIsLoading(true);
+    // 테스트용: 3초 후 페이지 이동
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate(`/job/result`);
+    }, 3000);
   };
 
   const isAllAnswered = questions.length === Object.keys(answers).length;
+
+  if (isLoading) {
+    return <AnalysisPage />;
+  }
 
   return (
     <>

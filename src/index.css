@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'swiper/css';
 
 @theme {
   /* Primary Blue Scale */
@@ -364,6 +365,18 @@ body {
   color: transparent;
 }
 
+@utility text-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-blue-500, #4e83f9) 0%,
+    var(--color-primary-blue-800, #183290) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 /* Shadow */
 .shadow-career-active {
   box-shadow: 0 0 5px 0 var(--color-opacity-black-20, rgba(17, 17, 17, 0.2));
@@ -378,6 +391,16 @@ body {
     50% 50% at 50% 50%,
     var(--color-primary-blue-200, #b8d4fe) 0%,
     rgba(184, 212, 254, 0) 100%
+  );
+}
+
+@utility home-white-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(245, 248, 255, 0) 0%,
+    rgba(245, 248, 255, 0) 10%,
+    rgba(245, 248, 255, 0.8) 60%,
+    #f5f8ff 100%
   );
 }
 
