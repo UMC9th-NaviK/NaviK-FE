@@ -1,15 +1,59 @@
 import { useNavigate } from "react-router-dom"
 import GoalsNavbar from "../../components/goals/GoalsNavbar"
 import TodoList from "../../components/goals/TodoList"
+import { useEffect, useRef, useState } from "react";
+import { getGoalsList } from "../../apis/goals/goals";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const SettingGoalsPage = () => {
     const naigate = useNavigate();
+    const observerRef = useRef<HTMLDivElement>(null);
+
+    const [pageSize, setPageSize] = useState(10);
+    const [sortBy, setSortBy] = useState("RECENT");
+
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
+        queryKey : ['goals', sortBy, pageSize],
+        queryFn : ({ pageParam }) => getGoalsList(pageParam as number, pageSize, sortBy),
+        initialPageParam : undefined as number | undefined,
+        getNextPageParam : (lastPage) => {
+            if (!lastPage.result.hasNext || lastPage.result.nextCursor === "null") {
+                return undefined;
+            }
+
+            return lastPage.result.nextCursor;
+        }
+    })
+
+    useEffect(() => {
+        if (!hasNextPage || !fetchNextPage) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+                    fetchNextPage();
+                }
+            },
+
+            { threshold : 0.1 }
+        )
+
+        if (observerRef.current) {
+            observer.observe(observerRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [hasNextPage, fetchNextPage, isFetchingNextPage])
+
+    const goalsList = data?.pages.flatMap(page => page.result.content) || [];
 
     return (
-        <div className="min-h-screen relative overflow-hidden bg-slate-50">
-            <GoalsNavbar />
+        <div className="min-h-screen relative overflow-x-hidden bg-slate-50">
+            <GoalsNavbar goalId={0} />
 
-            <div className="absolute w-[628px] h-[628px] left-[calc(50%-628px/2+0.5px)] top-[calc(50%-628px/2+73px)] bg-[radial-gradient(50%_50%_at_50%_50%,#94BBFD_0%,rgba(184,212,254,0)_100%)] z-10"></div>
+            <div className="absolute w-[628px] h-[628px] left-[calc(50%-628px/2+0.5px)] top-[calc(50%-628px/2+73px)] bg-[radial-gradient(50%_50%_at_50%_50%,#94BBFD_0%,rgba(184,212,254,0)_100%)] z-10 pointer-events-none"></div>
 
             <div className="flex flex-col p-[16px]">
                 <div className="flex flex-col gap-[16px]">
@@ -26,18 +70,23 @@ const SettingGoalsPage = () => {
                     </div>
 
                     <div className="flex flex-col gap-[12px] z-20">
-                        <div className='flex flex-col bg-[#FFFFFFB2] rounded-[8px] border-[1px] border-base-100 shadow-[0_0_10px_0_#DBEBFE]'>
-                            <div className='flex flex-col justify-between p-[16px] gap-[16px]'>
-                                <TodoList />
-                                <TodoList />
-                                <TodoList />
-                                <TodoList />
-                                <TodoList />
-                                <TodoList />
-                                <TodoList />
-                                <TodoList />
-                                <TodoList />
-                                <TodoList />
+                        <div className='h-[420px] flex flex-col bg-[#FFFFFFB2] rounded-[8px] border-[1px] border-base-100 shadow-[0_0_10px_0_#DBEBFE]'>
+                            <div className='flex flex-col scrollbar-hide overflow-y-auto justify-between p-[16px] gap-[16px]'>
+                                { isLoading ? (
+                                    <>
+                                        <p className="text-center text-caption-12M text-slate-400"> 불러오는 중... </p>
+                                    </>
+                                ) : (
+                                    <div className="flex flex-col gap-[12px]">
+                                        {goalsList.map((goal) => (
+                                            <TodoList key={goal.goalId} goalId={goal.goalId} title={goal.title} initialStatus={goal.status} content={goal.content} endDate={goal.endDate} />
+                                        ))}
+
+                                        <div ref={observerRef}>
+                                            {isFetchingNextPage}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
