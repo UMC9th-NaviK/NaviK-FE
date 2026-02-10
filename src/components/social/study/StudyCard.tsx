@@ -67,7 +67,7 @@ export default function StudyCard({
             {periodText} / {memberText}
           </span>
         </div>
-        <div className="border-primary-blue-100 itmes-center mt-2 inline-flex gap-[10px] rounded-[8px] border bg-[#F5F8FF] px-2 py-1">
+        <div className="border-primary-blue-100 mt-2 inline-flex items-center gap-[10px] rounded-[8px] border bg-[#F5F8FF] px-2 py-1">
           <span className="text-primary-blue-500 text-caption-12M">01 문제 정의&가설 수립</span>
         </div>
       </div>
