@@ -19,7 +19,7 @@ import SocialTabLayout from '../layouts/SocialTabLayout';
 import BoardEditPage from '../pages/social/BoardEditPage';
 import EvaluationPage from '../pages/social/EvaluationPage';
 import MyEvaluationPage from '../pages/social/MyEvaluationPage';
-import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
+// import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
 import StudyRecommendPage from '../pages/social/StudyRecommendPage';
 import NewStudyPage from '../pages/social/NewStudyPage';
 import StudyLayout from '../layouts/StudyLayout';
@@ -41,7 +41,7 @@ import EditProfilePage from '../pages/mypage/EditProfilePage';
 import SettingPage from '../pages/mypage/SettingPage';
 import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
 import NoticePage from '../pages/home/NoticePage';
-
+import BoardNewPage from '../pages/social/BoardNewPage';
 export const protectedRoutes: RouteObject[] = [
   {
     children: [
@@ -126,10 +126,11 @@ export const protectedRoutes: RouteObject[] = [
               { path: 'evaluation', element: <EvaluationPage /> },
             ],
           },
-          { path: 'board/:postId', element: <BoardDetailPage /> },
-          { path: 'board/:postId/edit', element: <BoardEditPage /> },
+          { path: 'board/new', element: <BoardNewPage /> },
+          { path: 'board/:boardId', element: <BoardDetailPage /> },
+          { path: 'board/:boardId/edit', element: <BoardEditPage /> },
           { path: 'evaluation/my', element: <MyEvaluationPage /> },
-          { path: 'study/evaluation', element: <StudyEvaluationPage /> },
+          // { path: 'study/evaluation', element: <StudyEvaluationPage /> },
         ],
       },
       {
