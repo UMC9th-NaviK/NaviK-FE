@@ -25,10 +25,8 @@ const GoalsNavbar = ({ goalId, goalTitle, content, endDate } : GoalsNavbarProps)
     const deleteIcon = location.pathname === '/goals/modify';
 
     const handleDeleteGoals = () => {
-        if (!goalId || goalId === -1) {
-            goalTitle = ("");
-            content = ("");
-            endDate = ("");
+        if (!goalId || goalId === 0) {
+            return;
         }
 
         mutate(goalId, {

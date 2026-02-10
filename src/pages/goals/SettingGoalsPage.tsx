@@ -9,8 +9,8 @@ const SettingGoalsPage = () => {
     const naigate = useNavigate();
     const observerRef = useRef<HTMLDivElement>(null);
 
-    const [pageSize, setPageSize] = useState(10);
-    const [sortBy, setSortBy] = useState("RECENT");
+    const [pageSize] = useState(10);
+    const [sortBy] = useState("RECENT");
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
         queryKey : ['goals', sortBy, pageSize],
