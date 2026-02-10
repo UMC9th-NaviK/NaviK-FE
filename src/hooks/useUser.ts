@@ -1,5 +1,4 @@
-import { useUserStore, convertJobToShortCode } from '../store/useUserStore';
-import { getUserInfo } from '../apis/user';
+import { useUserStore } from '../store/useUserStore';
 import { useEffect } from 'react';
 import { syncUserProfile } from '../apis/auth';
 
@@ -22,30 +21,6 @@ export const useUser = () => {
   const name = useUserStore((state) => state.name);
 
   return { userId, nickname, job, name };
-};
-
-export const useFetchUserProfile = () => {
-  const setUser = useUserStore((state) => state.setUser);
-
-  const fetchProfile = async () => {
-    try {
-      const profile = await getUserInfo();
-
-      setUser({
-        name: profile.name,
-        userId: profile.id,
-        nickname: profile.nickname,
-        job: convertJobToShortCode(profile.job),
-      });
-
-      return profile;
-    } catch (error) {
-      console.error('프로필 조회 실패:', error);
-      throw error;
-    }
-  };
-
-  return { fetchProfile };
 };
 
 export const useInitUser = () => {
