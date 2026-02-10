@@ -8,7 +8,7 @@ interface GoalsNavbarProps {
     endDate? : string;
 }
 
-const GoalsNavbar = ({ goalId, goalTitle, content, endDate } : GoalsNavbarProps) => {
+const GoalsNavbar = ({ goalId } : GoalsNavbarProps) => {
     const location = useLocation();
     const navigate = useNavigate();
 
