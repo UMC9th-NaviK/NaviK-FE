@@ -269,8 +269,6 @@ const BoardDetailPage = () => {
     );
   }
 
-  console.log('[me]', me);
-  console.log('[detail.userId]', detail?.userId);
   return (
     <div className="min-h-screen bg-[#F5F8FF] pb-[170px]">
       <BoardDetailHeader BackIcon={BackIcon} />
