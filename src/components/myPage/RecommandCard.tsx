@@ -1,15 +1,18 @@
 import type { Recruitment } from '../../types/recruits';
 
-interface CardProps {
+interface RecommandCardProps {
   data: Recruitment;
+  className?: string;
 }
 
-const RecommandCard = ({ data }: CardProps) => {
+const RecommandCard = ({ data, className }: RecommandCardProps) => {
   // 근무지 정보 ~~시 ~~구
   const locationTag = data.workPlace.split(' ').slice(0, 2).join(' ');
 
   return (
-    <div className="flex h-auto w-72 flex-col gap-3 rounded-lg border border-[#D6D6D6] bg-white px-4 py-3">
+    <div
+      className={`flex h-auto w-72 flex-col gap-3 rounded-lg border border-[#D6D6D6] px-4 py-3 ${className ?? ''}`}
+    >
       {/* 로고 및 D-Day */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 overflow-hidden">
