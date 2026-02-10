@@ -9,6 +9,7 @@ const TABS = [{ component: AllKpiCard }, { component: CorePower }, { component: 
 
 const ResultPage = () => {
   const [selected, setSelected] = useState(0);
+
   const CurrentComponent = TABS[selected].component;
 
   return (

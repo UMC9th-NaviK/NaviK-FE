@@ -33,5 +33,4 @@ const JobSuggest = () => {
     </div>
   );
 };
-
 export default JobSuggest;
