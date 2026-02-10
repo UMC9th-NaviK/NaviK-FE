@@ -29,7 +29,6 @@ import {
   deleteBoardComment,
 } from '../../apis/board';
 import type { BoardDetail, BoardCommentItem } from '../../apis/board';
-import { getJwtPayload } from '../../utils/jwt';
 
 type EditState = {
   title?: string;
@@ -65,20 +64,7 @@ const BoardDetailPage = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [likeLoading, setLikeLoading] = useState(false);
 
-  const me = useMemo(() => {
-    try {
-      const token = localStorage.getItem('accessToken');
-      if (!token) return null;
-      return getJwtPayload(token);
-    } catch {
-      return null;
-    }
-  }, []);
-
   const [serverCommentCount, setServerCommentCount] = useState(0);
-
-  const isRootComment = (parentCommentId: number | null | undefined) =>
-    parentCommentId == null || parentCommentId === 0;
 
   const parentComments = useMemo(
     () => comments.filter((c) => c.parentCommentId == null || c.parentCommentId === 0),
@@ -91,7 +77,8 @@ const BoardDetailPage = () => {
     comments.forEach((c) => {
       const pid = c.parentCommentId;
 
-      if (!pid == null || pid === 0) return;
+      // ✅ pid가 없거나 0이면 "부모댓글" 이므로 replies map에 넣지 않음
+      if (pid == null || pid === 0) return;
 
       const parentId = Number(pid);
       if (Number.isNaN(parentId)) return;
@@ -100,6 +87,7 @@ const BoardDetailPage = () => {
       arr.push(c);
       map.set(parentId, arr);
     });
+
     return map;
   }, [comments]);
 
@@ -127,7 +115,6 @@ const BoardDetailPage = () => {
         }
 
         setLikeCount(data.likeCount ?? 0);
-
         setLiked(typeof (data as any).isLiked === 'boolean' ? (data as any).isLiked : false);
       } catch (e) {
         console.error(e);
@@ -161,17 +148,17 @@ const BoardDetailPage = () => {
     setTitle(editState?.title ?? detail.articleTitle);
     setContent(editState?.content ?? detail.articleContent);
   }, [editState, boardId, detail]);
+
   const handleDeletePost = async () => {
     if (!boardId || deleting) return;
     const ok = window.confirm('게시글을 삭제할까요? 삭제 후 복구할 수 없어요');
     if (!ok) return;
+
     try {
       setDeleting(true);
 
       const res = await deleteBoard(Number(boardId));
-
       const successByBody = res.data?.isSuccess === true;
-
       const successByStatus = res.status === 204;
 
       if (!successByBody && !successByStatus) {
@@ -190,6 +177,7 @@ const BoardDetailPage = () => {
       setDeleting(false);
     }
   };
+
   const removeCommentFromState = (commentId: number) => {
     setComments((prev) => prev.filter((c) => c.commentId !== commentId));
 
@@ -218,15 +206,6 @@ const BoardDetailPage = () => {
         return;
       }
 
-      console.log(
-        '[comments raw]',
-        res.data.result.content.map((c) => ({
-          commentId: c.commentId,
-          parentCommentId: c.parentCommentId,
-          type: typeof c.parentCommentId,
-        })),
-      );
-
       setComments(res.data.result.content ?? []);
     } catch (e) {
       console.error(e);
@@ -240,7 +219,6 @@ const BoardDetailPage = () => {
   const fetchCommentCount = async () => {
     if (!boardId) return;
     const cntRes = await getBoardCommentCount(Number(boardId));
-
     if (cntRes.data?.isSuccess) {
       setServerCommentCount(cntRes.data.result.totalCommentCount ?? 0);
     }
@@ -249,6 +227,7 @@ const BoardDetailPage = () => {
   useEffect(() => {
     fetchComments();
   }, [boardId]);
+
   if (loading) {
     return (
       <div className="px-6 pt-6">
@@ -257,6 +236,7 @@ const BoardDetailPage = () => {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="px-6 pt-6">
@@ -265,6 +245,7 @@ const BoardDetailPage = () => {
       </div>
     );
   }
+
   if (!detail) {
     return (
       <div className="px-6 pt-6">
@@ -277,12 +258,14 @@ const BoardDetailPage = () => {
   return (
     <div className="min-h-screen bg-[#F5F8FF] pb-[170px]">
       <BoardDetailHeader BackIcon={BackIcon} />
+
       <div className="bg-white px-6">
         <AuthorCard
           ProfileIcon={ProfileIcon}
           author={detail.nickname}
           authorMeta={`${detail.isEntryLevel ? '신입' : '마스터'} ${detail.jobName} | LV.${detail.level}`}
         />
+
         <PostMetaRow
           timeAgo={detail?.createdAt}
           viewCount={detail?.viewCount}
@@ -296,10 +279,13 @@ const BoardDetailPage = () => {
           }}
           onDelete={handleDeletePost}
         />
+
         <h2 className="text-heading-18B text-base-900 mt-2 w-full self-stretch">{title}</h2>
+
         <p className="text-body-14R text-opacity-black-80 mt-3 w-full self-stretch break-words whitespace-pre-line">
           {content}
         </p>
+
         <ReactionBar
           liked={liked}
           likeCount={likeCount}
@@ -316,7 +302,6 @@ const BoardDetailPage = () => {
 
             try {
               setLikeLoading(true);
-
               setLiked(nextLiked);
               setLikeCount((prev) => prev + delta);
 
@@ -324,21 +309,16 @@ const BoardDetailPage = () => {
 
               if (!res.data?.isSuccess) {
                 console.warn(res.data?.message ?? '좋아요 토글 실패');
-
                 setLiked(prevLiked);
                 setLikeCount((prev) => prev - delta);
                 return;
               }
 
               const r = res.data.result;
-              console.log('[like toggle result]', r);
-
               if (typeof r.isLiked === 'boolean') setLiked(r.isLiked);
-
               if (typeof r.likeCount === 'number') setLikeCount(r.likeCount);
             } catch (e) {
               console.error(e);
-
               setLiked(prevLiked);
               setLikeCount((prev) => prev - delta);
             } finally {
@@ -346,12 +326,12 @@ const BoardDetailPage = () => {
             }
           }}
         />
+
         <div className="pt-6" />
       </div>
 
       <div className="px-6 pt-4">
-        <span className="text-body-14B">댓글</span>
-        &nbsp;
+        <span className="text-body-14B">댓글</span>&nbsp;
         <span className="text-body-14B text-primary-blue-500">{serverCommentCount}</span>
         {commentLoading && (
           <p className="text-body-14R text-opacity-black-60 mt-4">댓글 불러오는 중...</p>
@@ -388,7 +368,6 @@ const BoardDetailPage = () => {
 
                         try {
                           const res = await deleteBoardComment(Number(boardId), c.commentId);
-
                           const successByBody = res.data?.isSuccess === true;
                           const successByStatus = res.status === 204;
 
@@ -429,7 +408,6 @@ const BoardDetailPage = () => {
 
                             try {
                               const res = await deleteBoardComment(Number(boardId), r.commentId);
-
                               const successByBody = res.data?.isSuccess === true;
                               const successByStatus = res.status === 204;
 
@@ -453,6 +431,7 @@ const BoardDetailPage = () => {
           );
         })}
       </div>
+
       <div className="px-6">
         {composerMode === null ? (
           <div
@@ -472,7 +451,7 @@ const BoardDetailPage = () => {
         ) : (
           <CommentEditor
             author="나"
-            authorMeta={`마스터 | LV.3`}
+            authorMeta="마스터 | LV.3"
             profileSrc={ProfileIcon}
             value={composerValue}
             onChange={setComposerValue}
@@ -488,7 +467,6 @@ const BoardDetailPage = () => {
               if (!text) return;
 
               try {
-                //댓글
                 if (composerMode === 'comment') {
                   const res = await createBoardComment(Number(boardId), { content: text });
                   if (!res.data?.isSuccess) {
@@ -497,13 +475,11 @@ const BoardDetailPage = () => {
                   }
                 }
 
-                //대댓글
                 if (composerMode === 'reply') {
                   if (!replyTargetId) return;
                   const res = await createBoardReply(Number(boardId), Number(replyTargetId), {
                     content: text,
                   });
-                  console.log('[reply create response]', res.status, res.data);
                   if (!res.data?.isSuccess) {
                     console.warn(res.data?.message ?? '대댓글 작성 실패');
                     return;

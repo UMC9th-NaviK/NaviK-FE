@@ -10,7 +10,7 @@ import type { BoardPost } from '../../mocks/social/boardPosts';
 import { makeExcerpt } from '../../utils/makeExcerpt';
 
 import type { BoardListItem } from '../../apis/board';
-import { getBoardList, getHotBoardList, getJobBoardList, searchBoards } from '../../apis/board';
+import { getBoardList, getHotBoardList, getJobBoardList } from '../../apis/board';
 import { getJwtPayload } from '../../utils/jwt';
 import { jobNameFromSub } from '../../utils/job';
 type FilterKey = '전체' | '직무별' | 'HOT';
