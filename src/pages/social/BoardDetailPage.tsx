@@ -30,6 +30,7 @@ import {
 } from '../../apis/board';
 import type { BoardDetail, BoardCommentItem } from '../../types/social/board/board';
 import { timeAgo } from '../../utils/timeAgo';
+import { getJwtPayload } from '../../utils/jwt';
 
 type EditState = {
   title?: string;
@@ -66,6 +67,19 @@ const BoardDetailPage = () => {
   const [likeLoading, setLikeLoading] = useState(false);
 
   const [serverCommentCount, setServerCommentCount] = useState(0);
+
+  const me = useMemo(() => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) return null;
+      return getJwtPayload(token);
+    } catch {
+      return null;
+    }
+  }, []);
+
+  const myUserId = me?.sub ? Number(me.sub) : null;
+  const isMyPost = !!(detail && myUserId != null && myUserId === detail.userId);
 
   const parentComments = useMemo(
     () => comments.filter((c) => c.parentCommentId == null || c.parentCommentId === 0),
@@ -255,6 +269,8 @@ const BoardDetailPage = () => {
     );
   }
 
+  console.log('[me]', me);
+  console.log('[detail.userId]', detail?.userId);
   return (
     <div className="min-h-screen bg-[#F5F8FF] pb-[170px]">
       <BoardDetailHeader BackIcon={BackIcon} />
@@ -269,15 +285,19 @@ const BoardDetailPage = () => {
         <PostMetaRow
           timeAgo={timeAgo(detail.createdAt)}
           viewCount={detail?.viewCount}
-          MoreIcon={MoreIcon}
-          EditIcon={EditIcon}
-          DeleteIcon={DeleteIcon}
-          onEdit={() => {
-            navigate(`/social/board/${boardId}/edit`, {
-              state: { title, content },
-            });
-          }}
-          onDelete={handleDeletePost}
+          {...(isMyPost
+            ? {
+                MoreIcon,
+                EditIcon,
+                DeleteIcon,
+                onEdit: () => {
+                  navigate(`/social/board/${boardId}/edit`, {
+                    state: { title, content },
+                  });
+                },
+                onDelete: handleDeletePost,
+              }
+            : {})}
         />
 
         <h2 className="text-heading-18B text-base-900 mt-2 w-full self-stretch">{title}</h2>

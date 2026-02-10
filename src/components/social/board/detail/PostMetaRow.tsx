@@ -4,12 +4,12 @@ type Props = {
   timeAgo: string;
   viewCount: number;
 
-  MoreIcon: string;
-  EditIcon: string;
-  DeleteIcon: string;
+  MoreIcon?: string;
+  EditIcon?: string;
+  DeleteIcon?: string;
 
-  onEdit: () => void;
-  onDelete: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
 export default function PostMetaRow({
@@ -21,6 +21,8 @@ export default function PostMetaRow({
   onEdit,
   onDelete,
 }: Props) {
+  const showMenu = !!(MoreIcon && EditIcon && DeleteIcon && onEdit && onDelete);
+
   return (
     <div className="mt-4 flex w-full items-center justify-between">
       <div className="flex items-center gap-3">
@@ -33,13 +35,15 @@ export default function PostMetaRow({
         </span>
       </div>
 
-      <PostOptionsMenu
-        MoreIcon={MoreIcon}
-        EditIcon={EditIcon}
-        DeleteIcon={DeleteIcon}
-        onEdit={onEdit}
-        onDelete={onDelete}
-      />
+      {showMenu && (
+        <PostOptionsMenu
+          MoreIcon={MoreIcon}
+          EditIcon={EditIcon}
+          DeleteIcon={DeleteIcon}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      )}
     </div>
   );
 }
