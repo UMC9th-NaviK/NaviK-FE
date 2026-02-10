@@ -42,8 +42,7 @@ export async function uploadFileToS3(presignedUrl: string, file: File): Promise<
       },
     });
 
-    console.log('📡 S3 업로드 응답 상태:', response.status, response.statusText);
-    console.log('응답 헤더:', Object.fromEntries(response.headers.entries()));
+    console.log('S3 업로드 응답 상태:', response.status, response.statusText);
 
     if (!response.ok) {
       const errorText = await response.text();

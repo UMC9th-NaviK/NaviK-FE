@@ -35,7 +35,6 @@ const CategorySummary = ({ categoryId }: { categoryId: string }) => {
 
       if (noteFile) {
         const key = await uploadPortfolioPdf(userId, noteFile);
-        console.log('✅ S3 업로드 완료, key:', key);
 
         portfolioData = {
           inputType: 'PDF' as const,
