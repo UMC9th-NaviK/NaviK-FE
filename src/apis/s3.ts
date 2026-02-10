@@ -67,7 +67,9 @@ export async function uploadPortfolioPdf(userId: number, file: File): Promise<st
   console.log('파일:', file.name);
 
   try {
-    const extension = '.' + file.name.split('.').pop();
+    const parts = file.name.split('.');
+    const ext = parts.length > 1 ? parts.pop() : 'pdf';
+    const extension = '.' + ext;
 
     console.log('2️⃣ Presigned URL 발급 요청...');
     const { preSignedUrl, key } = await getPresignedUrl({

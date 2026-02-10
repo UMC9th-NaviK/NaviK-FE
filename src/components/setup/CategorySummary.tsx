@@ -34,7 +34,6 @@ const CategorySummary = ({ categoryId }: { categoryId: string }) => {
       let portfolioData;
 
       if (noteFile) {
-        console.log('📁 PDF 업로드 모드');
         const key = await uploadPortfolioPdf(userId, noteFile);
         console.log('✅ S3 업로드 완료, key:', key);
 
@@ -43,8 +42,6 @@ const CategorySummary = ({ categoryId }: { categoryId: string }) => {
           fileUrl: key, // "pdf/raw/11/2026-02-10_e86fc3b5.pdf" 형태
         };
       } else {
-        console.log('✏️ 텍스트 입력 모드');
-
         // TEXT 모드: content만 전송
         portfolioData = {
           inputType: 'TEXT' as const,
@@ -86,7 +83,7 @@ const CategorySummary = ({ categoryId }: { categoryId: string }) => {
         <ButtonRound
           onClick={handleNext}
           text={isSubmitting ? '제출 중...' : '다음'}
-          disabled={!noteHasInput || isSubmitting}
+          disabled={!noteHasInput || isSubmitting || (!noteFile && !noteContent.trim())}
         />
       </div>
       <div className="radial-blue pointer-events-none absolute bottom-0 left-1/2 z-5 h-157 w-157 -translate-x-1/2 translate-y-1/3 rounded-full" />
