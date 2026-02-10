@@ -28,7 +28,7 @@ import {
   createBoardReply,
   deleteBoardComment,
 } from '../../apis/board';
-import type { BoardDetail, BoardCommentItem } from '../../types/social/board/board';
+import type { BoardDetail, BoardCommentItem } from '../../types/board';
 import { timeAgo } from '../../utils/timeAgo';
 import { getJwtPayload } from '../../utils/jwt';
 

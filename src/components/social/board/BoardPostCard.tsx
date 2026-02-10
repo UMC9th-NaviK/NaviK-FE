@@ -3,7 +3,7 @@ import FavoriteIcon from '../../../assets/social/material-symbols_favorite-outli
 import ChatIcon from '../../../assets/social/material-symbols_chat-outline-rounded.svg';
 import ProfileIcon from '../../../assets/social/Ellipse 30.svg';
 
-import type { BoardListItem } from '../../../types/social/board/board';
+import type { BoardListItem } from '../../../types/board';
 import { makeExcerpt } from '../../../utils/makeExcerpt';
 import { timeAgo } from '../../../utils/timeAgo';
 

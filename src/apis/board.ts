@@ -13,7 +13,7 @@ import type {
   ToggleBoardLikeResult,
   UpdateBoardReq,
   BoardDetail,
-} from '../types/social/board/board';
+} from '../types/board';
 
 //전체 조회
 export const getBoardList = (params?: GetBoardListParams) => {

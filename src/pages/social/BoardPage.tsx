@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import AddIcon from '../../assets/social/material-symbols_edit-square-outline-rounded.svg';
 
-import type { BoardListItem } from '../../types/social/board/board';
+import type { BoardListItem } from '../../types/board';
 import { getBoardList, getHotBoardList, getJobBoardList } from '../../apis/board';
 import { getJwtPayload } from '../../utils/jwt';
 import { jobNameFromSub } from '../../utils/job';
