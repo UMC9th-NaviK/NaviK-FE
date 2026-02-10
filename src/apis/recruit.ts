@@ -40,3 +40,19 @@ export const searchPositions = async (
     throw error;
   }
 };
+
+export const getPositionsCount = async (body: RecruitPostFilterBody): Promise<number> => {
+  try {
+    const response = await axiosInstance.post<ApiResponse<number>>(
+      '/recruitments/positions/count',
+      body,
+    );
+    if (response.data.isSuccess) {
+      return response.data.result;
+    }
+    return 0;
+  } catch (error) {
+    console.error('공고 갯수 로드 실패:', error);
+    return 0;
+  }
+};

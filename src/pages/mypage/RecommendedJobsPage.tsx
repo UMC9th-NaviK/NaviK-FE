@@ -1,69 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { BottomSheet } from '../../components/myPage/recommend/BottomSheet';
 import { FilterBar } from '../../components/myPage/recommend/FilterBar';
 import { FILTERS } from '../../constants/filterData';
 import { Icon } from '@iconify/react';
 import { JobCard } from '../../components/myPage/recommend/JobCard';
 import SubHeader from '../../components/myPage/SubHeader';
-import { searchPositions } from '../../apis/recruit';
-import { FILTER_MAP } from '../../constants/filterMapper';
-import type { Recruitment } from '../../types/recruits';
+import { useJobSearch } from '../../hooks/useJobSearch';
 
 const RecommendJobPage = () => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
   const [isExcludeExpired, setIsExcludeExpired] = useState(false);
 
-  // --- API 데이터 및 페이징 상태 관리 ---
-  const [jobs, setJobs] = useState<Recruitment[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [nextCursor, setNextCursor] = useState<string | null>(null);
-  const [hasNext, setHasNext] = useState(false);
-
-  // --- 데이터 호출 로직 ---
-  const fetchJobs = async (cursor?: string) => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-    try {
-      const body = {
-        jobTypes: selectedValues['희망 직무']
-          ? [FILTER_MAP['희망 직무'][selectedValues['희망 직무']]]
-          : [],
-        experienceTypes: selectedValues['경력 요건']
-          ? [FILTER_MAP['경력 요건'][selectedValues['경력 요건']]]
-          : [],
-        employmentTypes: selectedValues['고용 형태']
-          ? [FILTER_MAP['고용 형태'][selectedValues['고용 형태']]]
-          : [],
-        companySizes: selectedValues['회사 규모']
-          ? [FILTER_MAP['회사 규모'][selectedValues['회사 규모']]]
-          : [],
-        educationLevels: selectedValues['학력'] ? [FILTER_MAP['학력'][selectedValues['학력']]] : [],
-        areaTypes: selectedValues['근무 지역']
-          ? [FILTER_MAP['근무 지역'][selectedValues['근무 지역']]]
-          : [],
-        industryTypes: selectedValues['관심 산업']
-          ? [FILTER_MAP['관심 산업'][selectedValues['관심 산업']]]
-          : [],
-        withEnded: !isExcludeExpired,
-      };
-
-      const result = await searchPositions(body, cursor, 20);
-
-      setJobs((prev) => (cursor ? [...prev, ...result.content] : result.content));
-      setNextCursor(result.nextCursor);
-      setHasNext(result.hasNext);
-    } catch (error) {
-      console.error('공고 로드 실패:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchJobs();
-  }, [selectedValues, isExcludeExpired]);
+  const { jobs, totalCount, isLoading, hasNext, nextCursor, fetchJobs } = useJobSearch(
+    selectedValues,
+    isExcludeExpired,
+  );
 
   // 스크롤 핸들러
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -120,7 +72,7 @@ const RecommendJobPage = () => {
         />
 
         <div className="flex w-full items-center justify-between px-4 pt-4 pb-2">
-          <div className="text-body-14B">공고 {jobs.length}건</div>
+          <div className="text-body-14B">공고 {totalCount.toLocaleString()}건</div>
           <button
             onClick={() => setIsExcludeExpired(!isExcludeExpired)}
             className="text-primary-blue-500 flex items-center gap-1"
