@@ -6,7 +6,6 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ data }: JobCardProps) => {
-  // 서버 데이터로부터 필요한 값 추출 및 가공
   const {
     companyName,
     companyLogo,
@@ -20,13 +19,12 @@ export const JobCard = ({ data }: JobCardProps) => {
     satisfyEducation,
     satisfyMajor,
     link,
+    companySize,
   } = data;
 
-  // 모든 조건(경력, 학력, 전공)을 만족해야 'isApplicable'로 판단 (형의 기획에 맞춰 조절 가능)
   const isApplicable = satisfyExperience && satisfyEducation && satisfyMajor;
 
-  // 날짜 가공 (예: 2026-02-09T16:56... -> 2026.02.09)
-  const formattedDeadline = endDate ? endDate.split('T')[0].replace(/-/g, '.') : '';
+  const deadlineText = endDate ? `${endDate.split('T')[0].replace(/-/g, '.')}까지` : '상시 채용';
 
   return (
     <div
@@ -57,7 +55,9 @@ export const JobCard = ({ data }: JobCardProps) => {
             >
               {companyName}
             </span>
-            <span className="text-heading-18B text-base-900 truncate leading-tight">{title}</span>
+            <span className="text-heading-18B text-base-900 line-clamp-2 min-h-10 leading-tight">
+              {title}
+            </span>
           </div>
 
           {/* 상세 영역 */}
@@ -78,35 +78,32 @@ export const JobCard = ({ data }: JobCardProps) => {
                 <span className="text-caption-12B">요구 KPI</span>
               </div>
               <ul className="text-caption-12R text-opacity-black-60 flex list-disc flex-col gap-px pl-3">
-                {kpis.slice(0, 3).map(
-                  (
-                    kpi,
-                    idx, // 너무 많으면 디자인 깨지니까 3개로 제한
-                  ) => (
-                    <li key={idx} className="leading-normal">
-                      <span className="block truncate">{kpi}</span>
-                    </li>
-                  ),
-                )}
+                {kpis.slice(0, 3).map((kpi, idx) => (
+                  <li key={idx} className="leading-normal">
+                    <span className="block w-full max-w-60 truncate">{kpi}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
           {/* 태그, D-Day */}
           <div className="mb-1 flex items-center gap-2 overflow-hidden">
-            {hashTags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-base-200/50 text-opacity-black-60 text-caption-12M border-base-200 shrink-0 rounded-lg border px-2 py-1"
-              >
-                #{tag}
-              </span>
-            ))}
+            <span
+              key={hashTags[2]}
+              className="bg-base-200/50 text-opacity-black-60 text-caption-12M border-base-200 shrink-0 rounded-lg border px-2 py-1"
+            >
+              #{hashTags[2]}
+            </span>
+            <span className="bg-base-200/50 text-opacity-black-60 text-caption-12M border-base-200 shrink-0 rounded-lg border px-2 py-1">
+              #{companySize}
+            </span>
+
             <span
               className={`text-caption-12M shrink-0 rounded-lg border px-2 py-1 transition-all ${
                 isApplicable
                   ? 'border-[#E72326]/10 bg-[#E72326]/10 text-[#E72326]'
-                  : 'border-base-300 bg-base-200 text-opacity-black-60'
+                  : 'border-base-200 bg-base-200/50 text-opacity-black-60'
               }`}
             >
               {dday ? `D-${dday}` : '상시'}
@@ -115,7 +112,7 @@ export const JobCard = ({ data }: JobCardProps) => {
           <span
             className={`text-caption-12B ${isApplicable ? 'text-red-500' : 'text-opacity-black-60'}`}
           >
-            {formattedDeadline}까지
+            {deadlineText}
           </span>
         </div>
       </div>

@@ -108,7 +108,6 @@ const RecommendJobPage = () => {
         />
 
         <div className="flex w-full items-center justify-between px-4 pt-4 pb-2">
-          {/* MOCK_JOBS 대신 실제 받아온 jobs 개수 표시 */}
           <div className="text-body-14B">공고 {jobs.length}건</div>
           <button
             onClick={() => setIsExcludeExpired(!isExcludeExpired)}
