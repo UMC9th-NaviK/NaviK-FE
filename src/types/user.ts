@@ -38,3 +38,14 @@ export type ResponseUserProfile = {
   job: string;
   isEntryLevel: boolean;
 };
+
+export type ResponseUserInfo = {
+  id: number;
+  profileImageUrl: string;
+  name: string;
+  nickname: string;
+  job: string;
+  isEntryLevel: boolean;
+  educationLevel: 'HIGH_SCHOOL' | 'ASSOCIATE' | 'BACHELOR' | 'MASTER' | 'DOCTORATE';
+  departmentList: string[];
+};

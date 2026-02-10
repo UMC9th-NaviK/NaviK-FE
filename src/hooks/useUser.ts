@@ -1,5 +1,5 @@
 import { useUserStore, convertJobToShortCode } from '../store/useUserStore';
-import { getUserProfile } from '../apis/user';
+import { getUserInfo } from '../apis/user';
 import { useEffect } from 'react';
 import { syncUserProfile } from '../apis/auth';
 
@@ -19,8 +19,9 @@ export const useUser = () => {
   const userId = useUserStore((state) => state.userId);
   const nickname = useUserStore((state) => state.nickname);
   const job = useUserStore((state) => state.job);
+  const name = useUserStore((state) => state.name);
 
-  return { userId, nickname, job };
+  return { userId, nickname, job, name };
 };
 
 export const useFetchUserProfile = () => {
@@ -28,9 +29,10 @@ export const useFetchUserProfile = () => {
 
   const fetchProfile = async () => {
     try {
-      const profile = await getUserProfile();
+      const profile = await getUserInfo();
 
       setUser({
+        name: profile.name,
         userId: profile.id,
         nickname: profile.nickname,
         job: convertJobToShortCode(profile.job),

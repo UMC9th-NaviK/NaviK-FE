@@ -1,8 +1,7 @@
-// apis/auth.ts
 import type { RefreshTokenResponse } from '../types/auth';
 import type { CommonResponse } from '../types/common';
 import axiosInstance from './axios';
-import { getUserProfile } from './user';
+import { getUserInfo } from './user';
 import { useUserStore, convertJobToShortCode } from '../store/useUserStore';
 
 export const refreshAccessToken = async (): Promise<RefreshTokenResponse> => {
@@ -17,8 +16,9 @@ export const refreshAccessToken = async (): Promise<RefreshTokenResponse> => {
 
 export const syncUserProfile = async (): Promise<void> => {
   try {
-    const profile = await getUserProfile();
+    const profile = await getUserInfo();
     useUserStore.getState().setUser({
+      name: profile.name,
       userId: profile.id,
       nickname: profile.nickname,
       job: convertJobToShortCode(profile.job),

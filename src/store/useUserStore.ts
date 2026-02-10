@@ -3,11 +3,12 @@ import { persist } from 'zustand/middleware';
 import type { JobType } from '../types/user';
 
 interface UserState {
+  name: string | null;
   userId: number | null;
   nickname: string | null;
   job: JobType | null;
   _hasHydrated: boolean;
-  setUser: (data: { userId: number; nickname: string; job: JobType }) => void;
+  setUser: (data: { userId: number; name: string; nickname: string; job: JobType }) => void;
   clearUser: () => void;
   setHasHydrated: (value: boolean) => void;
 }
@@ -26,13 +27,14 @@ export const convertJobToShortCode = (job: string): JobType => {
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
+      name: null,
       userId: null,
       nickname: null,
       job: null,
       _hasHydrated: false,
       setUser: (data) => set(data),
       clearUser: () => {
-        set({ userId: null, nickname: null, job: null });
+        set({ userId: null, name: null, nickname: null, job: null });
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
       },
@@ -42,6 +44,7 @@ export const useUserStore = create<UserState>()(
       name: 'user',
       partialize: (state) => ({
         userId: state.userId,
+        name: state.name,
         nickname: state.nickname,
         job: state.job,
       }),
