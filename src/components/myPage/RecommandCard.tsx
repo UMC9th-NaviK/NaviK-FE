@@ -7,7 +7,9 @@ interface RecommandCardProps {
 
 const RecommandCard = ({ data, className }: RecommandCardProps) => {
   // 근무지 정보 ~~시 ~~구
-  const locationTag = data.workPlace.split(' ').slice(0, 2).join(' ');
+  const locationTag = data.workPlace
+    ? data.workPlace.split(' ').slice(0, 2).join(' ')
+    : '지역 미정';
 
   return (
     <div
@@ -45,8 +47,8 @@ const RecommandCard = ({ data, className }: RecommandCardProps) => {
       <div className="flex flex-col gap-y-1.5">
         <div className="scrollbar-hide flex items-center gap-x-1 overflow-x-auto">
           <Tag text={locationTag} />
-          <Tag text={data.experience} />
-          <Tag text={data.employment} />
+          <Tag text={data.experience || '경력무관'} />
+          <Tag text={data.employment || '고용형태'} />
         </div>
 
         <div className="flex items-center gap-x-1">
