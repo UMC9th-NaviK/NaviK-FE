@@ -40,7 +40,7 @@ import EditProfilePage from '../pages/mypage/EditProfilePage';
 import SettingPage from '../pages/mypage/SettingPage';
 import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
 import NoticePage from '../pages/home/NoticePage';
-// import BoardNewPage from '../pages/social/BoardNewPage';
+import BoardNewPage from '../pages/social/BoardNewPage';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -124,7 +124,7 @@ export const protectedRoutes: RouteObject[] = [
               { path: 'evaluation', element: <EvaluationPage /> },
             ],
           },
-          // { path: 'board/new', element: <BoardNewPage /> },
+          { path: 'board/new', element: <BoardNewPage /> },
           { path: 'board/:boardId', element: <BoardDetailPage /> },
           { path: 'board/:boardId/edit', element: <BoardEditPage /> },
           { path: 'evaluation/my', element: <MyEvaluationPage /> },

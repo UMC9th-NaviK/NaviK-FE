@@ -28,7 +28,9 @@ import {
   createBoardReply,
   deleteBoardComment,
 } from '../../apis/board';
-import type { BoardDetail, BoardCommentItem } from '../../apis/board';
+import type { BoardDetail, BoardCommentItem } from '../../types/board';
+import { timeAgo } from '../../utils/timeAgo';
+import { getJwtPayload } from '../../utils/jwt';
 
 type EditState = {
   title?: string;
@@ -66,6 +68,19 @@ const BoardDetailPage = () => {
 
   const [serverCommentCount, setServerCommentCount] = useState(0);
 
+  const me = useMemo(() => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) return null;
+      return getJwtPayload(token);
+    } catch {
+      return null;
+    }
+  }, []);
+
+  const myUserId = me?.sub ? Number(me.sub) : null;
+  const isMyPost = !!(detail && myUserId != null && myUserId === detail.userId);
+
   const parentComments = useMemo(
     () => comments.filter((c) => c.parentCommentId == null || c.parentCommentId === 0),
     [comments],
@@ -77,7 +92,6 @@ const BoardDetailPage = () => {
     comments.forEach((c) => {
       const pid = c.parentCommentId;
 
-      // ✅ pid가 없거나 0이면 "부모댓글" 이므로 replies map에 넣지 않음
       if (pid == null || pid === 0) return;
 
       const parentId = Number(pid);
@@ -267,17 +281,21 @@ const BoardDetailPage = () => {
         />
 
         <PostMetaRow
-          timeAgo={detail?.createdAt}
+          timeAgo={timeAgo(detail.createdAt)}
           viewCount={detail?.viewCount}
-          MoreIcon={MoreIcon}
-          EditIcon={EditIcon}
-          DeleteIcon={DeleteIcon}
-          onEdit={() => {
-            navigate(`/social/board/${boardId}/edit`, {
-              state: { title, content },
-            });
-          }}
-          onDelete={handleDeletePost}
+          {...(isMyPost
+            ? {
+                MoreIcon,
+                EditIcon,
+                DeleteIcon,
+                onEdit: () => {
+                  navigate(`/social/board/${boardId}/edit`, {
+                    state: { title, content },
+                  });
+                },
+                onDelete: handleDeletePost,
+              }
+            : {})}
         />
 
         <h2 className="text-heading-18B text-base-900 mt-2 w-full self-stretch">{title}</h2>
@@ -349,7 +367,7 @@ const BoardDetailPage = () => {
                 author={c.nickname}
                 authorMeta={`${c.isEntryLevel ? '신입' : '마스터'} ${c.jobName} | LV.${c.level}`}
                 content={c.content}
-                timeAgo={c.createdAt}
+                timeAgo={timeAgo(c.createdAt)}
                 profileSrc={ProfileIcon}
                 addIconSrc={AddIcon}
                 deleteIconSrc={DeleteIcon2}
@@ -394,7 +412,7 @@ const BoardDetailPage = () => {
                     author={r.nickname}
                     authorMeta={replyMeta}
                     content={r.content}
-                    timeAgo={r.createdAt}
+                    timeAgo={timeAgo(r.createdAt)}
                     profileSrc={ProfileIcon}
                     deleteIconSrc={DeleteIcon2}
                     enterIconSrc={enterIcon}
