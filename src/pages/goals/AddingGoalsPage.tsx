@@ -25,23 +25,28 @@ const AddingGoalsPage = () => {
 
         const firstDayOfMonth = new Date(year, month, 1).getDay();
         const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-
         const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
 
         const days = [];
+
+        const todayCopy = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
         for (let i = firstDayOfMonth - 1; i >= 0; i--) {
             days.push({
                 date: lastDateOfPrevMonth - i,
                 currentMonth: false,
+                isPast: true,
                 id: `prev-${i}`
             });
         }
 
         for (let i = 1; i <= lastDateOfMonth; i++) {
+            const targetDate = new Date(year, month, i);
+
             days.push({
                 date: i,
                 currentMonth: true,
+                isPast : targetDate < todayCopy, 
                 id: `curr-${i}`
             });
         }
@@ -54,12 +59,6 @@ const AddingGoalsPage = () => {
     const handleAddingGoals = async () => {
         if (!goalContent.trim() || !goalTitle.trim()) {
             alert("목표가 입력되지 않았습니다.");
-
-            return;
-        }
-
-        if (!selectedDate) {
-            alert("목표 달성 기한이 선택되지 않았습니다.");
 
             return;
         }
@@ -216,15 +215,21 @@ const AddingGoalsPage = () => {
                                         {calendarDays.map((item) => {
                                             const isSelected = item.currentMonth && selectedDate.getDate() === item.date && selectedDate.getMonth() === currentDate.getMonth();
                                             
+                                            const isSelectable = item.currentMonth && !item.isPast;
+
                                             return (
                                                 <div 
                                                     key={item.id}
-                                                    onClick={() => item.currentMonth && setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))}
+                                                    onClick={() => {
+                                                        if (isSelectable) {
+                                                            setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))
+                                                        }
+                                                    }}
                                                     className="flex items-center justify-center cursor-pointer"
                                                 >
                                                     <div className={`
                                                         flex items-center justify-center w-[32px] h-[32px] text-caption-12M
-                                                        ${!item.currentMonth ? "text-base-300 opacity-40" : "text-base-800"}
+                                                        ${(!item.currentMonth || item.isPast) ? "text-base-300 opacity-40" : "text-base-800"}
                                                         ${isSelected ? "bg-primary-blue-500 text-white rounded-full" : ""}
                                                     `}>
                                                         {item.date}

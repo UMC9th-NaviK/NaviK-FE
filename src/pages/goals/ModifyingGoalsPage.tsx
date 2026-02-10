@@ -26,23 +26,28 @@ const ModifyingGoalsPage = () => {
 
         const firstDayOfMonth = new Date(year, month, 1).getDay();
         const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-
         const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
 
         const days = [];
+
+        const todayCopy = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
         for (let i = firstDayOfMonth - 1; i >= 0; i--) {
             days.push({
                 date: lastDateOfPrevMonth - i,
                 currentMonth: false,
+                isPast: true,
                 id: `prev-${i}`
             });
         }
 
         for (let i = 1; i <= lastDateOfMonth; i++) {
+            const targetDate = new Date(year, month, i);
+
             days.push({
                 date: i,
                 currentMonth: true,
+                isPast : targetDate < todayCopy, 
                 id: `curr-${i}`
             });
         }
@@ -238,15 +243,21 @@ const ModifyingGoalsPage = () => {
                                         {calendarDays.map((item) => {
                                             const isSelected = item.currentMonth && selectedDate.getDate() === item.date && selectedDate.getMonth() === currentDate.getMonth();
                                             
+                                            const isSelectable = item.currentMonth && !item.isPast;
+
                                             return (
                                                 <div 
                                                     key={item.id}
-                                                    onClick={() => item.currentMonth && setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))}
+                                                    onClick={() => {
+                                                        if (isSelectable) {
+                                                            setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))
+                                                        }
+                                                    }}
                                                     className="flex items-center justify-center cursor-pointer"
                                                 >
                                                     <div className={`
                                                         flex items-center justify-center w-[24px] h-[24px] text-caption-12M
-                                                        ${!item.currentMonth ? "text-[#11111133]" : "text-[#111111CC]"}
+                                                        ${(!item.currentMonth || item.isPast) ? "text-[#11111133]" : "text-[#111111CC]"}
                                                         ${isSelected ? "bg-primary-blue-500 text-white rounded-full" : ""}
                                                     `}>
                                                         {item.date}
