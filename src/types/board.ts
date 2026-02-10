@@ -36,7 +36,6 @@ export type BoardDetail = {
   articleContent: string;
   likeCount: number;
   isLiked?: boolean;
-  isliked?: boolean;
   commentCount: number;
   viewCount: number;
   createdAt: string;
