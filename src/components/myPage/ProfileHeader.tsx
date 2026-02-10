@@ -2,14 +2,17 @@ import { Icon } from '@iconify/react';
 import bedgeImg from '../../../public/images/mypage/bedgeImg.svg';
 import { type RoleType, bgStyles, roleImages } from '../myPage/profiledata';
 import { Link } from 'react-router-dom';
+import type { UserProfile } from '../../types/user';
 
 interface HeaderProps {
   role: RoleType;
+  profile: UserProfile;
 }
 
-const ProfileHeader = ({ role }: HeaderProps) => {
+const ProfileHeader = ({ role, profile }: HeaderProps) => {
   return (
     <div className={`relative flex h-64.25 w-full flex-col gap-6 px-5 ${bgStyles[role]}`}>
+      {/* 마이페이지 & 설정 아이콘 */}
       <div className="relative z-10 flex w-full items-center justify-between pt-5 pb-1">
         <div className="text-2xl font-bold text-white">마이페이지</div>
         <Link
@@ -20,30 +23,48 @@ const ProfileHeader = ({ role }: HeaderProps) => {
         </Link>
       </div>
 
+      {/* 직군에 따른 배경이미지 */}
       <img
         src={roleImages[role]}
         className="pointer-events-none absolute -bottom-18 left-30 h-auto w-80 opacity-30 transition-opacity duration-500"
         alt="background character"
       />
 
+      {/* 유저 정보 섹션 */}
       <div className="relative z-10 flex h-16 items-center gap-5 pt-3">
         <Link className="relative h-20 w-20" to={'/mypage/edit'}>
-          <div className="h-full w-full rounded-full bg-white opacity-20"></div>
+          {/* 프로필 이미지 */}
+          <div
+            className={`h-full w-full rounded-full bg-cover bg-center ${
+              profile?.profileImageUrl ? 'bg-white' : 'bg-base-300'
+            }`}
+            style={{
+              backgroundImage: profile?.profileImageUrl
+                ? `url(${profile.profileImageUrl})`
+                : 'none',
+            }}
+          >
+            {/* 이미지가 없을 때  */}
+            {!profile?.profileImageUrl && (
+              <div className="flex h-full w-full items-center justify-center">
+                <Icon icon="material-symbols:person-rounded" className="text-base-400 h-10 w-10" />
+              </div>
+            )}
+          </div>
           <div className="bg-base-200 absolute right-0 bottom-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full">
             <Icon icon="material-symbols:edit-outline" className="h-5 w-5" />
           </div>
         </Link>
         <div className="flex flex-col">
-          <div className="text-heading-18B text-white">응애개발자</div>
+          {/* 닉네임 */}
+          <div className="text-heading-18B text-white">{profile.nickname}</div>
           <div className="text-body-16M text-[#DED6FF]">
-            {role === 'PM' && '프로덕트 매니저'}
-            {role === 'DESIGNER' && '프로덕트 디자이너'}
-            {role === 'FE' && '프론트엔드 개발자'}
-            {role === 'BE' && '백엔드 개발자'} | 신입
+            {profile.job} | {profile.isEntryLevel ? '신입' : '경력'}
           </div>
         </div>
       </div>
 
+      {/* 직무 영문 표시 섹션 */}
       <div className="relative z-10 flex h-10 w-84 items-center justify-center gap-5 self-center rounded-3xl bg-white/30 px-5">
         <span className="text-body-eng-14SB tracking-wider text-white uppercase">
           {role === 'PM' && 'PRODUCT MANAGER'}
@@ -53,6 +74,7 @@ const ProfileHeader = ({ role }: HeaderProps) => {
         </span>
       </div>
 
+      {/* 하단 배지 */}
       <div className="absolute bottom-0 left-1/2 z-20 flex h-16 w-85.75 -translate-x-1/2 translate-y-1/2 flex-col justify-center overflow-hidden rounded-xl border border-[#BDADFF] bg-white px-4 text-black shadow-lg backdrop-blur-md">
         <img
           src={bedgeImg}
