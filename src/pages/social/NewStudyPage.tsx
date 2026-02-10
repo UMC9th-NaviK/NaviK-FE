@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import MinusIcon from '../../assets/social/material-symbols_do-not-disturb-on-outline-rounded.svg';
 import PlusIcon from '../../assets/social/material-symbols_add-circle-outline-rounded.svg';
-import 'react-day-picker/dist/style.css';
-import { DayPicker } from 'react-day-picker';
 import type { DateRange } from 'react-day-picker';
 import Divider from '../../components/common/Divider';
 const BG = '#F5F5F5';
