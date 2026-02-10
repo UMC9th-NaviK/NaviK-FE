@@ -2,17 +2,51 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import BackIcon from '../../assets/social/material-symbols_arrow-back-ios-new-rounded.svg';
 import BoardEditHeader from '../../components/social/board/edit/BoardEditHeader';
+import { updateBoard } from '../../apis/board';
 type EditState = { title?: string; content?: string };
 
 const BoardEditPage = () => {
   const navigate = useNavigate();
-  const { postId } = useParams();
-  const stateId = postId;
+  const { boardId } = useParams<{ boardId: string }>();
   const location = useLocation();
-  const state = (location.state as EditState) ?? {};
+  const editState = location.state as EditState | null;
 
-  const [title, setTitle] = useState(state.title ?? '');
-  const [content, setContent] = useState(state.content ?? '');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  //초기값 세팅(BoardDetailPage에서 state로 넘긴 값)
+  useEffect(() => {
+    setTitle(editState?.title ?? '');
+    setContent(editState?.content ?? '');
+  }, [editState]);
+
+  const onSubmit = async () => {
+    if (!boardId || saving) return;
+
+    const articleTitle = title.trim();
+    const articleContent = content.trim();
+
+    if (!articleTitle || !articleContent) return;
+
+    try {
+      setSaving(true);
+
+      const res = await updateBoard(Number(boardId), { articleTitle, articleContent });
+
+      if (!res.data?.isSuccess) {
+        console.warn(res.data?.message ?? '게시글 수정 실패');
+        return;
+      }
+
+      navigate(`/social/board/${boardId}`, { state: { refresh: true }, replace: true });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   function autoResize() {
     const el = textareaRef.current;
@@ -26,17 +60,7 @@ const BoardEditPage = () => {
 
   return (
     <div className="min-h-screen">
-      <BoardEditHeader
-        BackIcon={BackIcon}
-        title="게시글 수정"
-        onDone={() => {
-          if (!stateId) return;
-          navigate(`/social/board/${stateId}`, {
-            state: { title, content },
-            replace: true,
-          });
-        }}
-      />
+      <BoardEditHeader BackIcon={BackIcon} title="게시글 수정" onDone={onSubmit} />
       <div className="px-6">
         <div className="border-base-200 flex w-full items-center justify-center gap-2.5 self-stretch border-b py-4">
           <input
