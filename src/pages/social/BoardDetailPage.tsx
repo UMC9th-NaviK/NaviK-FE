@@ -29,6 +29,7 @@ import {
   deleteBoardComment,
 } from '../../apis/board';
 import type { BoardDetail, BoardCommentItem } from '../../types/social/board/board';
+import { timeAgo } from '../../utils/timeAgo';
 
 type EditState = {
   title?: string;
@@ -77,7 +78,6 @@ const BoardDetailPage = () => {
     comments.forEach((c) => {
       const pid = c.parentCommentId;
 
-      // ✅ pid가 없거나 0이면 "부모댓글" 이므로 replies map에 넣지 않음
       if (pid == null || pid === 0) return;
 
       const parentId = Number(pid);
@@ -267,7 +267,7 @@ const BoardDetailPage = () => {
         />
 
         <PostMetaRow
-          timeAgo={detail?.createdAt}
+          timeAgo={timeAgo(detail.createdAt)}
           viewCount={detail?.viewCount}
           MoreIcon={MoreIcon}
           EditIcon={EditIcon}
@@ -349,7 +349,7 @@ const BoardDetailPage = () => {
                 author={c.nickname}
                 authorMeta={`${c.isEntryLevel ? '신입' : '마스터'} ${c.jobName} | LV.${c.level}`}
                 content={c.content}
-                timeAgo={c.createdAt}
+                timeAgo={timeAgo(c.createdAt)}
                 profileSrc={ProfileIcon}
                 addIconSrc={AddIcon}
                 deleteIconSrc={DeleteIcon2}
@@ -394,7 +394,7 @@ const BoardDetailPage = () => {
                     author={r.nickname}
                     authorMeta={replyMeta}
                     content={r.content}
-                    timeAgo={r.createdAt}
+                    timeAgo={timeAgo(r.createdAt)}
                     profileSrc={ProfileIcon}
                     deleteIconSrc={DeleteIcon2}
                     enterIconSrc={enterIcon}

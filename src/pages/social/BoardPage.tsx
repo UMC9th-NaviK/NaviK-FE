@@ -13,6 +13,7 @@ import type { BoardListItem } from '../../types/social/board/board';
 import { getBoardList, getHotBoardList, getJobBoardList } from '../../apis/board';
 import { getJwtPayload } from '../../utils/jwt';
 import { jobNameFromSub } from '../../utils/job';
+import { timeAgo } from '../../utils/timeAgo';
 type FilterKey = '전체' | '직무별' | 'HOT';
 
 function cn(...arr: (string | false | undefined)[]) {
@@ -294,7 +295,7 @@ export default function BoardPage() {
               commentCount: b.commentCount,
               author: b.nickname,
               authorMeta: `${b.isEntryLevel ? '신입' : '마스터'} ${b.jobName} | LV.${b.level}`,
-              timeAgo: b.createdAt,
+              timeAgo: timeAgo(b.createdAt),
               viewCount: b.viewCount,
             }}
           />
