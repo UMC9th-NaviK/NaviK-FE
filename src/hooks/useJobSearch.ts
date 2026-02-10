@@ -54,9 +54,12 @@ export const useJobSearch = (selectedValues: Record<string, string>, isExcludeEx
     }
   };
 
+  const filterKey = JSON.stringify(selectedValues);
+
   useEffect(() => {
     fetchJobs();
-  }, [selectedValues, isExcludeExpired]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterKey, isExcludeExpired]);
 
   return { jobs, totalCount, isLoading, hasNext, nextCursor, fetchJobs };
 };

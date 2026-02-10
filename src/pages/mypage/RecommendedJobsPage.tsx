@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BottomSheet } from '../../components/myPage/recommend/BottomSheet';
 import { FilterBar } from '../../components/myPage/recommend/FilterBar';
 import { FILTERS } from '../../constants/filterData';
@@ -12,14 +12,26 @@ const RecommendJobPage = () => {
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
   const [isExcludeExpired, setIsExcludeExpired] = useState(false);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const { jobs, totalCount, isLoading, hasNext, nextCursor, fetchJobs } = useJobSearch(
     selectedValues,
     isExcludeExpired,
   );
 
-  // 스크롤 핸들러
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth', // 부드럽게 이동
+      });
+    }
+  }, [selectedValues, isExcludeExpired]);
+
+  // 스크롤 핸들러 (무한 스크롤)
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    // 바닥 근처(50px)에 닿으면 다음 데이터 호출
     if (scrollHeight - scrollTop <= clientHeight + 50 && !isLoading && hasNext) {
       fetchJobs(nextCursor || undefined);
     }
@@ -42,7 +54,7 @@ const RecommendJobPage = () => {
 
   return (
     <div className="relative flex h-screen flex-col overflow-hidden bg-white">
-      {/* 배경 원 */}
+      {/* 배경 원 디자인 */}
       <div
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 opacity-60"
         style={{
@@ -55,13 +67,13 @@ const RecommendJobPage = () => {
         }}
       />
 
-      {/* 헤더 + 필터바 */}
+      {/* 상단 레이어: 헤더 + 필터바 */}
       <div className="relative z-10 shrink-0">
         <SubHeader
           title={'추천 공고'}
           bgColor="bg-white"
           showInfo={true}
-          infoContent="나의 강점 KPI를 가장 잘 살릴 수 있는 공고를 추천해요..."
+          infoContent="나의 강점 KPI를 가장 잘 살릴 수 있는 공고를 추천해요. 희망 직무, 고용 형태 등 원하는 조건을 설정하면 더 정확한 공고를 확인할 수 있어요."
         />
         <FilterBar
           filters={FILTERS}
@@ -90,13 +102,13 @@ const RecommendJobPage = () => {
         </div>
       </div>
 
-      {/* 리스트 영역 */}
       <div
+        ref={scrollRef}
         onScroll={handleScroll}
         className="scrollbar-hide relative z-10 flex-1 overflow-y-auto px-4 pb-20"
       >
         <div className="flex flex-col gap-4 pt-2">
-          {/*  처음 데이터 로딩 시 */}
+          {/* 초기 로딩 화면 */}
           {isLoading && jobs.length === 0 ? (
             <div className="flex h-[60vh] w-full flex-col items-center justify-center gap-6">
               <Icon
@@ -114,7 +126,7 @@ const RecommendJobPage = () => {
                 <JobCard key={`${job.id}-${index}`} data={job} />
               ))}
 
-              {/* 추가 데이터 로딩 스피너 */}
+              {/* 추가 데이터 로딩 중 (하단 스피너) */}
               {isLoading && (
                 <div className="flex justify-center py-10">
                   <Icon
@@ -125,6 +137,7 @@ const RecommendJobPage = () => {
                 </div>
               )}
 
+              {/* 데이터가 없을 때 */}
               {!isLoading && jobs.length === 0 && (
                 <div className="text-base-400 py-20 text-center">조건에 맞는 공고가 없습니다.</div>
               )}
@@ -133,7 +146,7 @@ const RecommendJobPage = () => {
         </div>
       </div>
 
-      {/* 바텀시트 */}
+      {/*  바텀시트 */}
       <BottomSheet
         title={activeFilter || ''}
         isOpen={!!activeFilter}
