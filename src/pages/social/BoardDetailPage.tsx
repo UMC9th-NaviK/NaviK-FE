@@ -28,7 +28,7 @@ import {
   createBoardReply,
   deleteBoardComment,
 } from '../../apis/board';
-import type { BoardDetail, BoardCommentItem } from '../../apis/board';
+import type { BoardDetail, BoardCommentItem } from '../../types/social/board/board';
 
 type EditState = {
   title?: string;

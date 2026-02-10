@@ -9,7 +9,7 @@ import AddIcon from '../../assets/social/material-symbols_edit-square-outline-ro
 import type { BoardPost } from '../../mocks/social/boardPosts';
 import { makeExcerpt } from '../../utils/makeExcerpt';
 
-import type { BoardListItem } from '../../apis/board';
+import type { BoardListItem } from '../../types/social/board/board';
 import { getBoardList, getHotBoardList, getJobBoardList } from '../../apis/board';
 import { getJwtPayload } from '../../utils/jwt';
 import { jobNameFromSub } from '../../utils/job';
