@@ -6,7 +6,7 @@ import { getGoalsList } from "../../apis/goals/goals";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 const SettingGoalsPage = () => {
-    const naigate = useNavigate();
+    const navigate = useNavigate();
     const observerRef = useRef<HTMLDivElement>(null);
 
     const [pageSize] = useState(10);
@@ -92,7 +92,7 @@ const SettingGoalsPage = () => {
 
                         <div className="flex justify-end w-full"> 
                             <button 
-                            onClick={() => naigate("/goals/add")}
+                            onClick={() => navigate("/goals/add")}
                             className="flex items-center justify-center w-[100px] h-[38px] rounded-[8px] py-[8px] px-[24px] gap-[10px] bg-primary-blue-500">
                                 <p className="text-body-14B text-base-100">
                                     목표 추가
