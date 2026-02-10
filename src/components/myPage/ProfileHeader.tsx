@@ -35,9 +35,22 @@ const ProfileHeader = ({ role, profile }: HeaderProps) => {
         <Link className="relative h-20 w-20" to={'/mypage/edit'}>
           {/* 프로필 이미지 */}
           <div
-            className="h-full w-full rounded-full bg-white bg-cover bg-center"
-            style={{ backgroundImage: `url(${profile.profileImageUrl})` }}
-          ></div>
+            className={`h-full w-full rounded-full bg-cover bg-center ${
+              profile?.profileImageUrl ? 'bg-white' : 'bg-base-300'
+            }`}
+            style={{
+              backgroundImage: profile?.profileImageUrl
+                ? `url(${profile.profileImageUrl})`
+                : 'none',
+            }}
+          >
+            {/* 이미지가 없을 때  */}
+            {!profile?.profileImageUrl && (
+              <div className="flex h-full w-full items-center justify-center">
+                <Icon icon="material-symbols:person-rounded" className="text-base-400 h-10 w-10" />
+              </div>
+            )}
+          </div>
           <div className="bg-base-200 absolute right-0 bottom-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full">
             <Icon icon="material-symbols:edit-outline" className="h-5 w-5" />
           </div>
