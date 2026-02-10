@@ -2,11 +2,17 @@ import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import RecommandCard from '../../components/myPage/RecommandCard';
+import type { Recruitment } from '../../types/recruits';
 
-const RecommendationList = () => {
+interface Props {
+  recruitments: Recruitment[];
+}
+
+const RecommendationList = ({ recruitments }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(1);
-  const totalItems = 20;
+
+  const totalItems = recruitments.length || 1;
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -36,16 +42,18 @@ const RecommendationList = () => {
             ref={scrollRef}
             onScroll={handleScroll}
             className="scrollbar-hide flex snap-x snap-mandatory scroll-pl-4.5 flex-nowrap gap-4 overflow-x-auto scroll-smooth px-4 pb-4"
-            style={{
-              marginLeft: '-16px',
-              marginRight: '-16px',
-            }}
+            style={{ marginLeft: '-16px', marginRight: '-16px' }}
           >
-            {Array.from({ length: totalItems }).map((_, idx) => (
-              <div key={idx} className="w-71 shrink-0 snap-start snap-always">
-                <RecommandCard />
+            {recruitments.map((item) => (
+              <div key={item.id} className="w-71 shrink-0 snap-start snap-always">
+                <RecommandCard data={item} />
               </div>
             ))}
+
+            {/* 데이터가 아예 없을 때 예외 처리 */}
+            {recruitments.length === 0 && (
+              <div className="w-full py-10 text-center text-gray-400">추천 공고가 없습니다.</div>
+            )}
 
             <div className="w-1 flex-none" />
           </div>

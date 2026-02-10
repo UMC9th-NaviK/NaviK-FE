@@ -3,7 +3,6 @@ import HomePage from '../pages/home/HomePage';
 import JobPage from '../pages/setup/JobPage';
 import CategoryPage from '../pages/setup/CategoryPage';
 import CategoryDetailPage from '../pages/setup/CategoryDetailPage';
-import AnalysisPage from '../pages/job/AnalysisPage';
 import ResultPage from '../pages/job/ResultPage';
 import ReportMainPage from '../pages/report/ReportMainPage';
 import MyCardPage from '../pages/report/MyCardPage';
@@ -19,7 +18,7 @@ import SocialTabLayout from '../layouts/SocialTabLayout';
 import BoardEditPage from '../pages/social/BoardEditPage';
 import EvaluationPage from '../pages/social/EvaluationPage';
 import MyEvaluationPage from '../pages/social/MyEvaluationPage';
-// import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
+import StudyEvaluationPage from '../pages/social/StudyEvaluationPage';
 import StudyRecommendPage from '../pages/social/StudyRecommendPage';
 import NewStudyPage from '../pages/social/NewStudyPage';
 import StudyLayout from '../layouts/StudyLayout';
@@ -42,6 +41,7 @@ import SettingPage from '../pages/mypage/SettingPage';
 import RecommendedJobsPage from '../pages/mypage/RecommendedJobsPage';
 import NoticePage from '../pages/home/NoticePage';
 // import BoardNewPage from '../pages/social/BoardNewPage';
+
 export const protectedRoutes: RouteObject[] = [
   {
     children: [
@@ -61,10 +61,7 @@ export const protectedRoutes: RouteObject[] = [
       {
         path: '/job',
         element: <JobLayout />,
-        children: [
-          { path: 'analysis', element: <AnalysisPage /> },
-          { path: 'result', element: <ResultPage /> },
-        ],
+        children: [{ path: 'result', element: <ResultPage /> }],
       },
       {
         path: '/report',
@@ -111,6 +108,7 @@ export const protectedRoutes: RouteObject[] = [
                     path: 'new',
                     element: <NewStudyPage />,
                   },
+                  { path: ':studyId/evaluation', element: <StudyEvaluationPage /> },
                   {
                     path: 'my',
                     element: <MyStudyLayout />,
@@ -130,7 +128,6 @@ export const protectedRoutes: RouteObject[] = [
           { path: 'board/:boardId', element: <BoardDetailPage /> },
           { path: 'board/:boardId/edit', element: <BoardEditPage /> },
           { path: 'evaluation/my', element: <MyEvaluationPage /> },
-          // { path: 'study/evaluation', element: <StudyEvaluationPage /> },
         ],
       },
       {

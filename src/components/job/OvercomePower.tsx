@@ -1,10 +1,11 @@
 import CardSlider from '../common/CardSlider';
+import ResultButton from './ResultButton';
 import StudySuggest from './StudySuggest';
 
 const OvercomePower = () => {
   return (
-    <div className="flex flex-col gap-8">
-      <CardSlider title="극복 역량" />
+    <div className="flex flex-col">
+      <CardSlider />
       <div className="mb-6.75 flex flex-col gap-4 p-4">
         <span className="flex items-center gap-2">
           <img src="/icons/jobs/mouse-cursor.svg" className="h-6 w-6" />
@@ -15,6 +16,9 @@ const OvercomePower = () => {
           </span>
         </span>
         <StudySuggest />
+        <div className="pt-2">
+          <ResultButton />
+        </div>
       </div>
     </div>
   );

@@ -13,14 +13,14 @@ const Footer = () => {
   const { pathname } = useLocation();
 
   const navItems = [
-    { label: '홈', path: '/', offIcon: DOC, onIcon: DOCOn },
+    { label: '홈', path: '/home', offIcon: DOC, onIcon: DOCOn },
     { label: '리포트', path: '/report', offIcon: Graph, onIcon: GraphOn },
     { label: '소셜', path: '/social', offIcon: Chat, onIcon: ChatOn },
     { label: '마이페이지', path: '/mypage', offIcon: User, onIcon: UserOn },
   ];
 
   const isActive = (path: string) => {
-    if (path === '/') return pathname === '/';
+    if (path === '/home') return pathname === '/home';
     return pathname.startsWith(path);
   };
 

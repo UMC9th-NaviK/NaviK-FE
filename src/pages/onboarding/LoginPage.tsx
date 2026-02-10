@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SplashScreen from './SplashScreen';
-import LoginButton from '../../components/onboarding/LoginButton';
+import LoginButtonList from '../../components/onboarding/LoginButtonList';
 
 const LoginPage = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -27,11 +27,7 @@ const LoginPage = () => {
         </div>
         <div className="flex flex-col gap-16">
           <p className="text-heading-20B text-base-900 text-center whitespace-pre-line">{`쉽게 가입하고\n간편하게 로그인하세요`}</p>
-          <div className="flex flex-col gap-4">
-            <LoginButton platform="google" />
-            <LoginButton platform="naver" />
-            <LoginButton platform="kakao" />
-          </div>
+          <LoginButtonList />
         </div>
       </div>
     </div>
