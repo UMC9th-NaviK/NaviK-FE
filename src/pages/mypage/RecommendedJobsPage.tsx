@@ -14,16 +14,19 @@ const RecommendJobPage = () => {
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
   const [isExcludeExpired, setIsExcludeExpired] = useState(false);
 
-  // --- API 데이터 상태 관리 ---
+  // --- API 데이터 및 페이징 상태 관리 ---
   const [jobs, setJobs] = useState<Recruitment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [hasNext, setHasNext] = useState(false);
 
-  // --- 데이터 변환 및 API 호출 로직 ---
-  const fetchJobs = async () => {
+  // --- 데이터 호출 로직 ---
+  const fetchJobs = async (cursor?: string) => {
+    if (isLoading) return;
+
     setIsLoading(true);
     try {
       const body = {
-        // 값이 있으면 배열에 담고, 없으면 null/undefined 대신 빈 배열([])을 할당!
         jobTypes: selectedValues['희망 직무']
           ? [FILTER_MAP['희망 직무'][selectedValues['희망 직무']]]
           : [],
@@ -46,9 +49,11 @@ const RecommendJobPage = () => {
         withEnded: !isExcludeExpired,
       };
 
-      const result = await searchPositions(body, undefined, 20);
-      setJobs(result.content);
-      console.log(result.content);
+      const result = await searchPositions(body, cursor, 20);
+
+      setJobs((prev) => (cursor ? [...prev, ...result.content] : result.content));
+      setNextCursor(result.nextCursor);
+      setHasNext(result.hasNext);
     } catch (error) {
       console.error('공고 로드 실패:', error);
     } finally {
@@ -56,10 +61,17 @@ const RecommendJobPage = () => {
     }
   };
 
-  // 필터나 마감 공고 제외 여부가 바뀔 때마다 실행
   useEffect(() => {
     fetchJobs();
   }, [selectedValues, isExcludeExpired]);
+
+  // 스크롤 핸들러
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (scrollHeight - scrollTop <= clientHeight + 50 && !isLoading && hasNext) {
+      fetchJobs(nextCursor || undefined);
+    }
+  };
 
   const handleItemClick = (filterLabel: string, value: string) => {
     setSelectedValues((prev) => ({ ...prev, [filterLabel]: value }));
@@ -78,7 +90,7 @@ const RecommendJobPage = () => {
 
   return (
     <div className="relative flex h-screen flex-col overflow-hidden bg-white">
-      {/* 배경 원 - 디자인 유지 */}
+      {/* 배경 원 */}
       <div
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 opacity-60"
         style={{
@@ -91,13 +103,13 @@ const RecommendJobPage = () => {
         }}
       />
 
-      {/* 헤더 + 필터바 영역 (고정) - 디자인 유지 */}
+      {/* 헤더 + 필터바 */}
       <div className="relative z-10 shrink-0">
         <SubHeader
           title={'추천 공고'}
           bgColor="bg-white"
           showInfo={true}
-          infoContent="나의 강점 KPI를 가장 잘 살릴 수 있는 공고를 추천해요. 희망 직무, 고용 형태 등 원하는 조건을 설정하면 더 정확한 공고를 확인할 수 있어요."
+          infoContent="나의 강점 KPI를 가장 잘 살릴 수 있는 공고를 추천해요..."
         />
         <FilterBar
           filters={FILTERS}
@@ -126,21 +138,50 @@ const RecommendJobPage = () => {
         </div>
       </div>
 
-      {/* 리스트 - 실제 데이터 매핑 */}
-      <div className="scrollbar-hide relative z-10 flex-1 overflow-y-auto px-4 pb-20">
+      {/* 리스트 영역 */}
+      <div
+        onScroll={handleScroll}
+        className="scrollbar-hide relative z-10 flex-1 overflow-y-auto px-4 pb-20"
+      >
         <div className="flex flex-col gap-4 pt-2">
-          {isLoading ? (
-            <div className="py-20 text-center text-gray-400">공고를 불러오는 중입니다...</div>
+          {/*  처음 데이터 로딩 시 */}
+          {isLoading && jobs.length === 0 ? (
+            <div className="flex h-[60vh] w-full flex-col items-center justify-center gap-6">
+              <Icon
+                icon="line-md:loading-twotone-loop"
+                style={{ width: '80px', height: '80px' }}
+                className="text-primary-blue-500"
+              />
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-opacity-black-60 text-body-16B">맞춤 공고 분석 중</p>
+              </div>
+            </div>
           ) : (
-            jobs.map((job) => <JobCard key={job.id} data={job} />)
-          )}
-          {!isLoading && jobs.length === 0 && (
-            <div className="py-20 text-center text-gray-400">조건에 맞는 공고가 없습니다.</div>
+            <>
+              {jobs.map((job, index) => (
+                <JobCard key={`${job.id}-${index}`} data={job} />
+              ))}
+
+              {/* 추가 데이터 로딩 스피너 */}
+              {isLoading && (
+                <div className="flex justify-center py-10">
+                  <Icon
+                    icon="line-md:loading-twotone-loop"
+                    style={{ width: '40px', height: '40px' }}
+                    className="text-primary-blue-500"
+                  />
+                </div>
+              )}
+
+              {!isLoading && jobs.length === 0 && (
+                <div className="text-base-400 py-20 text-center">조건에 맞는 공고가 없습니다.</div>
+              )}
+            </>
           )}
         </div>
       </div>
 
-      {/* 바텀시트 - 디자인 유지 */}
+      {/* 바텀시트 */}
       <BottomSheet
         title={activeFilter || ''}
         isOpen={!!activeFilter}

@@ -24,6 +24,14 @@ export const JobCard = ({ data }: JobCardProps) => {
 
   const isApplicable = satisfyExperience && satisfyEducation && satisfyMajor;
 
+  // ✅ D-Day 표시 문구 제어
+  const getDDayText = () => {
+    if (dday !== null && dday < 0) return '마감'; // 음수면 마감
+    if (dday === 0) return 'D-Day';
+    if (dday && dday > 0) return `D-${dday}`;
+    return '상시';
+  };
+
   const deadlineText = endDate ? `${endDate.split('T')[0].replace(/-/g, '.')}까지` : '상시 채용';
 
   return (
@@ -106,7 +114,7 @@ export const JobCard = ({ data }: JobCardProps) => {
                   : 'border-base-200 bg-base-200/50 text-opacity-black-60'
               }`}
             >
-              {dday ? `D-${dday}` : '상시'}
+              {getDDayText()}
             </span>
           </div>
           <span
