@@ -1,35 +1,28 @@
-import { useState, useEffect } from 'react';
+import { Icon } from '@iconify/react';
 import ProfileHeader from '../../components/myPage/ProfileHeader';
 import RecommendationList from '../../components/myPage/RecommendationList';
 import { FOOTERPB } from '../../components/common/Footer';
-import { getUserProfile } from '../../apis/user';
-import { getRecruitments } from '../../apis/recruit';
-import { type RoleType, convertJobToRole } from '../../components/myPage/profiledata';
-import type { Recruitment } from '../../types/recruits';
-import type { UserProfile } from '../../types/user';
+import { useProfile } from '../../hooks/useProfile';
+import { useRecruitments } from '../../hooks/useRecruitments';
 
 const ProfilePage = () => {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [recruitments, setRecruitments] = useState<Recruitment[]>([]);
-  const [role, setRole] = useState<RoleType>('FE');
+  const { profile, role, isLoading: isProfileLoading } = useProfile();
+  const { recruitments, isLoading: isRecruitLoading } = useRecruitments();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [profileData, recruitData] = await Promise.all([getUserProfile(), getRecruitments()]);
+  if (isProfileLoading || isRecruitLoading) {
+    return (
+      <div className={`flex min-h-screen w-full flex-col items-center justify-center ${FOOTERPB}`}>
+        <Icon
+          icon="line-md:loading-twotone-loop"
+          style={{ width: '80px', height: '80px' }}
+          className="text-primary-blue-500"
+        />
+        <p className="text-body-16SB text-opacity-black-60 mt-4">프로필 정보를 불러오고 있어요</p>
+      </div>
+    );
+  }
 
-        setProfile(profileData);
-        setRecruitments(recruitData);
-        setRole(convertJobToRole(profileData.job));
-      } catch (error) {
-        console.error('데이터 로딩 중 에러 발생', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (!profile) return <div className="p-10 text-center">로딩 중...</div>;
+  if (!profile) return null;
 
   return (
     <div className={`flex w-full flex-col ${FOOTERPB}`}>
