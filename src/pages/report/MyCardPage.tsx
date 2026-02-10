@@ -26,7 +26,7 @@ const MyCardPage = () => {
       <div className="bg-white-background flex flex-col gap-[16px] pt-[16px] pr-[16px] pl-[16px]">
         <h1 className="text-heading-20B"> 직무 전체 역량 </h1>
         {isFetching || isLoading ? (
-          <div className="flex flex-col gap-4 p-4 pb-7">
+          <div className="flex flex-col gap-[10px] pb-[24px]">
             <div className="grid grid-cols-2 gap-4">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="bg-base-200 aspect-2/3 w-full animate-pulse rounded-lg" />
