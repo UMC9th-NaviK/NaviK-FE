@@ -4,13 +4,13 @@ export type RequestPortfolio =
       content: string;
     }
   | {
-      inputType: 'FILE';
+      inputType: 'PDF';
       fileUrl: string;
     };
 
 export type ResponsePortfolio = {
   id: number;
-  inputType: 'TEXT' | 'FILE';
+  inputType: 'TEXT' | 'PDF';
   status: 'COMPLETED' | 'RETRY_REQUIRED' | 'FAILED';
 };
 
