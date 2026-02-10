@@ -8,6 +8,7 @@ export interface ApiResponse<T> {
 
 // 유저 프로필 (마이페이지)
 export interface UserProfile {
+  id: number;
   profileImageUrl: string;
   nickname: string;
   job: string;
