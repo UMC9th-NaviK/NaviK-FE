@@ -34,7 +34,10 @@ export default function StudyCard3({
         tabIndex={0}
         onClick={onClick}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') onClick?.();
+          if (e.key === 'Enter' || e.key === '') {
+            e.preventDefault();
+            onClick?.();
+          }
         }}
         className={`flex flex-col self-stretch rounded-[16px] bg-white p-4 shadow-[0_0_10px_0_#DBEBFE] ${className} `}
       >
