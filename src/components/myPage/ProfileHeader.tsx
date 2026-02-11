@@ -2,11 +2,11 @@ import { Icon } from '@iconify/react';
 import bedgeImg from '../../../public/images/mypage/bedgeImg.svg';
 import { type RoleType, bgStyles, roleImages } from '../myPage/profiledata';
 import { Link } from 'react-router-dom';
-import type { UserProfile } from '../../types/user';
+import type { ResponseUserInfo } from '../../types/user';
 
 interface HeaderProps {
   role: RoleType;
-  profile: UserProfile;
+  profile: ResponseUserInfo;
 }
 
 const ProfileHeader = ({ role, profile }: HeaderProps) => {
@@ -56,8 +56,8 @@ const ProfileHeader = ({ role, profile }: HeaderProps) => {
           </div>
         </Link>
         <div className="flex flex-col">
-          {/* 닉네임 */}
-          <div className="text-heading-18B text-white">{profile.nickname}</div>
+          <div className="text-heading-18B text-white">{profile.nickname || profile.name}</div>
+
           <div className="text-body-16M text-[#DED6FF]">
             {profile.job} | {profile.isEntryLevel ? '신입' : '경력'}
           </div>

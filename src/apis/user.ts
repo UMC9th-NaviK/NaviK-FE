@@ -22,9 +22,9 @@ export const getUserProfile = async (): Promise<UserProfile> => {
   }
 };
 
-export const getUserMyPage = async (): Promise<UserProfile> => {
+export const getUserMyPage = async (): Promise<ResponseUserInfo> => {
   try {
-    const response = await axiosInstance.get<ApiResponse<UserProfile>>('/users/my-page');
+    const response = await axiosInstance.get<ApiResponse<ResponseUserInfo>>('/users/my-page');
     if (response.data.isSuccess) {
       return response.data.result;
     }
