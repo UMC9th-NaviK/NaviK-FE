@@ -43,8 +43,8 @@ export function getNoticeNavigationPath(notice: ResponseNotice): string {
       // 외부 링크는- 그대로 반환
       return notice.additionalInfoPerNotificationType;
     case 'GOAL':
-      // 목표 상세 페이지로 이동
-      return `/goals/${notice.additionalInfoPerNotificationType}`;
+      // TODO: 목표 상세 페이지 경로 확인
+      return `/goals`;
     case 'STUDY':
       // 스터디 상세 페이지로 이동
       return `/social/study/${notice.additionalInfoPerNotificationType}/evaluation`;
