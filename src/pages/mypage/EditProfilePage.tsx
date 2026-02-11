@@ -23,7 +23,7 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
   const handleSave = async () => {
     try {
       await patchUserProfile(formData);
-      alert('수정 완료!');
+
       navigate('/mypage');
     } catch (error) {
       alert('수정 실패');

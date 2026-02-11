@@ -11,7 +11,7 @@ export const useMyPage = () => {
     const fetchProfile = async () => {
       try {
         const data = await getUserMyPage();
-        console.log(data);
+
         setProfile(data);
       } catch (error) {
         console.error('내 프로필 로드 에러:', error);
@@ -32,7 +32,7 @@ export const useMyPage = () => {
   return {
     profile,
     isLoading,
-    formattedEdu, // '4년제 대학교'
-    formattedDepts, // 'IT, 공학'
+    formattedEdu,
+    formattedDepts,
   };
 };

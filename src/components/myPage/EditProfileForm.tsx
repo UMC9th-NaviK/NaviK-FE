@@ -8,8 +8,6 @@ import type { UserProfile } from '../../types/user';
 import axios from 'axios';
 
 const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
-  // profile이 부모로부터 전달된 시점(마운트 시점)에
-
   const [formData, setFormData] = useState({
     nickname: profile.nickname,
     isEntryLevel: profile.isEntryLevel,
@@ -24,7 +22,6 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
         alert('수정 성공');
       }
     } catch (error) {
-      // ✅ as any를 지우고 axios.isAxiosError로 체크!
       alert('수정 실패 ');
 
       if (axios.isAxiosError(error)) {
