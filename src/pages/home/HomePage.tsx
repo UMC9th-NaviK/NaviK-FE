@@ -5,9 +5,11 @@ import HomeHeader from '../../components/home/HomeHeader';
 import HomeJobSuggest from '../../components/home/HomeJobSuggest';
 import HotBoardSection from '../../components/home/HotBoardSection';
 import KpiFile from '../../components/home/KpiFile';
+import { useUser } from '../../hooks/useUser';
 
 const HomePage = () => {
   const { recruitments } = useRecruitments();
+  const { name } = useUser();
 
   return (
     <>
@@ -17,7 +19,7 @@ const HomePage = () => {
           <HomeHeader />
           <div className="flex flex-col gap-8">
             <p className="text-heading-20B text-base-100 px-4">
-              김나비님
+              {name}님
               <br /> 커리어 항해를 시작할까요?
             </p>
             <KpiFile />

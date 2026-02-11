@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import RecommandCard from '../myPage/RecommandCard';
 import type { Recruitment } from '../../types/recruits';
+import { useUser } from '../../hooks/useUser';
 
 interface HomeJobSuggestProps {
   recruitments: Recruitment[];
@@ -8,13 +9,14 @@ interface HomeJobSuggestProps {
 
 const HomeJobSuggest = ({ recruitments }: HomeJobSuggestProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { name } = useUser();
 
   return (
     <>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between px-4">
           <span className="text-heading-18B text-base-900 flex">
-            <span className="text-primary-blue-500">김나비</span>
+            <span className="text-primary-blue-500">{name}</span>
             님을 위한 추천 공고
           </span>
           <button
