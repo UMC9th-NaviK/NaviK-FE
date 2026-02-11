@@ -1,18 +1,59 @@
 import { useNavigate } from "react-router-dom";
 import { ROLE_THEME_MAP } from "../../constants/roleTheme";
-import type { Role } from "../../types/role";
+import { ROLE_MAP } from "../../types/role";
 import LevelCard from "../../components/growth/LevelCard";
 import GrowthRecordInput from "../../components/growth/GrowthRecordInput";
 import GrowthTimeline from "../../components/growth/GrowthTimeline";
+import { getUserProfile } from "../../apis/user";
+import { useState, useEffect } from "react";
+import kroman from 'kroman';
 
-interface GrowthMainPageProps {
-  role : Role;
-}
-
-const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
+const GrowthMainPage = () => {
   const navigate = useNavigate();
 
-  const theme = ROLE_THEME_MAP[role] || ROLE_THEME_MAP['pm']; 
+  const [profile, setProfile] = useState({
+    id: 0,
+    name: "",
+    job: "pm",
+    profileImage: "/icons/reports/logo.svg",
+    englishName: ""
+});
+
+  const theme = ROLE_THEME_MAP[profile.job] || ROLE_THEME_MAP['pm'];
+
+  useEffect(() => {
+      const fetchUserProfile = async () => {
+          try {
+              const response = await getUserProfile();
+
+              const role = (ROLE_MAP[response.job] || 'pm');
+
+              const romanized = kroman.parse(response.nickname);
+              const englishName = (romanized.replace(/-/g, '').replace(/\s+/g, '').toLowerCase());
+
+              setProfile({
+                id: response.id,
+                name: response.nickname,
+                job: role,
+                profileImage: response.profileImageUrl,
+                englishName: englishName
+            });
+          }
+
+          catch (error) {
+              console.log("사용자 찾을 수 없음");
+          }
+      }
+
+      fetchUserProfile();
+  }, [])
+
+  const roleMapping : Record<string, string> = {
+    "pm": "PRODUCT MANAGER",
+    "designer": "PRODUCT DESIGNER",
+    "frontend": "FRONTEND DEVELOPER",
+    "backend": "BACKEND DEVELOPER"
+  };
 
   return (
     <div className={`bg-[#4E83F9]`}>
@@ -43,20 +84,21 @@ const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
         <div className="relative -translate-y-[45%] flex flex-1 z-20 w-full py-[10px] px-[26px] gap-[20px] justify-between">
           <div 
           className={`flex items-center justify-center w-[115px] h-[115px] rounded-full`} 
-          style={{ background: `var(--role-${role}-secondary)`}} >
+          style={{ background: `var(--role-${profile.job}-secondary)`}} >
             <img 
+            src={`${profile.profileImage}`}
             alt="프로필 이미지"
             className="flex items-center justify-center w-[100px] h-[100px] rounded-full bg-white" />
           </div>
           <div className={`flex justify-end items-end mb-[10px]`}>
-            <span className={`bg-base-100 px-[16px] py-[8px] border border-1 ${theme.surfaceBorder} rounded-[50px] text-body-eng-14SB ${theme.primaryText}`}> PRODUCT MANAGER </span>
+            <span className={`bg-base-100 px-[16px] py-[8px] border border-1 ${theme.surfaceBorder} rounded-[50px] text-body-eng-14SB ${theme.primaryText}`}> {roleMapping[profile.job]} </span>
           </div>
         </div>
 
         <div className="flex flex-1 items-center justify-between -mt-[65px] pt-[10px] px-[24px] pb-[10px]">
           <div className="flex flex-1 items-center gap-[9px]">
-            <p className="text-heading-20B text-black-900"> 김나비 </p>
-            <p className="text-body-eng-16SB text-[#11111199]"> KIM NA VI </p>
+            <p className="text-heading-20B text-black-900"> { profile.name } </p>
+            <p className="text-body-eng-16SB text-[#11111199]"> { profile.englishName } </p>
           </div>
           <button
           onClick={() => navigate("/mypage")}>
@@ -68,7 +110,7 @@ const GrowthMainPage = ({ role } : GrowthMainPageProps) => {
         </div>
 
         <div className="flex flex-col px-[16px] pb-[16px] gap-[24px]">
-          <LevelCard role={"designer"} />
+          <LevelCard role={profile.job} />
           <GrowthRecordInput />
           <GrowthTimeline />
         </div> 
