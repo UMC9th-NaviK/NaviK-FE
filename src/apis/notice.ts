@@ -11,3 +11,15 @@ export async function getNotice() {
 
   return data.result;
 }
+
+export async function patchNotice({ notificationId }: { notificationId: number }) {
+  const { data } = await axiosInstance.patch<CommonResponse<string>>(
+    `/notifications/${notificationId}`,
+  );
+
+  if (!data.isSuccess) {
+    throw new Error(data.message || 'Failed to mark notices as read');
+  }
+
+  return data.result;
+}
