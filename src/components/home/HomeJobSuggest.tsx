@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import RecommandCard from '../myPage/RecommandCard';
 import type { Recruitment } from '../../types/recruits';
 import { useUser } from '../../hooks/useUser';
+import { useNavigate } from 'react-router-dom';
 
 interface HomeJobSuggestProps {
   recruitments: Recruitment[];
@@ -11,16 +12,18 @@ const HomeJobSuggest = ({ recruitments }: HomeJobSuggestProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { name } = useUser();
 
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between px-4">
           <span className="text-heading-18B text-base-900 flex">
-            <span className="text-primary-blue-500">{name}</span>
+            <span className="text-primary-blue-500">{name || '김나비'}</span>
             님을 기다리는 추천 공고
           </span>
           <button
-            onClick={() => (window.location.href = '/mypage/recommend')}
+            onClick={() => navigate('/mypage/recommend')}
             className="text-opacity-black-60 text-caption-12M flex items-center gap-1"
           >
             더보기

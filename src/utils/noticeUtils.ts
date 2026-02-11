@@ -52,24 +52,3 @@ export function getNoticeNavigationPath(notice: ResponseNotice): string {
       return '/';
   }
 }
-
-export function formatNoticeTime(createdAt: string): string {
-  const now = new Date();
-  const noticeDate = new Date(createdAt);
-  const diffInMs = now.getTime() - noticeDate.getTime();
-
-  const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
-  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-  if (diffInMinutes < 60) {
-    // 1시간 미만
-    return diffInMinutes === 0 ? '방금 전' : `${diffInMinutes}분 전`;
-  } else if (diffInHours < 24) {
-    // 24시간 미만
-    return `${diffInHours}시간 전`;
-  } else {
-    // 24시간 이상
-    return `${diffInDays}일 전`;
-  }
-}

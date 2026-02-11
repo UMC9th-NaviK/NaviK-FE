@@ -21,9 +21,9 @@ const HotBoardSection = () => {
     }
   };
 
-  const { data, isFetching, isError } = useHotBoardList();
+  const { data, isLoading, isError } = useHotBoardList();
 
-  if (isFetching) {
+  if (isLoading) {
     return (
       <div className="flex flex-col gap-4 px-4">
         <div className="flex items-center justify-between">
@@ -37,7 +37,7 @@ const HotBoardSection = () => {
           </button>
         </div>
 
-        <div className="border-base-100 bg-base-100/40 shadow-card text-base-700 flex h-[237px] items-center justify-center rounded-2xl border">
+        <div className="border-base-100 bg-base-100/40 shadow-card text-base-700 flex h-59.5 items-center justify-center rounded-2xl border">
           불러오는 중...
         </div>
       </div>
@@ -58,8 +58,8 @@ const HotBoardSection = () => {
           </button>
         </div>
 
-        <div className="border-base-100 bg-base-100/40 shadow-card text-base-700 flex h-[237px] items-center justify-center rounded-2xl border">
-          불러오는 중...
+        <div className="border-base-100 bg-base-100/40 shadow-card text-base-700 flex h-59.5 items-center justify-center rounded-2xl border">
+          오류가 발생했습니다. 잠시 후 다시 시도해주세요.
         </div>
       </div>
     );
@@ -98,7 +98,7 @@ const HotBoardSection = () => {
 
         {/* 인디케이터 점 */}
         <div className="flex items-center justify-center gap-2">
-          {Array.from({ length: 5 }).map((_, idx) => (
+          {Array.from({ length: Math.min(data?.length ?? 0, 5) }).map((_, idx) => (
             <button
               key={idx}
               onClick={() => goToSlide(idx)}
