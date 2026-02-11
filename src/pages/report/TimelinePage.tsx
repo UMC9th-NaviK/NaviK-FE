@@ -4,7 +4,6 @@ import GrowthChart from "../../components/growth/GrowthChart";
 import GrowthSchedule from "../../components/growth/GrowthSchedule";
 import ReportNavbar from "../../components/report/ReportNavbar";
 import { getGrowthLogMonthly } from "../../apis/growth/growth";
-import { useState } from "react";
 
 const TimelinePage = () => {
   const yearMonth = new Date().toISOString().slice(0, 7);
