@@ -5,7 +5,7 @@ type CommentCardProps = {
   timeAgo: string;
   profileSrc: string;
   addIconSrc: string;
-  deleteIconSrc: string;
+  deleteIconSrc?: string;
   onAdd?: () => void;
   onDelete?: () => void;
 };
@@ -21,6 +21,8 @@ export default function CommentCard({
   onAdd,
   onDelete,
 }: CommentCardProps) {
+  const canDelete = typeof onDelete === 'function';
+
   return (
     <div className="w-full rounded-2xl bg-white">
       <div className="flex w-full items-start justify-between">
@@ -50,17 +52,19 @@ export default function CommentCard({
             <img src={addIconSrc} alt="댓글 추가" className="h-5 w-5" />
           </button>
 
-          <button
-            type="button"
-            aria-label="댓글 삭제"
-            className="h-5 w-5 cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete?.();
-            }}
-          >
-            <img src={deleteIconSrc} alt="댓글 삭제" className="h-5 w-5" />
-          </button>
+          {canDelete && deleteIconSrc && (
+            <button
+              type="button"
+              aria-label="댓글 삭제"
+              className="h-5 w-5 cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete?.();
+              }}
+            >
+              <img src={deleteIconSrc} alt="댓글 삭제" className="h-5 w-5" />
+            </button>
+          )}
         </div>
       </div>
 

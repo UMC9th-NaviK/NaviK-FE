@@ -1,16 +1,23 @@
 import { useState } from "react";
 import GoalsNavbar from "../../components/goals/GoalsNavbar"
+import { postGoals } from "../../apis/goals/goals";
+import { useNavigate } from "react-router-dom";
 
 const AddingGoalsPage = () => {
+    const navigate = useNavigate();
+
     const [goalTitle, setGoalTitle] = useState("");
-    const MAX_LENGTH = 10;
+    const [goalContent, setGoalContent] = useState("");
 
     const today = new Date();
+
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isClick, setIsClick] = useState(false);
     const [currentDate, setCurrentDate] = useState(new Date());
 
     const week = ['일', '월', '화', '수', '목', '금', '토'];
+
+    const MAX_LENGTH = 10;
 
     const renderCalendar = () => {
         const year = currentDate.getFullYear();
@@ -18,23 +25,28 @@ const AddingGoalsPage = () => {
 
         const firstDayOfMonth = new Date(year, month, 1).getDay();
         const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-
         const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
 
         const days = [];
+
+        const todayCopy = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
         for (let i = firstDayOfMonth - 1; i >= 0; i--) {
             days.push({
                 date: lastDateOfPrevMonth - i,
                 currentMonth: false,
+                isPast: true,
                 id: `prev-${i}`
             });
         }
 
         for (let i = 1; i <= lastDateOfMonth; i++) {
+            const targetDate = new Date(year, month, i);
+
             days.push({
                 date: i,
                 currentMonth: true,
+                isPast : targetDate < todayCopy, 
                 id: `curr-${i}`
             });
         }
@@ -43,6 +55,54 @@ const AddingGoalsPage = () => {
     };
 
     const calendarDays = renderCalendar();
+
+    const handleAddingGoals = async () => {
+        if (!goalContent.trim() || !goalTitle.trim()) {
+            alert("목표가 입력되지 않았습니다.");
+
+            return;
+        }
+
+        try {
+            const year = selectedDate.getFullYear();
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+
+            const formattedDate = `${year}-${month}-${day}`;
+
+            const requestData = {
+                title : goalTitle,
+                content : goalContent,
+                endDate : formattedDate,
+            }
+
+            await postGoals(requestData);
+
+            console.log("목표 등록 성공");
+
+            navigate('/goals')
+        } 
+
+        catch (error) {
+            console.error("목표 등록 실패:", error);
+        }
+
+        finally {
+            handleCancel();
+        }
+    }
+
+    const handleCancel = () => {
+        setGoalTitle("");
+        setGoalContent("");
+
+        const resetDate = new Date();
+
+        setSelectedDate(resetDate);
+        setCurrentDate(resetDate);
+
+        setIsClick(false);
+    }
 
     const handleClick = () => setIsClick(prev => !prev);
 
@@ -77,7 +137,7 @@ const AddingGoalsPage = () => {
 
     return (
         <div>
-            <GoalsNavbar />
+            <GoalsNavbar goalId={0} />
             <div className="bg-white-background min-h-screen flex flex-col p-[16px]">
                 <div className="flex flex-col bg-white shadow-[0_0_10px_0_#DBEBFE] rounded-[16px] p-[16px] gap-[24px]">
                     <div className="flex flex-col gap-[16px]">
@@ -95,8 +155,10 @@ const AddingGoalsPage = () => {
                         <div className="flex flex-col gap-[12px]">
                             <p className="text-body-16B text-base-900"> 목표를 입력해주세요. </p>
                             <textarea 
-                                className="bg-white h-[83px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
-                                placeholder="나의 목표를 작성하고, 성장의 첫 계단을 나아가보세요."
+                            value={goalContent}
+                            onChange={(e) => setGoalContent(e.target.value)}
+                            className="bg-white h-[83px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
+                            placeholder="나의 목표를 작성하고, 성장의 첫 계단을 나아가보세요."
                             />
                         </div>
 
@@ -153,15 +215,21 @@ const AddingGoalsPage = () => {
                                         {calendarDays.map((item) => {
                                             const isSelected = item.currentMonth && selectedDate.getDate() === item.date && selectedDate.getMonth() === currentDate.getMonth();
                                             
+                                            const isSelectable = item.currentMonth && !item.isPast;
+
                                             return (
                                                 <div 
                                                     key={item.id}
-                                                    onClick={() => item.currentMonth && setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))}
+                                                    onClick={() => {
+                                                        if (isSelectable) {
+                                                            setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))
+                                                        }
+                                                    }}
                                                     className="flex items-center justify-center cursor-pointer"
                                                 >
                                                     <div className={`
                                                         flex items-center justify-center w-[32px] h-[32px] text-caption-12M
-                                                        ${!item.currentMonth ? "text-base-300 opacity-40" : "text-base-800"}
+                                                        ${(!item.currentMonth || item.isPast) ? "text-base-300 opacity-40" : "text-base-800"}
                                                         ${isSelected ? "bg-primary-blue-500 text-white rounded-full" : ""}
                                                     `}>
                                                         {item.date}
@@ -177,16 +245,21 @@ const AddingGoalsPage = () => {
 
                     <div className="flex flex-1 items-center justify-center gap-[16px]">
                         <button 
+                        onClick={handleCancel}
                         className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[40px] py-[12px] bg-base-200">
                             <p className="text-center text-body-16B text-base-600"> 취소 </p>
                         </button>
 
                         {isClick ? (
-                            <button className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[40px] py-[12px] bg-primary-blue-500">
+                            <button 
+                            onClick={handleAddingGoals}
+                            className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[40px] py-[12px] bg-primary-blue-500">
                                 <p className="text-center text-body-16B text-base-100"> 목표 저장 </p>
                             </button>
                         ) : (
-                            <button className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[40px] py-[12px] bg-primary-blue-500">
+                            <button 
+                            onClick={handleAddingGoals}
+                            className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[40px] py-[12px] bg-primary-blue-500">
                                 <p className="text-center text-body-16B text-base-100"> 작성 완료 </p>
                             </button>
                         )}

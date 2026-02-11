@@ -1,8 +1,18 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import useDeleteGoals from '../../hooks/goals/useDeleteGoals';
 
-const GoalsNavbar = () => {
+interface GoalsNavbarProps {
+    goalId : number;
+    goalTitle? : string;
+    content? : string;
+    endDate? : string;
+}
+
+const GoalsNavbar = ({ goalId } : GoalsNavbarProps) => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const { mutate } = useDeleteGoals();
 
     const title : Record<string, string> = {
         '/goals' : '목표 설정',
@@ -12,7 +22,19 @@ const GoalsNavbar = () => {
 
     const getTitle = title[location.pathname];
 
-    const deleteIcon = location.pathname === '/goals/modify' || location.pathname === '/goals/add';
+    const deleteIcon = location.pathname === '/goals/modify';
+
+    const handleDeleteGoals = () => {
+        if (!goalId || goalId === 0) {
+            return;
+        }
+
+        mutate(goalId, {
+            onSuccess : () => {
+                navigate('/goals');
+            }
+        });
+    }
 
     return (
         <nav className='flex bg-white items-center p-[24px] gap-[10px]'>
@@ -29,7 +51,7 @@ const GoalsNavbar = () => {
                 
                 <div className='w-[24px] h-[24px] flex items-center justify-center'>
                     {deleteIcon && (
-                        <button onClick={() => { /* 삭제 로직 넣을 예정*/ }}>
+                        <button onClick={handleDeleteGoals}>
                             <img 
                                 src="/icons/goals/material-symbols_delete-outline-rounded.svg" 
                                 alt="삭제 버튼"
