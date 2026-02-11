@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import type { ResponseNotice } from '../../types/notice';
 import { formatNoticeTime, getNoticeNavigationPath } from '../../utils/noticeUtils';
+import { useUpdateNotice } from '../../hooks/mutations/useUpdateNotice';
 
 type NoticeItemProps = {
   notice: ResponseNotice;
@@ -9,6 +10,7 @@ type NoticeItemProps = {
 
 const NoticeItem = ({ notice, showBorder = true }: NoticeItemProps) => {
   const navigate = useNavigate();
+  const { mutate, isPending, isError } = useUpdateNotice();
 
   const handleClick = () => {
     const path = getNoticeNavigationPath(notice);
@@ -19,7 +21,9 @@ const NoticeItem = ({ notice, showBorder = true }: NoticeItemProps) => {
       navigate(path);
     }
 
-    // TODO: 읽음 처리 API 호출
+    if (!notice.read && !isPending && !isError) {
+      mutate(notice.notificationId);
+    }
   };
 
   const time = formatNoticeTime(notice.createdAt);
