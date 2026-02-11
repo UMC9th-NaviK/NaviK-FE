@@ -170,7 +170,9 @@ const GrowthRecord = () => {
                 </div>
 
                 <div className="flex flex-1 items-center justify-center gap-[16px]">
-                    <button className="flex items-center justify-center w-full h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-base-200">
+                    <button 
+                    onClick={handleCancelGrowthLog}
+                    className="flex items-center justify-center w-full h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-base-200">
                         <p className="text-body-16B text-base-600 text-center"> 취소 </p>
                     </button>
 
