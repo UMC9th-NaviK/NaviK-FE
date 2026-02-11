@@ -171,19 +171,6 @@ const MyEvaluationPage = () => {
                 상세 불러오는 중...
               </div>
             )}
-
-            {!loading && hasNext && (
-              <button
-                type="button"
-                className="bg-primary-blue-500 h-[48px] w-full cursor-pointer rounded-2xl text-white"
-                onClick={() => {
-                  const cursorNum = nextCursor ? Number(nextCursor) : undefined;
-                  fetchListAndDetails(cursorNum);
-                }}
-              >
-                더 보기
-              </button>
-            )}
           </div>
         </div>
       </div>
