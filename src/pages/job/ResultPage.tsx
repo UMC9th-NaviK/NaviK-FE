@@ -14,7 +14,6 @@ const ResultPage = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* TODO: 은솔 공통 컴포넌트로 변경 */}
       <CardHeader />
       <CardNavigate selected={selected} setSelected={setSelected} />
       <div className="bg-white-background flex-1">

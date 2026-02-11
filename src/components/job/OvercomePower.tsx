@@ -1,11 +1,15 @@
+import { useGetOvercomeKpiCards } from '../../hooks/queries/useKpiCards';
 import CardSlider from '../common/CardSlider';
 import ResultButton from './ResultButton';
 import StudySuggest from './StudySuggest';
 
 const OvercomePower = () => {
+  const { data, isFetching } = useGetOvercomeKpiCards();
+  const cards = data || [];
+
   return (
     <div className="flex flex-col">
-      <CardSlider />
+      <CardSlider cards={cards} isLoading={isFetching} />
       <div className="mb-6.75 flex flex-col gap-4 p-4">
         <span className="flex items-center gap-2">
           <img src="/icons/jobs/mouse-cursor.svg" className="h-6 w-6" />

@@ -24,9 +24,8 @@ export const JobCard = ({ data }: JobCardProps) => {
 
   const isApplicable = satisfyExperience && satisfyEducation && satisfyMajor;
 
-  // ✅ D-Day 표시 문구 제어
   const getDDayText = () => {
-    if (dday !== null && dday < 0) return '마감'; // 음수면 마감
+    if (dday !== null && dday < 0) return '마감';
     if (dday === 0) return 'D-Day';
     if (dday && dday > 0) return `D-${dday}`;
     return '상시';
@@ -36,16 +35,14 @@ export const JobCard = ({ data }: JobCardProps) => {
 
   return (
     <div
-      onClick={() => window.open(link, '_blank')} // 카드 클릭 시 공고 이동
+      onClick={() => window.open(link, '_blank')}
       className={`border-primary-blue-100 bg-base-100 shadow-card w-full cursor-pointer rounded-2xl border p-5 transition-all active:scale-[0.98] ${
         !isApplicable ? 'opacity-50' : 'opacity-100'
       }`}
     >
       <div className="flex items-start gap-3">
-        {/* 기업 로고 - 서버 이미지 적용 */}
-        <div
-          className={`border-base-100 flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border bg-white`}
-        >
+        {/* 기업 로고 */}
+        <div className="border-base-100 flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border bg-white">
           {companyLogo ? (
             <img src={companyLogo} alt={companyName} className="h-full w-full object-contain" />
           ) : (
@@ -57,18 +54,19 @@ export const JobCard = ({ data }: JobCardProps) => {
 
         <div className="flex w-full min-w-0 flex-col">
           {/* 회사, 공고 제목 */}
-          <div className="mb-4 flex flex-col">
+          <div className="mb-4 flex flex-col gap-1">
+            {' '}
             <span
               className={`text-body-14B ${isApplicable ? 'text-primary-blue-500' : 'text-opacity-black-60'}`}
             >
               {companyName}
             </span>
-            <span className="text-heading-18B text-base-900 line-clamp-2 min-h-10 leading-tight">
+            <span className="text-heading-18B text-base-900 line-clamp-2 leading-tight">
               {title}
             </span>
           </div>
 
-          {/* 상세 영역 */}
+          {/* 상세 영역  */}
           <div className="mb-5 flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <div className="text-opacity-black-60 flex min-w-20 items-center gap-1.5">
@@ -97,10 +95,7 @@ export const JobCard = ({ data }: JobCardProps) => {
 
           {/* 태그, D-Day */}
           <div className="mb-1 flex items-center gap-2 overflow-hidden">
-            <span
-              key={hashTags[2]}
-              className="bg-base-200/50 text-opacity-black-60 text-caption-12M border-base-200 shrink-0 rounded-lg border px-2 py-1"
-            >
+            <span className="bg-base-200/50 text-opacity-black-60 text-caption-12M border-base-200 shrink-0 rounded-lg border px-2 py-1">
               #{hashTags[2]}
             </span>
             <span className="bg-base-200/50 text-opacity-black-60 text-caption-12M border-base-200 shrink-0 rounded-lg border px-2 py-1">
