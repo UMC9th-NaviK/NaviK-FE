@@ -16,6 +16,8 @@
     "@tanstack/react-query-devtools": "^5.91.3",
     "axios": "^1.13.2",
     "framer-motion": "^12.25.0",
+    "hangul-romanization": "^1.0.1",
+    "kroman": "^1.0.1",
     "lottie-react": "^2.4.1",
     "react": "^19.2.0",
     "react-day-picker": "^9.13.0",
