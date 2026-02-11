@@ -20,7 +20,7 @@ const HomeJobSuggest = ({ recruitments }: HomeJobSuggestProps) => {
             님을 기다리는 추천 공고
           </span>
           <button
-            onClick={() => (window.location.href = '/recommend')}
+            onClick={() => (window.location.href = '/mypage/recommend')}
             className="text-opacity-black-60 text-caption-12M flex items-center gap-1"
           >
             더보기
