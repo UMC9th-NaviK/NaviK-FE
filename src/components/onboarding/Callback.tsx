@@ -2,6 +2,8 @@ import { Suspense, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { refreshAccessToken } from '../../apis/auth';
 import { redirectByUserStatus } from '../../utils/authRedirect';
+import { convertJobToShortCode, useUserStore } from '../../store/useUserStore';
+import { getUserInfo } from '../../apis/user';
 
 const OAuthCallbackContent = () => {
   const navigate = useNavigate();
@@ -17,6 +19,15 @@ const OAuthCallbackContent = () => {
         // accessToken 저장
         localStorage.setItem('accessToken', accessToken);
         console.log('✅ Access token saved');
+
+        // 프로필 조회 및 store에 저장
+        const profile = await getUserInfo();
+        useUserStore.getState().setUser({
+          name: profile.name,
+          userId: profile.id,
+          nickname: profile.nickname,
+          job: convertJobToShortCode(profile.job),
+        });
 
         // 사용자 상태에 따라 분기
         redirectByUserStatus(status, navigate);

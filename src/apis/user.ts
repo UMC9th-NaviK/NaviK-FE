@@ -1,4 +1,4 @@
-import type { ApiResponse, UserProfile } from '../types/user';
+import type { ApiResponse, ResponseUserInfo, UserProfile } from '../types/user';
 import axiosInstance from './axios';
 
 export const getUserProfile = async (): Promise<UserProfile> => {
@@ -15,3 +15,12 @@ export const getUserProfile = async (): Promise<UserProfile> => {
     throw error;
   }
 };
+
+export async function getUserInfo(): Promise<ResponseUserInfo> {
+  const { data } = await axiosInstance.get<ApiResponse<ResponseUserInfo>>('/users/my-page');
+
+  if (!data.isSuccess) {
+    throw new Error(data.message || 'Failed to get user info');
+  }
+  return data.result;
+}

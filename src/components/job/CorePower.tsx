@@ -1,11 +1,15 @@
+import { useGetCoreKpiCards } from '../../hooks/queries/useKpiCards';
 import CardSlider from '../common/CardSlider';
 import JobSuggest from './JobSuggest';
 import ResultButton from './ResultButton';
 
 const CorePower = () => {
+  const { data, isFetching } = useGetCoreKpiCards();
+  const cards = data || [];
+
   return (
     <div className="flex flex-col">
-      <CardSlider />
+      <CardSlider cards={cards} isLoading={isFetching} />
       <div className="mb-6.75 flex flex-col gap-4 p-4">
         <span className="flex items-center gap-2">
           <img src="/icons/jobs/circle-rounded.svg" className="h-6 w-6" />

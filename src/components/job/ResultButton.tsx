@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 const ResultButton = () => {
+  const navigate = useNavigate();
+
   return (
     <button
       className="text-primary-blue-500 text-body-16B w-full rounded-full py-3 text-center"
@@ -7,6 +11,9 @@ const ResultButton = () => {
         background:
           'linear-gradient(0deg, rgba(255, 255, 255, 0.00) 0%, var(--base-100-white, #FFF) 100%)',
         boxShadow: '0 0 40px 0 var(--primary-blue-200, #B8D4FE)',
+      }}
+      onClick={() => {
+        navigate('/home');
       }}
     >
       분석 결과 활용하기
