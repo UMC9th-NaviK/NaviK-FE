@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { postGrowthLog } from "../../apis/growth/growth";
+import { postGrowthLog, postGrowthLogRetry } from "../../apis/growth/growth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getNotionOauth } from "../../apis/growth/notionOAuth";
 import { useSearchParams } from "react-router-dom";
@@ -22,8 +22,6 @@ const GrowthRecord = () => {
     const { mutate } = useMutation({
         mutationFn : postGrowthLog,
         onSuccess : () => {
-            console.log("성장 기록 입력 성공");
-
             queryClient.invalidateQueries({ queryKey : ['growthLogs'] });
 
             handleCancelGrowthLog();
@@ -32,6 +30,20 @@ const GrowthRecord = () => {
             console.error("성장 기록 입력 실패:", error);
         }
     })
+
+    useMutation({
+        mutationFn: (growthLogId: number) => postGrowthLogRetry(growthLogId),
+        onSuccess: (response) => {
+            if (response.result.status === 'FAILED') {
+                return;
+            }
+
+            queryClient.invalidateQueries({ queryKey: ['growthLogs'] });
+        },
+        onError: (error) => {
+            console.error(error);
+        }
+    });
     
     const handleAddingGrowthLog = async () => {
         const trimmedContent = content.trim();

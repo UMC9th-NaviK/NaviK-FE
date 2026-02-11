@@ -17,6 +17,10 @@ const TimelinePage = () => {
 
   const logs = data?.result?.content || [];
 
+  const sortedLogs = [...logs].sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+
   return (
     <div className={`flex flex-col h-screen overflow-hidden ${FOOTERPB}`}>
       <div className="flex-shrink-0">
@@ -30,7 +34,7 @@ const TimelinePage = () => {
 
         <div className="flex-1 overflow-y-auto pb-[16px] scrollbar-hide">
           <div className="flex flex-col gap-[16px]">
-            {logs?.map((log) => (
+            {sortedLogs?.map((log) => (
               <GrowthSchedule key={log.growthLogId} logs={log} />
             ))}
           </div>

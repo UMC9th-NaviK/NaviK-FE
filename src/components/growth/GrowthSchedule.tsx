@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { GrowthLogMonthlyResponseResultContent } from "../../types/growth";
 
-type Status = 'PENDING' | 'COMPLETED';
+type Status = 'PENDING' | 'COMPLETED' | 'FAILED';
 
 interface GrowthScheduleProps {
     logs : GrowthLogMonthlyResponseResultContent;
