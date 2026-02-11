@@ -10,11 +10,11 @@ const GrowthTimeline = () => {
                 <p className="text-heading-20B text-[#111111CC]"> 성장 타임라인 </p>
                 <p className="text-body-14M text-[#11111166]"> 나의 활동을 바로 입력하고 성장 그래프로 확인해보세요! </p>
             </div>
-            <div className='flex items-center justify-center'>
-                <GrowthChart width={'100%'} height={'100%'} />
+            <div className='flex flex-1 items-center justify-center'>
+                <GrowthChart width={'100%'} height={'100%'} unit={'MONTH'} type={'USER_INPUT'} />
             </div>
             <button 
-            className="bg-primary-blue-500 w-full rounded-[10px] px-[15px] py-[12px]"
+            className="bottom-0 bg-primary-blue-500 w-full rounded-[10px] px-[15px] py-[12px]"
             onClick={() => navigate("/report/growth/timeline")}>
                 <p className="text-body-16B text-white"> 자세히 보기 </p>
             </button>
