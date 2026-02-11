@@ -1,8 +1,9 @@
+import type { ResponseNotice } from '../../types/notice';
 import NoticeItem from './NoticeItem';
 
 type NoticeSectionProps = {
   title: string;
-  notices: Array<{ isRead: boolean; text?: string; time?: string }>;
+  notices: ResponseNotice[];
 };
 
 const NoticeSection = ({ title, notices }: NoticeSectionProps) => {
@@ -17,16 +18,10 @@ const NoticeSection = ({ title, notices }: NoticeSectionProps) => {
       </div>
       {notices.map((notice, index) => {
         const nextNotice = notices[index + 1];
-        const shouldShowBorder = nextNotice ? notice.isRead === nextNotice.isRead : false;
+        const shouldShowBorder = nextNotice ? notice.read === nextNotice.read : false;
 
         return (
-          <NoticeItem
-            key={index}
-            isRead={notice.isRead}
-            text={notice.text}
-            time={notice.time}
-            className={shouldShowBorder ? '' : 'border-b-0!'}
-          />
+          <NoticeItem key={notice.notificationId} notice={notice} showBorder={shouldShowBorder} />
         );
       })}
     </div>

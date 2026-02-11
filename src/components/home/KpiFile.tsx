@@ -48,7 +48,7 @@ const KpiFile = () => {
           }}
         >
           <div className="h-full">
-            <KpiCard />
+            <KpiCard type={activeTab} />
           </div>
         </div>
       </div>

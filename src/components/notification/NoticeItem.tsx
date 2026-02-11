@@ -1,25 +1,52 @@
+import { useNavigate } from 'react-router-dom';
+import type { ResponseNotice } from '../../types/notice';
+import { getNoticeNavigationPath } from '../../utils/noticeUtils';
+import { useUpdateNotice } from '../../hooks/mutations/useUpdateNotice';
+import { timeAgo } from '../../utils/timeAgo';
+
 type NoticeItemProps = {
-  isRead?: boolean;
-  text?: string;
-  time?: string;
-  className?: string;
+  notice: ResponseNotice;
+  showBorder?: boolean;
 };
 
-const NoticeItem = ({
-  isRead,
-  text = '[DB 설계] 스터디가 종료되었습니다. 평가를 남기고 성장 기록을 확인해 보세요!',
-  time = '2시간',
-  className = '',
-}: NoticeItemProps) => {
+const NoticeItem = ({ notice, showBorder = true }: NoticeItemProps) => {
+  const navigate = useNavigate();
+  const { mutate, isPending } = useUpdateNotice();
+
+  const handleClick = () => {
+    const path = getNoticeNavigationPath(notice);
+
+    if (!notice.read && !isPending) {
+      mutate(notice.notificationId);
+    }
+
+    if (notice.notificationType === 'RECRUITMENT') {
+      window.open(path, '_blank', 'noopener,noreferrer');
+    } else {
+      navigate(path);
+    }
+  };
+
+  const time = timeAgo(notice.createdAt);
+
   return (
     <div
-      className={`text-opacity-black-80 border-b-base-400 flex gap-10 border-b p-4 last:border-0 ${isRead ? 'bg-base-200 text-body-14R' : 'text-body-14B bg-white-background'} ${className}`}
+      onClick={handleClick}
+      className={`cursor-pointer px-5 py-4 ${!notice.read ? 'bg-white-background' : 'bg-base-200'} ${showBorder ? 'border-b-base-200 border-b' : ''}`}
     >
-      <div className="flex items-center justify-center gap-4">
-        {!isRead && <div className="bg-primary-blue-500 h-2 w-2 rounded-full" />}
-        <p className="line-clamp-2 flex-1 overflow-hidden text-ellipsis">{text}</p>
+      <div className="flex items-start justify-between gap-3">
+        {!notice.read && (
+          <div className="bg-primary-blue-500 mt-1 h-2 w-2 shrink-0 self-center rounded-full" />
+        )}
+        <div className="flex-1">
+          <p
+            className={`text-body-14M ${!notice.read ? 'text-opacity-black-80' : 'text-opacity-black-60'}`}
+          >
+            {notice.content}
+          </p>
+        </div>
+        <p className="text-caption-12R text-opacity-black-40">{time}</p>
       </div>
-      <p className="text-caption-12R text-opacity-black-40 whitespace-nowrap">{time}</p>
     </div>
   );
 };
