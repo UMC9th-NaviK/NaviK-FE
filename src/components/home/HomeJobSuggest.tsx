@@ -17,7 +17,7 @@ const HomeJobSuggest = ({ recruitments }: HomeJobSuggestProps) => {
         <div className="flex items-center justify-between px-4">
           <span className="text-heading-18B text-base-900 flex">
             <span className="text-primary-blue-500">{name}</span>
-            님을 위한 추천 공고
+            님을 기다리는 추천 공고
           </span>
           <button
             onClick={() => (window.location.href = '/recommend')}
