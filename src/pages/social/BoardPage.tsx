@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import SearchIcon from '../../assets/social/material-symbols_search-rounded.svg';
-import FavoriteIcon from '../../assets/social/material-symbols_favorite-outline-rounded.svg';
-import ChatIcon from '../../assets/social/material-symbols_chat-outline-rounded.svg';
-import ProfileIcon from '../../assets/social/Ellipse 30.svg';
 import AddIcon from '../../assets/social/material-symbols_edit-square-outline-rounded.svg';
-import type { BoardPost } from '../../mocks/social/boardPosts';
-import { makeExcerpt } from '../../utils/makeExcerpt';
 
-import type { BoardListItem } from '../../apis/board';
+import type { BoardListItem } from '../../types/board';
 import { getBoardList, getHotBoardList, getJobBoardList } from '../../apis/board';
 import { getJwtPayload } from '../../utils/jwt';
 import { jobNameFromSub } from '../../utils/job';
+
+import BoardSearchBar from '../../components/social/board/BoardSearchBar';
+import BoardPostCard from '../../components/social/board/BoardPostCard';
+
 type FilterKey = '전체' | '직무별' | 'HOT';
 
 function cn(...arr: (string | false | undefined)[]) {
@@ -60,92 +58,6 @@ function FilterChip({
   );
 }
 
-function SearchBar({
-  value,
-  onChange,
-  onEnter,
-  placeholder,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  onEnter: (value: string) => void;
-  placeholder: string;
-}) {
-  return (
-    <div className="border-primary-blue-100 bg-base-100 mt-4 flex w-full flex-col items-center justify-center gap-2.5 self-stretch rounded-[20px] border px-4 py-[10px]">
-      <div className="flex w-full items-center justify-between gap-2.5">
-        <input
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              console.log('[ENTER] value:', value);
-              onEnter(value);
-            }
-          }}
-          placeholder={placeholder}
-          className="text-body-14R text-opacity-black-40 placeholder:text-opacity-black-40 w-full bg-transparent outline-none"
-        />
-        <img src={SearchIcon} alt="검색" className="h-5 w-5 shrink-0 cursor-pointer" />
-      </div>
-    </div>
-  );
-}
-
-function PostCard({ post }: { post: BoardPost }) {
-  const navigate = useNavigate();
-
-  return (
-    <article
-      role="button"
-      tabIndex={0}
-      onClick={() => {
-        navigate(`/social/board/${post.id}`);
-      }}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') navigate(`/social/board/${post.id}`);
-      }}
-      className="flex w-full cursor-pointer flex-col items-start gap-4 self-stretch rounded-[8px] border border-[#DBEBFE] bg-white p-4 shadow-[0_0_10px_0_#DBEBFE]"
-    >
-      <h3 className="text-body-16B text-base-900 h-6 self-stretch">{post.title}</h3>
-      <p className="text-caption-12M text-opacity-black-60 line-clamp-2 self-stretch">
-        {makeExcerpt(post.content)}
-      </p>
-
-      <div className="flex h-6 items-center gap-4">
-        <div className="text-caption-12M text-opacity-black-40 flex items-center gap-1.5">
-          <img src={FavoriteIcon} alt="좋아요" className="h-4 w-4" />
-          <span>{post.likeCount}</span>
-        </div>
-
-        <div className="text-caption-12M text-opacity-black-40 flex items-center gap-1.5">
-          <img src={ChatIcon} alt="댓글" className="h-4 w-4" />
-          <span>{post.commentCount}</span>
-        </div>
-      </div>
-
-      <div className="flex w-full items-center justify-between">
-        <div className="flex w-full items-center gap-3">
-          <img src={ProfileIcon} alt="프로필" className="h-8 w-8 rounded-full object-cover" />
-          <div className="flex min-w-0 flex-1 flex-col">
-            <span className="text-base-900 text-[12px] leading-[140%] font-bold">
-              {post.author}
-            </span>
-
-            <div className="flex w-full items-center justify-between">
-              <span className="text-caption-12R text-opacity-black-40 leading-[140%]">
-                {post.authorMeta}
-              </span>
-              <span className="text-caption-12M text-opacity-black-20">{post.timeAgo}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
 export default function BoardPage() {
   const [allBoards, setAllBoards] = useState<BoardListItem[]>([]);
   const [boards, setBoards] = useState<BoardListItem[]>([]);
@@ -162,7 +74,7 @@ export default function BoardPage() {
       setRefetchKey((k) => k + 1);
       navigate(location.pathname, { replace: true, state: null });
     }
-  }, [location.state, navigate, location.pathname]);
+  }, [location.state, location.pathname, navigate]);
 
   //filter 바뀔 때->서버호출
   useEffect(() => {
@@ -224,18 +136,14 @@ export default function BoardPage() {
       return;
     }
 
-    const filtered = allBoards.filter((b) => {
-      const title = (b.articleTitle ?? '').toLowerCase();
-      const content = (b.articleContent ?? '').toLowerCase();
-      return title.includes(kw) || content.includes(kw);
-    });
-    setBoards(filtered);
+    setBoards(
+      allBoards.filter((b) => {
+        const t = (b.articleTitle ?? '').toLowerCase();
+        const c = (b.articleContent ?? '').toLowerCase();
+        return t.includes(kw) || c.includes(kw);
+      }),
+    );
   }, [allBoards, searchKeyword]);
-  useEffect(() => {
-    console.log('[DEBUG] searchKeyword:', searchKeyword);
-    console.log('[DEBUG] allBoards:', allBoards.length);
-    console.log('[DEBUG] boards:', boards.length);
-  }, [searchKeyword, allBoards, boards]);
 
   return (
     <div className="mt-4 min-h-screen">
@@ -272,32 +180,11 @@ export default function BoardPage() {
         />
       </div>
 
-      <SearchBar
-        value={query}
-        onChange={setQuery}
-        onEnter={(value) => {
-          console.log('[onEnter] query:', query);
-          setSearchKeyword(value.trim());
-        }}
-        placeholder="검색"
-      />
+      <BoardSearchBar value={query} onChange={setQuery} onEnter={(v) => setSearchKeyword(v)} />
 
       <div className="mt-4 flex flex-col gap-4">
         {boards.map((b) => (
-          <PostCard
-            key={b.boardId}
-            post={{
-              id: b.boardId,
-              title: b.articleTitle,
-              content: b.articleContent,
-              likeCount: b.likeCount,
-              commentCount: b.commentCount,
-              author: b.nickname,
-              authorMeta: `${b.isEntryLevel ? '신입' : '마스터'} ${b.jobName} | LV.${b.level}`,
-              timeAgo: b.createdAt,
-              viewCount: b.viewCount,
-            }}
-          />
+          <BoardPostCard key={b.boardId} board={b} />
         ))}
       </div>
     </div>

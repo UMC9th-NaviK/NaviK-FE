@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GoalsNavbar from "../../components/goals/GoalsNavbar";
+import { getGoals, patchGoals } from "../../apis/goals/goals";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const ModifyingGoalsPage = () => {
-    const [goalTitle, setGoalTitle] = useState("");
+const ModifyingGoalsPage = () => { 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { goalId, title, content, endDate } = location.state || {};
+
+    const [goalTitle, setGoalTitle] = useState(title || "");
+    const [goalContent, setGoalContent] = useState(content || "");
+
     const MAX_LENGTH = 10;
 
     const today = new Date();
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(endDate ? new Date(endDate) : new Date());
     const [isClick, setIsClick] = useState(false);
     const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -18,23 +26,28 @@ const ModifyingGoalsPage = () => {
 
         const firstDayOfMonth = new Date(year, month, 1).getDay();
         const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-
         const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
 
         const days = [];
+
+        const todayCopy = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
         for (let i = firstDayOfMonth - 1; i >= 0; i--) {
             days.push({
                 date: lastDateOfPrevMonth - i,
                 currentMonth: false,
+                isPast: true,
                 id: `prev-${i}`
             });
         }
 
         for (let i = 1; i <= lastDateOfMonth; i++) {
+            const targetDate = new Date(year, month, i);
+
             days.push({
                 date: i,
                 currentMonth: true,
+                isPast : targetDate < todayCopy, 
                 id: `curr-${i}`
             });
         }
@@ -68,6 +81,12 @@ const ModifyingGoalsPage = () => {
     };
 
     const formatDate = (date: Date) => {
+        const d = date instanceof Date ? date : new Date(date);
+
+        if (isNaN(d.getTime())) {
+            return "날짜 정보 없음";
+        }
+
         return `${date.getFullYear()}년 ${String(date.getMonth() + 1).padStart(2, '0')}월 ${String(date.getDate()).padStart(2, '0')}일`;
     };
 
@@ -75,9 +94,77 @@ const ModifyingGoalsPage = () => {
     currentDate.getFullYear() > today.getFullYear() || 
     (currentDate.getFullYear() === today.getFullYear() && currentDate.getMonth() > today.getMonth());
 
+    const [originData, setOriginData] = useState<{title: string, content: string, endDate: string} | null>(null);
+
+    useEffect(() => {
+        const fetchGoals = async () => {
+            try {
+                const response = await getGoals(goalId);
+
+                const { title, content, endDate } = response.result;
+
+                const targetDate = new Date(endDate);
+
+                setGoalTitle(title);
+                setGoalContent(content); 
+                setSelectedDate(new Date(targetDate));
+                setCurrentDate(targetDate);
+
+                setOriginData({
+                    title,
+                    content: content || "",
+                    endDate: endDate
+                });
+            }
+
+            catch (error) {
+                console.log("목표 가져오기 실패");
+            }
+        }
+
+        fetchGoals();
+    }, [goalId])
+
+    const handleModifyingGoalsSave = async () => {
+        if (!goalTitle.trim()) {
+            return;
+        }
+
+        const offset = selectedDate.getTimezoneOffset() * 60000; 
+        const localTime = new Date(selectedDate.getTime() - offset).toISOString();
+
+        try {
+            await patchGoals(goalId, {
+                title : goalTitle,
+                content : goalContent,
+                endDate : localTime
+            })
+
+            console.log("수정 완료");
+
+            navigate('/goals');
+        }
+
+        catch (error) {
+            console.error("수정 실패:", error);
+        }
+    }
+
+    const handleModifyingCancel = () => {
+        if (!originData) return;
+
+        setGoalTitle(originData.title);
+        setGoalContent(originData.content);
+        setSelectedDate(new Date(originData.endDate));
+
+        setCurrentDate(new Date(originData.endDate));
+    
+        setIsClick(false);
+    }
+
     return (
         <div>
-            <GoalsNavbar />
+            <GoalsNavbar goalId={goalId} goalTitle="goalTitle" content="goalContent" endDate="selectedDate"/>
             <div className="bg-white-background min-h-screen flex flex-col p-[16px]">
                 <div className="flex flex-col bg-white shadow-[0_0_10px_0_#DBEBFE] rounded-[16px] p-[16px] gap-[24px]">
                     <div className="flex flex-col gap-[16px]">
@@ -89,14 +176,17 @@ const ModifyingGoalsPage = () => {
                             onChange={(e) => setGoalTitle(e.target.value)}
                             maxLength={MAX_LENGTH}
                             className="bg-white h-[49px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
+                            placeholder="공백 포함 10자 이내로 입력해주세요."
                             />
                         </div>
 
                         <div className="flex flex-col gap-[12px]">
                             <p className="text-body-16B text-base-900"> 목표 내용을 입력해주세요. </p>
                             <textarea 
-                                className="bg-white h-[83px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
-                                placeholder="나의 목표를 작성하고, 성장의 첫 계단을 나아가보세요."
+                            value={goalContent}
+                            onChange={(e) => setGoalContent(e.target.value)}
+                            className="bg-white h-[83px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
+                            placeholder="나의 목표를 작성하고, 성장의 첫 계단을 나아가보세요."
                             />
                         </div>
 
@@ -153,15 +243,21 @@ const ModifyingGoalsPage = () => {
                                         {calendarDays.map((item) => {
                                             const isSelected = item.currentMonth && selectedDate.getDate() === item.date && selectedDate.getMonth() === currentDate.getMonth();
                                             
+                                            const isSelectable = item.currentMonth && !item.isPast;
+
                                             return (
                                                 <div 
                                                     key={item.id}
-                                                    onClick={() => item.currentMonth && setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))}
+                                                    onClick={() => {
+                                                        if (isSelectable) {
+                                                            setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), item.date))
+                                                        }
+                                                    }}
                                                     className="flex items-center justify-center cursor-pointer"
                                                 >
                                                     <div className={`
                                                         flex items-center justify-center w-[24px] h-[24px] text-caption-12M
-                                                        ${!item.currentMonth ? "text-[#11111133]" : "text-[#111111CC]"}
+                                                        ${(!item.currentMonth || item.isPast) ? "text-[#11111133]" : "text-[#111111CC]"}
                                                         ${isSelected ? "bg-primary-blue-500 text-white rounded-full" : ""}
                                                     `}>
                                                         {item.date}
@@ -176,11 +272,15 @@ const ModifyingGoalsPage = () => {
                     </div>
 
                     <div className="flex flex-1 items-center justify-center gap-[16px]">
-                        <button className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[20px] py-[12px] bg-base-200">
+                        <button 
+                        onClick={handleModifyingCancel}
+                        className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[20px] py-[12px] bg-base-200">
                             <p className="text-center text-body-16B text-base-600"> 취소 </p>
                         </button>
 
-                        <button className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[20px] py-[12px] bg-primary-blue-500">
+                        <button 
+                        onClick={handleModifyingGoalsSave}
+                        className="flex flex-1 items-center justify-center h-[48px] w-full rounded-[8px] px-[20px] py-[12px] bg-primary-blue-500">
                             <p className="text-center text-body-16B text-base-100"> 변경 사항 저장 </p>
                         </button>
                     </div>
