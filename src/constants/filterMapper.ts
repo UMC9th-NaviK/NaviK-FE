@@ -66,3 +66,35 @@ export const FILTER_MAP: Record<string, Record<string, string>> = {
     '공공기관·협회': 'PUBLIC_ORGANIZATION',
   },
 };
+
+// 학과/계열 매핑
+export const DEPARTMENT_MAP: Record<string, number> = {
+  IT: 1,
+  '디자인/미디어': 2,
+  '자연/과학/바이오': 3,
+  공학: 4,
+  '인문/사회/교육': 5,
+  '경영/경제/사무': 6,
+};
+
+// 반대로 ID를 받아서 이름을 보여줘야 할 때용 (역매핑)
+export const DEPARTMENT_NAME_MAP: Record<number, string> = {
+  1: 'IT',
+  2: '디자인/미디어',
+  3: '자연/과학/바이오',
+  4: '공학',
+  5: '인문/사회/교육',
+  6: '경영/경제/사무',
+};
+// 학력 맵핑
+export const EDUCATION_MAP: Record<string, string> = {
+  HIGH_SCHOOL: '고등',
+  ASSOCIATE: '2년제',
+  BACHELOR: '4년제',
+  MASTER: '석사',
+  DOCTOR: '박사',
+};
+// 학력 역 맵핑
+export const REVERSE_EDUCATION_MAP: Record<string, string> = Object.fromEntries(
+  Object.entries(EDUCATION_MAP).map(([key, value]) => [value, key]),
+);

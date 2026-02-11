@@ -28,3 +28,22 @@ export type ResponseBasicInfo = {
   jobId: number;
   isEntryLevel: boolean;
 };
+
+export interface UserProfile {
+  id: number;
+  profileImageUrl: string;
+  name: string;
+  nickname: string;
+  job: string;
+  isEntryLevel: boolean;
+  educationLevel: string; // 'BACHELOR'
+  departmentList: string[]; // ['1', '2'] 등으로 옴
+}
+
+// 수정용 요청 타입
+export interface UpdateProfileRequest {
+  nickname: string;
+  isEntryLevel: boolean;
+  educationLevel: string;
+  departmentIds: string[]; // 조회할 땐 departmentList였지만 보낼 땐 Id로!!!!!
+}
