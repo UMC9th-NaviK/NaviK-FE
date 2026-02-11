@@ -1,0 +1,68 @@
+/**
+ * UI 한글을 서버 API용 영문 상수로 매핑하는 함수 -> 추천 공고(마이페이지)
+ */
+export const FILTER_MAP: Record<string, Record<string, string>> = {
+  '희망 직무': {
+    PM: 'PM',
+    디자이너: 'DESIGNER',
+    프론트엔드: 'FRONTEND',
+    백엔드: 'BACKEND',
+  },
+  '경력 요건': {
+    신입: 'ENTRY',
+    경력: 'EXPERIENCED',
+  },
+  '고용 형태': {
+    인턴: 'INTERN',
+    정규직: 'FULL_TIME',
+    계약직: 'CONTRACT',
+    프리랜서: 'FREELANCER',
+  },
+  '회사 규모': {
+    대기업: 'LARGE',
+    중견기업: 'MID_LARGE',
+    중소기업: 'SMALL',
+    공기업: 'PUBLIC',
+    '외국계 기업': 'FOREIGN',
+  },
+  학력: {
+    고등학교: 'HIGH_SCHOOL',
+    '2년제 대학교': 'ASSOCIATE',
+    '4년제 대학교': 'BACHELOR',
+    석사: 'MASTER',
+    박사: 'DOCTOR',
+  },
+  '근무 지역': {
+    서울: 'SEOUL',
+    부산: 'BUSAN',
+    대구: 'DAEGU',
+    인천: 'INCHEON',
+    광주: 'GWANGJU',
+    대전: 'DAEJEON',
+    울산: 'ULSAN',
+    세종: 'SEJONG',
+    경기: 'GYEONGGI',
+    강원: 'GANGWON',
+    충북: 'CHUNGBUK',
+    충남: 'CHUNGNAM',
+    전북: 'JEONBUK',
+    전남: 'JEONNAM',
+    경북: 'GYEONGBUK',
+    경남: 'GYEONGNAM',
+    제주: 'JEJU',
+    해외: 'OVERSEAS',
+  },
+  '관심 산업': {
+    서비스업: 'SERVICE',
+    '금융·은행업': 'FINANCE_BANKING',
+    'IT·정보통신업': 'IT_TELECOMMUNICATION',
+    '판매·유통업': 'SALES_DISTRIBUTION',
+    '제조·생산·화학업': 'MANUFACTURING_CHEMICAL',
+    교육업: 'EDUCATION',
+    건설업: 'CONSTRUCTION',
+    '의료·제약업': 'MEDICAL_PHARMACEUTICAL',
+    '미디어·광고업': 'MEDIA_ADVERTISING',
+    '문화·예술·디자인업': 'CULTURE_ART_DESIGN',
+    '공공기관·협회': 'PUBLIC_ORGANIZATION',
+  },
+};
