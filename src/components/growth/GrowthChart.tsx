@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import type { GrowthLogTimelineResponseResult } from "../../types/growth"; //
+import { getGrowthLogAggregateScore } from "../../apis/growth/growth";
 
 type DataItem = {
     label: string;
@@ -8,77 +10,94 @@ type DataItem = {
 interface GrowthChartProps {
     width : number | string;
     height : number | string;
+    unit : string;
+    type : string;
 }
-
-const data: DataItem[] = [
-    { label: "7월", value: 750 },
-    { label: "8월", value: 780 },
-    { label: "9월", value: 700 },
-    { label: "10월", value: 750 },
-    { label: "11월", value: 800 },
-    { label: "12월", value: 750 },
-    { label: "1월", value: 850 },
-];
 
 const PADDING_Y = 30;
 const BAR_WIDTH = 38.57;
 
 type Point = { x: number; y: number };
 
-const GrowthChart = ({ width, height } : GrowthChartProps) => {
+const GrowthChart = ({ width, height, unit, type } : GrowthChartProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [activeIndex, setActiveIndex] = useState(4);
     
-    // 초기값을 props나 기본값으로 설정하여 '차트 안 나옴' 현상 방지
+    const [chartData, setChartData] = useState<DataItem[]>([]);
+    const [activeIndex, setActiveIndex] = useState(0);
+    
     const [dims, setDims] = useState({ 
         w: typeof width === 'number' ? width : 425, 
         h: 175 
     });
 
     useEffect(() => {
+        const fetchTimelineData = async () => {
+            if (!unit || !type || type === "") return;
+
+            try {
+                const response = await getGrowthLogAggregateScore(unit, type); //
+                if (response.isSuccess && response.result) {
+                    const formattedData: DataItem[] = response.result
+                        .slice(-7)
+                        .map((item: GrowthLogTimelineResponseResult) => {
+                            const month = parseInt(item.period.split('-')[1], 10);
+                            return {
+                                label: `${month}월`,
+                                value: item.cumulativeScore
+                            };
+                        });
+
+                    setChartData(formattedData);
+                    setActiveIndex(formattedData.length - 1)
+                }
+            } catch (error) {
+                console.error("성장 로그 데이터를 불러오는데 실패했습니다:", error);
+            }
+        };
+
+        fetchTimelineData();
+    }, [unit, type]);
+
+    useEffect(() => {
         const updateSize = () => {
             if (containerRef.current) {
                 const bWidth = containerRef.current.offsetWidth;
+
                 if (bWidth > 0) {
                     setDims(prev => ({ ...prev, w: bWidth }));
                 }
             }
         };
 
-        // 초기 실행
         updateSize();
 
         const observer = new ResizeObserver(() => updateSize());
+
         if (containerRef.current) observer.observe(containerRef.current);
-        
+
         return () => observer.disconnect();
     }, []);
 
-    // 14px 패딩 양쪽 제외 (28px)
+    if (chartData.length === 0) return <div ref={containerRef} style={{ width, height, background: "#fff", borderRadius: 16 }} />;
+
     const SVG_WIDTH = dims.w - 28; 
     const SVG_HEIGHT = 175;
 
-    const values = data.map(d => d.value);
+    const values = chartData.map(d => d.value);
     const max = Math.max(...values);
     const min = Math.min(...values);
     const adjustedMin = min - (max - min) * 0.4; 
 
-    const segmentWidth = SVG_WIDTH / data.length;
+    const segmentWidth = SVG_WIDTH / chartData.length;
     const getXPos = (index: number) => segmentWidth * index + segmentWidth / 2;
 
-    const dataPoints: Point[] = data.map((d, i) => ({
+    const dataPoints: Point[] = chartData.map((d, i) => ({
         x: getXPos(i),
-        y: PADDING_Y + ((max - d.value) / (max - adjustedMin)) * (SVG_HEIGHT - PADDING_Y * 2)
+        y: PADDING_Y + ((max - d.value) / (max - (max === adjustedMin ? max - 1 : adjustedMin))) * (SVG_HEIGHT - PADDING_Y * 2)
     }));
 
-    const virtualStart = {
-        x: 0,
-        y: dataPoints[0].y - (dataPoints[1].y - dataPoints[0].y) * 0.2
-    };
-    const virtualEnd = {
-        x: SVG_WIDTH,
-        y: dataPoints[dataPoints.length - 1].y + (dataPoints[dataPoints.length - 1].y - dataPoints[dataPoints.length - 2].y) * 0.2
-    };
+    const virtualStart = { x: 0, y: dataPoints[0].y };
+    const virtualEnd = { x: SVG_WIDTH, y: dataPoints[dataPoints.length - 1].y };
 
     const pathPoints = [virtualStart, ...dataPoints, virtualEnd];
     const buildSmoothPath = (pts: Point[]) => {
@@ -101,8 +120,9 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
 
     const linePath = buildSmoothPath(pathPoints);
     const areaPath = `${linePath} L ${SVG_WIDTH} ${SVG_HEIGHT} L 0 ${SVG_HEIGHT} Z`;
-    const activePoint = dataPoints[activeIndex];
+    const activePoint = dataPoints[activeIndex] || dataPoints[0];
 
+    // JSX 구조 및 인라인 CSS 절대 수정 금지 준수
     return (
         <div 
             ref={containerRef}
@@ -113,7 +133,7 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
                 borderRadius: 16, 
                 background: "#fff", 
                 boxSizing: 'border-box',
-                display: 'block' // 부모 너비를 제대로 잡기 위해 display 설정
+                display: 'block'
             }} 
         >
             <svg 
@@ -139,8 +159,8 @@ const GrowthChart = ({ width, height } : GrowthChartProps) => {
             </svg>
 
             <div style={{ display: "flex", width: SVG_WIDTH, marginTop: 12 }}>
-                {data.map((d, i) => (
-                    <div key={d.label} onClick={() => setActiveIndex(i)} style={{ flex: 1, display: 'flex', justifyContent: 'center', cursor: "pointer" }}>
+                {chartData.map((d, i) => (
+                    <div key={`${d.label}-${i}`} onClick={() => setActiveIndex(i)} style={{ flex: 1, display: 'flex', justifyContent: 'center', cursor: "pointer" }}>
                         <div className="text-caption-12M" style={{ padding: "2px 8px", borderRadius: 16, color: i === activeIndex ? "#fff" : "#79A6FB", background: i === activeIndex ? "#79A6FB" : "transparent", whiteSpace: 'nowrap' }}>
                             {d.label}
                         </div>

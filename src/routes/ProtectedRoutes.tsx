@@ -73,7 +73,7 @@ export const protectedRoutes: RouteObject[] = [
           { path: 'core/detail', element: <CoreKPIDetailPage role={'designer'} /> },
           { path: 'overcoming', element: <OvercomingKPIPage /> },
           { path: 'overcoming/detail', element: <OvercomingKPIDetailPage role={'pm'} /> },
-          { path: 'growth', element: <GrowthMainPage role={'designer'} /> },
+          { path: 'growth', element: <GrowthMainPage /> },
           { path: 'growth/write', element: <GrowthWritePage /> },
           { path: 'growth/timeline', element: <TimelinePage /> },
         ],
