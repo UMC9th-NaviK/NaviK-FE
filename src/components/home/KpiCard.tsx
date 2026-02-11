@@ -1,13 +1,56 @@
 import { useState } from 'react';
 import { useUser } from '../../hooks/useUser';
+import { useGetCoreKpiCards, useGetOvercomeKpiCards } from '../../hooks/queries/useKpiCards';
+import FlipCard from './FlipCard';
 
-const KpiCard = () => {
+const KpiCard = ({ type }: { type: 'core' | 'overcome' }) => {
   const { job } = useUser();
+  const { data: coreData, isFetching: isCoreFetching } = useGetCoreKpiCards();
+  const { data: overcomeData, isFetching: isOvercomeFetching } = useGetOvercomeKpiCards();
+
+  const cardsData = type === 'core' ? coreData || [] : overcomeData || [];
+  const isFetching = type === 'core' ? isCoreFetching : isOvercomeFetching;
+
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = () => {
     setIsFlipped((prev) => !prev);
   };
+
+  const displayCards = cardsData.slice(0, 3);
+  const cards = [displayCards[0] || null, displayCards[1] || null, displayCards[2] || null];
+  const backImageUrl = `/images/kpi/${job}-back.png`;
+
+  // 로딩 중이거나 데이터가 없을 경우
+  if (isFetching || cardsData.length === 0) {
+    return (
+      <div className="relative h-full">
+        <img src={`/images/home/card-bg-${job}.png`} className="absolute bottom-0 left-0" alt="" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex items-center">
+            <FlipCard
+              backImageUrl={backImageUrl}
+              isFlipped={false}
+              className="z-0 -mr-6 -rotate-[8deg]"
+              altText="KPI 카드 1"
+            />
+            <FlipCard
+              backImageUrl={backImageUrl}
+              isFlipped={false}
+              className="z-10 -mr-6"
+              altText="KPI 카드 2"
+            />
+            <FlipCard
+              backImageUrl={backImageUrl}
+              isFlipped={false}
+              className="z-20 rotate-[8deg]"
+              altText="KPI 카드 3"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative h-full">
@@ -15,31 +58,30 @@ const KpiCard = () => {
       <img src={`/images/home/card-bg-${job}.png`} className="absolute bottom-0 left-0" alt="" />
 
       {/* 카드 영역 - 전체 클릭 가능 */}
-      {/* TODO: 서서히 바뀌기 */}
       <button onClick={handleClick} className="absolute inset-0">
         <div className="relative flex h-full items-center justify-center">
           <div className="flex items-center">
-            <div className="z-0 -mr-6 w-25 shrink-0 -rotate-[8deg] transition-transform duration-300">
-              <img
-                src={`/images/kpi/${job}-${isFlipped ? 'front' : 'back'}.png`}
-                alt="KPI 카드 1"
-                className="w-full"
-              />
-            </div>
-            <div className="z-10 -mr-6 w-25 shrink-0 transition-transform duration-300">
-              <img
-                src={`/images/kpi/${job}-${isFlipped ? 'front' : 'back'}.png`}
-                alt="KPI 카드 2"
-                className="w-full"
-              />
-            </div>
-            <div className="z-20 w-25 shrink-0 rotate-[8deg] transition-transform duration-300">
-              <img
-                src={`/images/kpi/${job}-${isFlipped ? 'front' : 'back'}.png`}
-                alt="KPI 카드 3"
-                className="w-full"
-              />
-            </div>
+            <FlipCard
+              frontImageUrl={cards[0]?.imageUrl}
+              backImageUrl={backImageUrl}
+              isFlipped={isFlipped}
+              className="z-0 -mr-6 -rotate-[8deg]"
+              altText="KPI 카드 1"
+            />
+            <FlipCard
+              frontImageUrl={cards[1]?.imageUrl}
+              backImageUrl={backImageUrl}
+              isFlipped={isFlipped}
+              className="z-10 -mr-6"
+              altText="KPI 카드 2"
+            />
+            <FlipCard
+              frontImageUrl={cards[2]?.imageUrl}
+              backImageUrl={backImageUrl}
+              isFlipped={isFlipped}
+              className="z-20 rotate-[8deg]"
+              altText="KPI 카드 3"
+            />
           </div>
         </div>
       </button>
