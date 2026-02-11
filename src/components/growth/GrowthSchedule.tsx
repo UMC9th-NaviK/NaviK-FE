@@ -8,14 +8,14 @@ interface GrowthScheduleProps {
 }
 
 const GrowthSchedule = ({ logs } : GrowthScheduleProps) => {
-const status : Status = useMemo(() => {
+    const status : Status = useMemo(() => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
         const target = new Date(logs.createdAt);
         target.setHours(0, 0, 0, 0);
-
-        return target.getTime() <= today.getTime() ? 'COMPLETED' : 'PENDING';
+        
+        return target.getTime() < today.getTime() ? 'COMPLETED' : 'PENDING';
     }, [logs.createdAt]);
 
     const isoDate = logs.createdAt;
