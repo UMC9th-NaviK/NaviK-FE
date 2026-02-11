@@ -7,8 +7,8 @@ import { getGrowthLogMonthly } from "../../apis/growth/growth";
 import { useState } from "react";
 
 const TimelinePage = () => {
-  const [yearMonth] = useState("2026-02");
-  const [type] = useState("USER_INPUT");
+  const yearMonth = new Date().toISOString().slice(0, 7);
+  const type = "USER_INPUT";
 
   const { data } = useQuery({
       queryKey: ['growthLogsMonthly', yearMonth, type],

@@ -19,7 +19,7 @@ const LevelCard = ({ role } : LevelCardProps) => {
     const imageUrl = roleImages[role] || roleImages['designer'];
 
     const [level, setLevel] = useState(0);
-    const [percentage, setPersentage] = useState(0);
+    const [percentage, setPercentage] = useState(0);
     const [description, setDescription] = useState(""); 
     
     useEffect(() => {
@@ -28,7 +28,7 @@ const LevelCard = ({ role } : LevelCardProps) => {
                 const response = await getUserLevel();
         
                 setLevel(response.result.level);
-                setPersentage(response.result.percentage);
+                setPercentage(response.result.percentage);
                 setDescription(response.result.description);
             }
     
