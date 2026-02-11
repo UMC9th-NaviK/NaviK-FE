@@ -87,7 +87,7 @@ function ApplicantCard({
             )}
 
             {Array.from({
-              length: 6 - Math.floor(applicant.score) - (applicant.score % 1 == 0 ? 1 : 0),
+              length: 5 - Math.ceil(applicant.score),
             }).map((_, idx) => (
               <img
                 key={`empty-${idx}`}
