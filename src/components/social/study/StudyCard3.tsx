@@ -19,6 +19,12 @@ interface StudyCardProps {
   onClick?: () => void;
 }
 
+const statusLabelMap: Record<string, string> = {
+  RECURRING: '모집중',
+  IN_PROGRESS: '진행중',
+  CLOSED: '종료',
+};
+
 export default function StudyCard3({
   title,
   currentCount,
@@ -36,6 +42,10 @@ export default function StudyCard3({
 
   onClick,
 }: StudyCardProps) {
+  const isClosed = recruitmentStatus === 'CLOSED';
+  const statusLabel = recruitmentStatus
+    ? (statusLabelMap[recruitmentStatus] ?? recruitmentStatus)
+    : '';
   return (
     <div className="py-2">
       <div
@@ -55,7 +65,7 @@ export default function StudyCard3({
             <span className="text-heading-18B">{title}</span>
             <div className="flex h-[29px] w-[56px] items-center justify-center rounded-[100px] border border-[0.5px] border-[#B8D4FE] bg-[#DBEBFE] px-[12px] py-[6px]">
               <span className="text-caption-12M text-primary-blue-900 whitespace-nowrap">
-                {recruitmentStatus}
+                {statusLabel}
               </span>
             </div>
           </div>
