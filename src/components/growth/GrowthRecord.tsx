@@ -13,32 +13,34 @@ const GrowthRecord = () => {
     const [githubUrl, setGithubUrl] = useState("");
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const [isNotionAuthenticated, setIsNotionAuthenticated] = useState(false);
+    const [isNotionAuthenticated, setIsNotionAuthenticated] = useState(() => localStorage.getItem('isNotionAuthenticated') === 'true');
 
     const hasContent = content.length > 0;
     const hasNotion = notionUrl.length > 0;
     const hasGithub = githubUrl.length > 0;
 
-    const { mutate } = useMutation({
-        mutationFn : postGrowthLog,
-        onSuccess : () => {
-            queryClient.invalidateQueries({ queryKey : ['growthLogs'] });
-
-            handleCancelGrowthLog();
-        },
-        onError : (error) => {
-            console.error("성장 기록 입력 실패:", error);
-        }
-    })
-
-    useMutation({
+    const { mutate: retryAI } = useMutation({
         mutationFn: (growthLogId: number) => postGrowthLogRetry(growthLogId),
         onSuccess: (response) => {
+            if (response.result.status === 'FAILED') return;
+    
+            queryClient.invalidateQueries({ queryKey: ['growthLogs'] });
+        },
+        onError: (error) => {
+            console.error(error);
+        }
+    });
+    
+    const { mutate: createLog } = useMutation({
+        mutationFn: postGrowthLog,
+        onSuccess: (response) => {
             if (response.result.status === 'FAILED') {
+                retryAI(response.result.id);
                 return;
             }
-
+    
             queryClient.invalidateQueries({ queryKey: ['growthLogs'] });
+            handleCancelGrowthLog();
         },
         onError: (error) => {
             console.error(error);
@@ -54,7 +56,7 @@ const GrowthRecord = () => {
             return;
         }
     
-        mutate({ content : trimmedContent || trimmedNotion || trimmedGithub });
+        createLog({ content : trimmedContent || trimmedNotion || trimmedGithub });
     }
     
     const handleCancelGrowthLog = () => {
@@ -86,16 +88,11 @@ const GrowthRecord = () => {
             localStorage.setItem('isNotionAuthenticated', 'true');
             
             searchParams.delete('success');
-            setSearchParams(searchParams);
+            setSearchParams(searchParams, { replace: true });
             
             console.log("노션 연동이 완료되었습니다!");
         }
-    
-        if (localStorage.getItem('isNotionAuthenticated') === 'true') {
-            setIsNotionAuthenticated(true);
-        }
-
-    }, [searchParams, setSearchParams]);
+    }, []);
 
     return (
         <div className='flex flex-col bg-white rounded-[16px] p-[16px] gap-[10px] border border-[1px] border-primary-blue-500'>
