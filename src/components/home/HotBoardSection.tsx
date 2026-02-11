@@ -3,10 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import HotBoardItem from './HotBoardItem';
-import { MOCK_POSTS } from '../../mocks/social/boardPosts';
 import { useNavigate } from 'react-router-dom';
-
-const SLIDE_COUNT = 5;
+import { useHotBoardList } from '../../hooks/queries/useBoardList';
 
 const HotBoardSection = () => {
   const navigate = useNavigate();
@@ -23,10 +21,54 @@ const HotBoardSection = () => {
     }
   };
 
+  const { data, isFetching, isError } = useHotBoardList();
+
+  if (isFetching) {
+    return (
+      <div className="flex flex-col gap-4 px-4">
+        <div className="flex items-center justify-between">
+          <span className="text-heading-18B text-base-900">🔥지금 주목받는 커리어 고민</span>
+          <button
+            className="text-opacity-black-60 text-caption-12M flex items-center gap-1"
+            onClick={() => navigate('/social/board')}
+          >
+            더보기
+            <img src="/icons/reports/arrow-right-gray.svg" className="h-4 w-4" alt="" />
+          </button>
+        </div>
+
+        <div className="border-base-100 bg-base-100/40 shadow-card text-base-700 flex h-[237px] items-center justify-center rounded-2xl border">
+          불러오는 중...
+        </div>
+      </div>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <div className="flex flex-col gap-4 px-4">
+        <div className="flex items-center justify-between">
+          <span className="text-heading-18B text-base-900">🔥지금 주목받는 커리어 고민</span>
+          <button
+            className="text-opacity-black-60 text-caption-12M flex items-center gap-1"
+            onClick={() => navigate('/social/board')}
+          >
+            더보기
+            <img src="/icons/reports/arrow-right-gray.svg" className="h-4 w-4" alt="" />
+          </button>
+        </div>
+
+        <div className="border-base-100 bg-base-100/40 shadow-card text-base-700 flex h-[237px] items-center justify-center rounded-2xl border">
+          불러오는 중...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4 px-4">
       <div className="flex items-center justify-between">
-        <span className="text-heading-18B text-base-900">🔥 이번 주 HOT 게시판</span>
+        <span className="text-heading-18B text-base-900">🔥지금 주목받는 커리어 고민</span>
         <button
           className="text-opacity-black-60 text-caption-12M flex items-center gap-1"
           onClick={() => navigate('/social/board')}
@@ -47,8 +89,8 @@ const HotBoardSection = () => {
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           className="w-full"
         >
-          {MOCK_POSTS.slice(0, SLIDE_COUNT).map((post) => (
-            <SwiperSlide key={post.id}>
+          {data?.slice(0, 5).map((post) => (
+            <SwiperSlide key={post.boardId}>
               <HotBoardItem post={post} />
             </SwiperSlide>
           ))}
@@ -56,7 +98,7 @@ const HotBoardSection = () => {
 
         {/* 인디케이터 점 */}
         <div className="flex items-center justify-center gap-2">
-          {Array.from({ length: SLIDE_COUNT }).map((_, idx) => (
+          {Array.from({ length: 5 }).map((_, idx) => (
             <button
               key={idx}
               onClick={() => goToSlide(idx)}
