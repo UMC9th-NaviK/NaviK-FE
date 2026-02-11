@@ -40,7 +40,13 @@ const OAuthCallbackContent = () => {
     handleOAuthCallback();
   }, [navigate]);
 
-  return <p>로그인중</p>;
+  return (
+    <div className="flex h-screen w-full items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="border-primary-blue-500 h-12 w-12 animate-spin rounded-full border-4 border-t-transparent" />
+      </div>
+    </div>
+  );
 };
 
 const OAuthCallback = () => {
