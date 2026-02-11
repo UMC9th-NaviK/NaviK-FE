@@ -4,11 +4,15 @@ import CardSlider from '../../components/common/CardSlider';
 import { useNavigate } from 'react-router-dom';
 import RecruitmentCard from '../../components/report/RecruitmentCard';
 import { FOOTERPB } from '../../components/common/Footer';
+import { useGetCoreKpiCards } from '../../hooks/queries/useKpiCards';
 
 const CoreKPIPage = () => {
   const navigate = useNavigate();
 
   const totalItems = 20;
+
+  const { data, isFetching } = useGetCoreKpiCards();
+  const cards = data || [];
 
   return (
     <div className={`${FOOTERPB}`}>
@@ -16,7 +20,7 @@ const CoreKPIPage = () => {
       <KPILocalNavbar />
 
       <div className="bg-white-background flex flex-col gap-[16px] pb-[16px]">
-        <CardSlider />
+        <CardSlider cards={cards} isLoading={isFetching} />
         <div className="flex flex-col gap-[16px] px-[16px]">
           <div className="flex flex-1 gap-[8px]">
             <img src="/icons/reports/material-symbols_highlight-mouse-cursor-rounded.svg" alt="" />

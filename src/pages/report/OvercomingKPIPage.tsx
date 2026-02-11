@@ -3,15 +3,19 @@ import ReportNavbar from '../../components/report/ReportNavbar';
 import CardSlider from '../../components/common/CardSlider';
 import RecommendationNotice from '../../components/report/RecommendationNotice';
 import { FOOTERPB } from '../../components/common/Footer';
+import { useGetOvercomeKpiCards } from '../../hooks/queries/useKpiCards';
 
 const OvercomingKPIPage = () => {
+  const { data, isFetching } = useGetOvercomeKpiCards();
+  const cards = data || [];
+
   return (
-    <div className={`${FOOTERPB}`}>
+    <div className={`${FOOTERPB} flex min-h-screen flex-col`}>
       <ReportNavbar />
       <KPILocalNavbar />
 
-      <div className="bg-white-background flex flex-col gap-[16px] pb-[16px]">
-        <CardSlider />
+      <div className="bg-white-background flex flex-1 flex-col gap-[16px] pb-[16px]">
+        <CardSlider cards={cards} isLoading={isFetching} />
 
         <div className="flex flex-col gap-[16px] px-[16px]">
           <div className="flex flex-1 gap-[8px]">
