@@ -45,7 +45,7 @@ const GrowthRecord = () => {
         }
     });
     
-    const handleAddingGrowthLog = async () => {
+    const handleAddingGrowthLog = () => {
         const trimmedContent = content.trim();
         const trimmedNotion = notionUrl.trim();
         const trimmedGithub = githubUrl.trim();
