@@ -1,16 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BottomSheet } from '../../components/myPage/recommend/BottomSheet';
 import { FilterBar } from '../../components/myPage/recommend/FilterBar';
 import { FILTERS } from '../../constants/filterData';
 import { Icon } from '@iconify/react';
 import { JobCard } from '../../components/myPage/recommend/JobCard';
-import { MOCK_JOBS } from '../../constants/mockJobData';
 import SubHeader from '../../components/myPage/SubHeader';
+import { useJobSearch } from '../../hooks/useJobSearch';
 
 const RecommendJobPage = () => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
   const [isExcludeExpired, setIsExcludeExpired] = useState(false);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const { jobs, totalCount, isLoading, hasNext, nextCursor, fetchJobs } = useJobSearch(
+    selectedValues,
+    isExcludeExpired,
+  );
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth', // 부드럽게 이동
+      });
+    }
+  }, [selectedValues, isExcludeExpired]);
+
+  // 스크롤 핸들러 (무한 스크롤)
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    // 바닥 근처(50px)에 닿으면 다음 데이터 호출
+    if (scrollHeight - scrollTop <= clientHeight + 50 && !isLoading && hasNext) {
+      fetchJobs(nextCursor || undefined);
+    }
+  };
 
   const handleItemClick = (filterLabel: string, value: string) => {
     setSelectedValues((prev) => ({ ...prev, [filterLabel]: value }));
@@ -29,7 +54,7 @@ const RecommendJobPage = () => {
 
   return (
     <div className="relative flex h-screen flex-col overflow-hidden bg-white">
-      {/* 배경 원 */}
+      {/* 배경 원 디자인 */}
       <div
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 opacity-60"
         style={{
@@ -42,7 +67,7 @@ const RecommendJobPage = () => {
         }}
       />
 
-      {/* 헤더 + 필터바 영역 (고정) */}
+      {/* 상단 레이어: 헤더 + 필터바 */}
       <div className="relative z-10 shrink-0">
         <SubHeader
           title={'추천 공고'}
@@ -59,7 +84,7 @@ const RecommendJobPage = () => {
         />
 
         <div className="flex w-full items-center justify-between px-4 pt-4 pb-2">
-          <div className="text-body-14B">공고 {MOCK_JOBS.length}건</div>
+          <div className="text-body-14B">공고 {totalCount.toLocaleString()}건</div>
           <button
             onClick={() => setIsExcludeExpired(!isExcludeExpired)}
             className="text-primary-blue-500 flex items-center gap-1"
@@ -77,15 +102,51 @@ const RecommendJobPage = () => {
         </div>
       </div>
 
-      {/* 리스트 -> 스크롤 가능!*/}
-      <div className="scrollbar-hide relative z-10 flex-1 overflow-y-auto px-4 pb-20">
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="scrollbar-hide relative z-10 flex-1 overflow-y-auto px-4 pb-20"
+      >
         <div className="flex flex-col gap-4 pt-2">
-          {MOCK_JOBS.map((job, index) => (
-            <JobCard key={`${job.id}-${index}`} {...job} />
-          ))}
+          {/* 초기 로딩 화면 */}
+          {isLoading && jobs.length === 0 ? (
+            <div className="flex h-[60vh] w-full flex-col items-center justify-center gap-6">
+              <Icon
+                icon="line-md:loading-twotone-loop"
+                style={{ width: '80px', height: '80px' }}
+                className="text-primary-blue-500"
+              />
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-opacity-black-60 text-body-16B">맞춤 공고 분석 중</p>
+              </div>
+            </div>
+          ) : (
+            <>
+              {jobs.map((job, index) => (
+                <JobCard key={`${job.id}-${index}`} data={job} />
+              ))}
+
+              {/* 추가 데이터 로딩 중 (하단 스피너) */}
+              {isLoading && (
+                <div className="flex justify-center py-10">
+                  <Icon
+                    icon="line-md:loading-twotone-loop"
+                    style={{ width: '40px', height: '40px' }}
+                    className="text-primary-blue-500"
+                  />
+                </div>
+              )}
+
+              {/* 데이터가 없을 때 */}
+              {!isLoading && jobs.length === 0 && (
+                <div className="text-base-400 py-20 text-center">조건에 맞는 공고가 없습니다.</div>
+              )}
+            </>
+          )}
         </div>
       </div>
 
+      {/*  바텀시트 */}
       <BottomSheet
         title={activeFilter || ''}
         isOpen={!!activeFilter}
