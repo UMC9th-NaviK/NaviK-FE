@@ -7,6 +7,7 @@ import { getEvaluationStudies, getEvaluationStudyDetail } from '../../apis/evalu
 import type { EvaluationStudy, EvaluationStudyDetail } from '../../types/evaluation';
 
 type CardVM = {
+  studyId: number;
   title: string;
   periodText: string;
   memberText: string;
@@ -37,12 +38,13 @@ const formatKoRange = (start: string, end: string) => {
   }월 ${e.getDate()}일`;
 };
 
-const toCardVM = (detail: EvaluationStudyDetail): CardVM => {
+const toCardVM = (detail: EvaluationStudyDetail, studyId: number): CardVM => {
   const statusInfo = statusLabelMap[detail.status] ?? { label: detail.status, variant: 'gray' };
   const participation =
     participationLabelMap[detail.participationMethod] ?? detail.participationMethod;
 
   return {
+    studyId,
     title: detail.studyName,
     periodText: formatKoRange(detail.startDate, detail.endDate),
     memberText: `${detail.memberCount}명`,
@@ -64,9 +66,6 @@ const MyEvaluationPage = () => {
   const [loading, setLoading] = useState(false);
   const [loadingDetails, setLoadingDetails] = useState(false);
 
-  const [hasNext, setHasNext] = useState(true);
-  const [nextCursor, setNextCursor] = useState<string | null>(null);
-
   const fetchListAndDetails = async (cursor?: number) => {
     if (loading) return;
 
@@ -80,8 +79,7 @@ const MyEvaluationPage = () => {
         return;
       }
 
-      const { content, hasNext: hn, nextCursor: nc } = res.data.result;
-
+      const { content } = res.data.result;
       setStudies((prev) => {
         const prevIds = new Set(prev.map((x) => x.studyId));
         const merged = [...prev];
@@ -90,9 +88,6 @@ const MyEvaluationPage = () => {
         });
         return merged;
       });
-
-      setHasNext(hn);
-      setNextCursor(nc ?? null);
 
       const newIds = content.map((x) => x.studyId).filter((id) => details[id] === undefined);
 
@@ -136,7 +131,7 @@ const MyEvaluationPage = () => {
       .map((s) => {
         const d = details[s.studyId];
         if (!d) return null;
-        return toCardVM(d);
+        return toCardVM(d, s.studyId);
       })
       .filter(Boolean) as CardVM[];
   }, [studies, details]);
@@ -163,7 +158,7 @@ const MyEvaluationPage = () => {
             )}
 
             {cards.map((card) => (
-              <StudyEvaluationCard key={`${card.title}-${card.periodText}`} {...card} />
+              <StudyEvaluationCard key={card.studyId} {...card} />
             ))}
 
             {loadingDetails && (
