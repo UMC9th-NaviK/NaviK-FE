@@ -35,7 +35,9 @@ const NoticeItem = ({ notice, showBorder = true }: NoticeItemProps) => {
       className={`cursor-pointer px-5 py-4 ${!notice.read ? 'bg-white-background' : 'bg-base-200'} ${showBorder ? 'border-b-base-200 border-b' : ''}`}
     >
       <div className="flex items-start justify-between gap-3">
-        {!notice.read && <div className="bg-primary-blue-500 mt-1 h-2 w-2 shrink-0 rounded-full" />}
+        {!notice.read && (
+          <div className="bg-primary-blue-500 mt-1 h-2 w-2 shrink-0 self-center rounded-full" />
+        )}
         <div className="flex-1">
           <p
             className={`text-body-14M ${!notice.read ? 'text-opacity-black-80' : 'text-opacity-black-60'}`}
