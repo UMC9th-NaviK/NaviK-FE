@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MinusIcon from '../../assets/social/material-symbols_do-not-disturb-on-outline-rounded.svg';
 import PlusIcon from '../../assets/social/material-symbols_add-circle-outline-rounded.svg';
 import MinusIcon2 from '../../assets/social/material-symbols_do-not-disturb-on-outline-rounded (1).svg';
@@ -11,10 +11,14 @@ import DateRangeCalendar from '../../components/social/study/DateRangeCalendar';
 import type { DateRange } from 'react-day-picker';
 import Divider from '../../components/common/Divider';
 
+import { createStudy, getStudyKpiCards } from '../../apis/study';
+import type { KpiCard } from '../../types/study';
+
 const formatKo = (d?: Date) => {
   if (!d) return '';
   return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
 };
+
 const itemsPM = [
   '문제 정의&가설 수립',
   '데이터 기반 의사결정',
@@ -71,11 +75,37 @@ const peopleLabels = ['2', '3', '4', '5', '6'] as const;
 
 type SelectedSkill = { roleIndex: number; itemIndex: number; text: string } | null;
 
+const jobNameByRoleIndex: Record<number, string> = {
+  0: '프로덕트 매니저',
+  1: '프로덕트 디자이너',
+  2: '프론트엔드 개발자',
+  3: '백엔드 개발자',
+};
+
+const jobIdByRoleIndex: Record<number, number> = {
+  0: 1,
+  1: 2,
+  2: 3,
+  3: 4,
+};
+
 const NewStudyPage = () => {
+  //입력값
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [openChatUrl, setOpenChatUrl] = useState('');
+
   //역량
   const [selectedSkill, setSelectedSkill] = useState<SelectedSkill>(null);
 
+  //KPI 캐시
+  const [kpiCache, setKpiCache] = useState<Record<number, KpiCard[]>>({});
+  const [kpiLoading, setKpiLoading] = useState(false);
+
   const getItemsByRole = (idx: number) => {
+    const cached = kpiCache[idx];
+    if (cached && cached.length > 0) return cached.map((k) => k.name);
+
     switch (idx) {
       case 0:
         return itemsPM;
@@ -90,11 +120,37 @@ const NewStudyPage = () => {
     }
   };
 
-  //인원, 빈도
+  //roleIndex(직무) 선택되면 해당 직무 KPI 카드 불러와서 캐싱
+  useEffect(() => {
+    const roleIndex = selectedSkill?.roleIndex;
+    if (roleIndex === undefined || roleIndex === null) return;
+    if (kpiCache[roleIndex]?.length) return;
 
+    const fetch = async () => {
+      try {
+        setKpiLoading(true);
+        const jobName = jobNameByRoleIndex[roleIndex];
+
+        const res = await getStudyKpiCards({ jobName, size: 50 });
+        if (!res.data.isSuccess) return;
+
+        setKpiCache((prev) => ({
+          ...prev,
+          [roleIndex]: res.data.result.content,
+        }));
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setKpiLoading(false);
+      }
+    };
+
+    fetch();
+  }, [selectedSkill?.roleIndex]);
+
+  //인원, 빈도
   const [activePeopleIndex, setActivePeopleIndex] = useState<number | null>(null);
   const [count, setCount] = useState(1);
-
   const handleDecrease = () => setCount((prev) => Math.max(1, prev - 1));
   const handleIncrease = () => setCount((prev) => Math.min(7, prev + 1));
 
@@ -111,6 +167,7 @@ const NewStudyPage = () => {
       return { from: prev.from, to: day };
     });
   };
+
   const isSameDay = (a?: Date, b?: Date) =>
     !!a &&
     !!b &&
@@ -177,6 +234,98 @@ const NewStudyPage = () => {
   const [activeModeIndex, setActiveModeIndex] = useState<number | null>(null);
   const [activeSynergyIndex, setActiveSynergyIndex] = useState<number | null>(null);
 
+  const [submitting, setSubmitting] = useState(false);
+  const handleSubmit = async () => {
+    if (submitting) return;
+
+    if (!title.trim()) return alert('스터디명을 입력해주세요.');
+    if (!description.trim()) return alert('한줄 소개를 입력해주세요.');
+    if (!selectedSkill) return alert('역량(KPI)을 선택해주세요.');
+    if (activePeopleIndex === null) return alert('인원을 선택해주세요.');
+    if (!range.from || !range.to) return alert('활동 기간을 선택해주세요.');
+    if (activeModeIndex === null) return alert('참여 방식을 선택해주세요.');
+    if (activeSynergyIndex === null) return alert('시너지를 선택해주세요.');
+    if (!openChatUrl.trim()) return alert('오픈채팅 링크를 입력해주세요.');
+
+    const roleIndex = selectedSkill.roleIndex;
+
+    try {
+      setSubmitting(true);
+
+      // 1) KPI 카드 목록 조회(캐시 없으면 조회)
+      let cards = kpiCache[roleIndex];
+      if (!cards || cards.length === 0) {
+        setKpiLoading(true);
+        const jobName = jobNameByRoleIndex[roleIndex];
+
+        const res = await getStudyKpiCards({ jobName, size: 100 });
+        if (!res.data.isSuccess) {
+          alert(res.data.message ?? 'KPI 카드 조회에 실패했어요.');
+          return;
+        }
+
+        cards = res.data.result.content;
+
+        setKpiCache((prev) => ({
+          ...prev,
+          [roleIndex]: cards!,
+        }));
+      }
+
+      // 2) 선택된 KPI 이름(text)로 kpiId 찾기
+      const matched = cards.find((k) => k.name === selectedSkill.text);
+      if (!matched) {
+        alert('선택한 KPI를 서버 목록에서 찾지 못했어요. 다시 선택해주세요.');
+        return;
+      }
+      const kpiId = matched.kpiId;
+
+      // 3) 스터디 생성 payload
+      const capacity = Number(peopleLabels[activePeopleIndex]);
+      const startDate = new Date(range.from).toISOString();
+      const endDate = new Date(range.to).toISOString();
+
+      const participationMethod = modeLabels[activeModeIndex]; // "온라인" | "오프라인" | "온/오프라인"
+      const synergyType = activeSynergyIndex === 0 ? 'SAME_JOB' : 'DIVERSE_JOB';
+
+      const jobId = jobIdByRoleIndex[roleIndex]; // ⚠️ 임시 매핑
+
+      const createRes = await createStudy({
+        title: title.trim(),
+        capacity,
+        description: description.trim(),
+        jobId,
+        kpiId,
+        participationMethod,
+        synergyType,
+        startDate,
+        endDate,
+        openChatUrl: openChatUrl.trim(),
+        weekTime: count,
+      });
+
+      if (!createRes.data.isSuccess) {
+        alert(createRes.data.message ?? '스터디 생성에 실패했어요.');
+        return;
+      }
+
+      const studyId = createRes.data.result;
+      alert('스터디가 생성됐어요!');
+      console.log('created studyId:', studyId);
+    } catch (e) {
+      console.error(e);
+      alert('요청 중 오류가 발생했어요.');
+    } finally {
+      setSubmitting(false);
+      setKpiLoading(false);
+    }
+  };
+  const submitButtonText = useMemo(() => {
+    if (submitting) return '등록중...';
+    if (kpiLoading) return 'KPI 불러오는 중...';
+    return '등록하기';
+  }, [submitting, kpiLoading]);
+
   return (
     <div>
       <div className="mt-8 self-stretch">
@@ -198,10 +347,13 @@ const NewStudyPage = () => {
 
               <input
                 type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 placeholder="내용을 입력해주세요."
                 className="text-caption-12R focus:border-primary-blue-500 mt-2 w-full rounded-[8px] border border-[#B8D4FE] bg-white p-[8px] text-[#111111] placeholder:text-[rgba(17,17,17,0.4)] focus:outline-none"
               />
             </div>
+
             {/*한줄 소개 */}
             <div className="mt-6 flex w-full flex-col">
               <div className="flex items-center gap-2">
@@ -212,10 +364,13 @@ const NewStudyPage = () => {
 
               <input
                 type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 placeholder="내용을 입력해주세요"
                 className="text-caption-12R focus:border-primary-blue-500 mt-2 w-full rounded-[8px] border border-[#B8D4FE] bg-white p-[8px] text-[#111111] placeholder:text-[rgba(17,17,17,0.4)] focus:outline-none"
               />
             </div>
+
             {/*역량 선택(칩+말풍선+선택카드) */}
             <SkillSelector
               roleLabels={roleLabels}
@@ -223,6 +378,7 @@ const NewStudyPage = () => {
               selectedSkill={selectedSkill}
               onChangeSelectedSkill={setSelectedSkill}
             />
+
             {/*인원, 빈도 */}
             <PeopleAndFrequency
               peopleLabels={peopleLabels}
@@ -236,7 +392,9 @@ const NewStudyPage = () => {
               PlusIcon={PlusIcon}
               PlusIcon2={PlusIcon2}
             />
+
             <Divider />
+
             {/*활동기간(range 달력) */}
             <DateRangeCalendar
               range={range}
@@ -251,7 +409,9 @@ const NewStudyPage = () => {
               isSameDay={isSameDay}
               isBetween={isBetween}
             />
+
             <Divider />
+
             {/*모드 선택 */}
             <div className="mt-6 flex w-full flex-col">
               <div className="flex items-center gap-2">
@@ -279,6 +439,8 @@ const NewStudyPage = () => {
                 })}
               </div>
             </div>
+
+            {/*시너지 선택 */}
             <div className="mt-6 flex w-full flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-body-14B text-[#111111]">어떤 시너지를 기대하시나요?</span>
@@ -305,6 +467,8 @@ const NewStudyPage = () => {
                 })}
               </div>
             </div>
+
+            {/*오픈채팅 */}
             <div className="mt-6 flex w-full flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-body-14B text-[#111111]">
@@ -314,16 +478,22 @@ const NewStudyPage = () => {
 
               <input
                 type="text"
+                value={openChatUrl}
+                onChange={(e) => setOpenChatUrl(e.target.value)}
                 placeholder="입력하기"
                 className="text-caption-12R focus:border-primary-blue-500 mt-2 w-full rounded-[8px] border border-[#B8D4FE] bg-white p-[8px] text-[#111111] placeholder:text-[rgba(17,17,17,0.4)] focus:outline-none"
               />
             </div>
+
+            {/*등록하기 */}
             <div className="mt-8 flex justify-center">
               <button
                 type="button"
+                onClick={handleSubmit}
+                disabled={submitting || kpiLoading}
                 className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] self-stretch rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
               >
-                <span className="text-body-16B text-center text-white">등록하기</span>
+                <span className="text-body-16B text-center text-white">{submitButtonText}</span>
               </button>
             </div>
           </div>

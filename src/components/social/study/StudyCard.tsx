@@ -8,6 +8,7 @@ interface StudyCardProps {
   periodText: string;
   memberText: string;
   network: string;
+  kpiName?: string;
   imageSrc?: string;
   className?: string;
   onClick?: () => void;
@@ -21,6 +22,7 @@ export default function StudyCard({
   periodText,
   memberText,
   network,
+  kpiName,
   imageSrc,
   className = '',
   onClick,
@@ -71,7 +73,7 @@ export default function StudyCard({
           </span>
         </div>
         <div className="border-primary-blue-100 mt-2 inline-flex items-center gap-[10px] rounded-[8px] border bg-[#F5F8FF] px-2 py-1">
-          <span className="text-primary-blue-500 text-caption-12M">01 문제 정의&가설 수립</span>
+          <span className="text-primary-blue-500 text-caption-12M">{kpiName}</span>
         </div>
       </div>
     </div>

@@ -1,12 +1,16 @@
 import StudyImageFallback from '../../../assets/social/study.png';
 import CalendarIcon from '../../../assets/social/material-symbols_calendar-today-rounded.svg';
 import PersonIcon from '../../../assets/social/material-symbols_person-rounded.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getStudyApplicants, decideStudyApplicant } from '../../../apis/study';
+import type { StudyApplicant } from '../../../types/study';
 import ClickIcon from '../../../assets/social/material-symbols_arrow-back-ios-new-rounded (1).svg';
 import StarIcon from '../../../assets/social/material-symbols_star-rounded.svg';
-import ProfileIcon from '../../../assets/social/Ellipse 30.svg';
+import HalfStarIcon from '../../../assets/social/ic_round-star-half.svg';
+import EmptyStarIcon from '../../../assets/social/material-symbols_star-outline-rounded.svg';
 
 interface StudyCardProps {
+  studyId: number;
   title: string;
   currentCount: number;
   maxCount: number;
@@ -14,29 +18,83 @@ interface StudyCardProps {
   description: string;
   periodText: string;
   network: string;
+  kpiName?: string;
+  recruitmentStatus?: string;
+  openChatUrl?: string;
+  canEvaluate?: boolean;
   imageSrc?: string;
   className?: string;
 }
 
-function ApplicantCard() {
+const statusLabelMap: Record<string, string> = {
+  RECURRING: '모집중',
+  IN_PROGRESS: '진행중',
+  CLOSED: '종료',
+};
+
+function ApplicantCard({
+  applicant,
+  onDecided,
+}: {
+  applicant: StudyApplicant;
+  onDecided?: (studyUserId: number) => void;
+}) {
+  const [loading, setLoading] = useState(false);
+
+  const handleDecide = async (accept: boolean) => {
+    if (loading) return;
+    try {
+      setLoading(true);
+      const res = await decideStudyApplicant(applicant.studyUserId, { accept });
+
+      if (!res.data.isSuccess) {
+        alert(res.data.message ?? '처리에 실패했어요.');
+        return;
+      }
+      onDecided?.(applicant.studyUserId);
+    } catch (e) {
+      console.error(e);
+      alert('요청 중 오류가 발생했어요.');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="border-primary-blue-100 flex w-full flex-col rounded-[16px] border bg-white p-4">
       <div className="flex items-start gap-4">
         <img
-          src={ProfileIcon}
+          src={applicant.profileImageUrl}
           alt="프로필 이미지"
           className="aspect-square h-[48px] w-[48px] flex-shrink-0 rounded-full"
         />
 
         <div className="flex flex-1 flex-col">
           <div className="flex items-center gap-2">
-            <p className="text-[16px] leading-[140%] font-semibold tracking-[-0.32px]">김나비</p>
-            <p className="text-body-14R text-opacity-black-60">백엔드 개발자 | Lv.6</p>
+            <p className="text-[16px] leading-[140%] font-semibold tracking-[-0.32px]">
+              {applicant.name}
+            </p>
+            <p className="text-body-14R text-opacity-black-60">
+              {applicant.jobName} | Lv.{applicant.level}
+            </p>
           </div>
 
           <div className="flex items-center gap-[2px]">
-            {Array.from({ length: 5 }).map((_, idx) => (
-              <img key={idx} src={StarIcon} alt="별점" className="mt-1 h-5 w-5" />
+            {Array.from({ length: Math.floor(applicant.score) }).map((_, idx) => (
+              <img key={`full-${idx}`} src={StarIcon} alt="별점" className="mt-1 h-5 w-5" />
+            ))}
+            {applicant.score % 1 !== 0 && (
+              <img src={HalfStarIcon} alt="반 별점" className="mt-1 h-5 w-5" />
+            )}
+
+            {Array.from({
+              length: 6 - Math.floor(applicant.score) - (applicant.score % 1 == 0 ? 1 : 0),
+            }).map((_, idx) => (
+              <img
+                key={`empty-${idx}`}
+                src={EmptyStarIcon}
+                alt="빈 별점"
+                className="mt-1 h-5 w-5"
+              />
             ))}
           </div>
         </div>
@@ -45,16 +103,20 @@ function ApplicantCard() {
       <div className="mt-3 flex gap-2">
         <button
           type="button"
+          disabled={loading}
+          onClick={() => handleDecide(false)}
           className="text-body-14B h-[44px] flex-1 cursor-pointer rounded-[10px] bg-[#F0F0F0] text-[rgba(17,17,17,0.6)]"
         >
-          거절하기
+          {loading ? '처리중...' : '거절하기'}
         </button>
 
         <button
           type="button"
+          disabled={loading}
+          onClick={() => handleDecide(true)}
           className="bg-primary-blue-500 text-body-14B h-[44px] flex-1 cursor-pointer rounded-[10px] text-white"
         >
-          함께하기
+          {loading ? '처리중...' : '함께하기'}
         </button>
       </div>
     </div>
@@ -62,6 +124,7 @@ function ApplicantCard() {
 }
 
 export default function StudyCard4({
+  studyId,
   title,
   currentCount,
   maxCount,
@@ -69,9 +132,42 @@ export default function StudyCard4({
   description,
   periodText,
   network,
+  kpiName,
+  recruitmentStatus,
+  openChatUrl,
+  canEvaluate,
   imageSrc,
 }: StudyCardProps) {
   const [open, setOpen] = useState(false);
+  const [applicants, setApplicants] = useState<StudyApplicant[]>([]);
+  const [loadingApplicants, setLoadingApplicants] = useState(false);
+
+  const isClosed = recruitmentStatus === 'CLOSED';
+
+  useEffect(() => {
+    if (!open) return;
+
+    const fetchApplicants = async () => {
+      try {
+        setLoadingApplicants(true);
+
+        const res = await getStudyApplicants(studyId, { size: 20 });
+
+        if (!res.data.isSuccess) return;
+
+        setApplicants(res.data.result.content);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoadingApplicants(false);
+      }
+    };
+
+    fetchApplicants();
+  }, [open, studyId]);
+  const handleDecided = (studyUserId: number) => {
+    setApplicants((prev) => prev.filter((a) => a.studyUserId !== studyUserId));
+  };
   return (
     <div className="py-2">
       <div className="w-full self-stretch rounded-lg bg-white shadow-[0_0_10px_0_#DBEBFE]">
@@ -84,9 +180,21 @@ export default function StudyCard4({
         >
           <div className="flex items-center gap-2">
             <span className="text-heading-18B">{title}</span>
-            <div className="flex h-[29px] w-[56px] items-center justify-center rounded-[100px] border border-[0.5px] border-[#B8D4FE] bg-[#DBEBFE] px-[12px] py-[6px]">
-              <span className="text-caption-12M text-primary-blue-900 whitespace-nowrap">
-                진행중
+            <div
+              className={`flex h-[29px] w-[56px] items-center justify-center rounded-[100px] border px-[12px] py-[6px] ${
+                isClosed
+                  ? 'border-[0.5px] border-[rgba(231,35,38,0.10)] bg-[rgba(231,35,38,0.10)]'
+                  : 'border-[0.5px] border-[#B8D4FE] bg-[#DBEBFE]'
+              } `}
+            >
+              <span
+                className={`text-caption-12M whitespace-nowrap ${
+                  isClosed ? 'text-[#E72326]' : 'text-primary-blue-900'
+                }`}
+              >
+                {(recruitmentStatus && statusLabelMap[recruitmentStatus]) ??
+                  recruitmentStatus ??
+                  ''}
               </span>
             </div>
           </div>
@@ -128,9 +236,7 @@ export default function StudyCard4({
               <div className="flex w-full flex-col rounded-[8px] bg-[#F5F8FF] p-2">
                 <div className="flex w-full items-center justify-between">
                   <span className="text-body-14B text-primary-blue-500">KPI 역량</span>
-                  <span className="text-caption-12M text-opacity-black-80">
-                    01 문제 정의&가설 수립
-                  </span>
+                  <span className="text-caption-12M text-opacity-black-80">{kpiName}</span>
                 </div>
               </div>
             </div>
@@ -164,6 +270,12 @@ export default function StudyCard4({
             <div className="mt-4">
               <button
                 type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!openChatUrl) return;
+                  window.open(openChatUrl, '_blank');
+                }}
+                disabled={!openChatUrl}
                 className="flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] bg-[#FEE500] px-[61px] py-[12px] whitespace-nowrap"
               >
                 <span className="text-body-16B text-center text-[#111111]">
@@ -172,14 +284,16 @@ export default function StudyCard4({
               </button>
             </div>
 
-            <div className="mt-2">
-              <button
-                type="button"
-                className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
-              >
-                <span className="text-body-16B text-center text-white">평가하기</span>
-              </button>
-            </div>
+            {canEvaluate && (
+              <div className="mt-2">
+                <button
+                  type="button"
+                  className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
+                >
+                  <span className="text-body-16B text-center text-white">평가하기</span>
+                </button>
+              </div>
+            )}
 
             <div className="mt-6">
               <h2 className="text-heading-20B text-[#111111]">스터디 신청 현황</h2>
@@ -189,9 +303,17 @@ export default function StudyCard4({
             </div>
 
             <div className="mt-3 flex flex-col gap-3">
-              <ApplicantCard />
-              <ApplicantCard />
-              <ApplicantCard />
+              {loadingApplicants && <p>불러오는 중...</p>}
+              {!loadingApplicants && applicants.length === 0 && (
+                <p className="text-opacity-black-40">아직 신청자가 없습니다.</p>
+              )}
+              {applicants.map((applicant) => (
+                <ApplicantCard
+                  key={applicant.studyUserId}
+                  applicant={applicant}
+                  onDecided={handleDecided}
+                />
+              ))}
             </div>
           </div>
         )}

@@ -10,6 +10,10 @@ interface StudyCardProps {
   description: string;
   periodText: string;
   network: string;
+  kpiName: string;
+  recruitmentStatus?: string;
+  canEvaluate?: boolean;
+  openChatUrl?: string;
   imageSrc?: string;
   className?: string;
   onClick?: () => void;
@@ -23,8 +27,13 @@ export default function StudyCard3({
   description,
   periodText,
   network,
+  kpiName,
+  recruitmentStatus,
+  canEvaluate,
+  openChatUrl,
   imageSrc,
   className = '',
+
   onClick,
 }: StudyCardProps) {
   return (
@@ -46,7 +55,7 @@ export default function StudyCard3({
             <span className="text-heading-18B">{title}</span>
             <div className="flex h-[29px] w-[56px] items-center justify-center rounded-[100px] border border-[0.5px] border-[#B8D4FE] bg-[#DBEBFE] px-[12px] py-[6px]">
               <span className="text-caption-12M text-primary-blue-900 whitespace-nowrap">
-                진행중
+                {recruitmentStatus}
               </span>
             </div>
           </div>
@@ -77,9 +86,7 @@ export default function StudyCard3({
             <div className="flex w-full flex-col rounded-[8px] bg-[#F5F8FF] p-2">
               <div className="flex w-full items-center justify-between">
                 <span className="text-body-14B text-primary-blue-500">KPI 역량</span>
-                <span className="text-caption-12M text-opacity-black-80">
-                  01 문제 정의&가설 수립
-                </span>
+                <span className="text-caption-12M text-opacity-black-80">{kpiName}</span>
               </div>
             </div>
           </div>
@@ -117,14 +124,21 @@ export default function StudyCard3({
               </span>
             </button>
           </div>
-          <div className="mt-2">
-            <button
-              type="button"
-              className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
-            >
-              <span className="text-body-16B text-center text-white">평가하기</span>
-            </button>
-          </div>
+
+          {canEvaluate && (
+            <div className="mt-2">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (openChatUrl) window.open(openChatUrl, '_blank');
+                }}
+                className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
+              >
+                <span className="text-body-16B text-center text-white">평가하기</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
