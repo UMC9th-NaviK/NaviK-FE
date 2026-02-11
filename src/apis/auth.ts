@@ -1,6 +1,8 @@
 import type { RefreshTokenResponse } from '../types/auth';
 import type { CommonResponse } from '../types/common';
 import axiosInstance from './axios';
+import { getUserInfo } from './user';
+import { useUserStore, convertJobToShortCode } from '../store/useUserStore';
 
 export const refreshAccessToken = async (): Promise<RefreshTokenResponse> => {
   const response = await axiosInstance.post<CommonResponse<RefreshTokenResponse>>('/auth/refresh');
@@ -10,4 +12,18 @@ export const refreshAccessToken = async (): Promise<RefreshTokenResponse> => {
   }
 
   return response.data.result;
+};
+
+export const syncUserProfile = async (): Promise<void> => {
+  try {
+    const profile = await getUserInfo();
+    useUserStore.getState().setUser({
+      name: profile.name,
+      userId: profile.id,
+      nickname: profile.nickname,
+      job: convertJobToShortCode(profile.job),
+    });
+  } catch (error) {
+    console.error('프로필 동기화 실패:', error);
+  }
 };
