@@ -42,7 +42,6 @@ export default function StudyCard3({
 
   onClick,
 }: StudyCardProps) {
-  const isClosed = recruitmentStatus === 'CLOSED';
   const statusLabel = recruitmentStatus
     ? (statusLabelMap[recruitmentStatus] ?? recruitmentStatus)
     : '';
