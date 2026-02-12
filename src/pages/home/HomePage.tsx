@@ -6,8 +6,14 @@ import HomeJobSuggest from '../../components/home/HomeJobSuggest';
 import HotBoardSection from '../../components/home/HotBoardSection';
 import KpiFile from '../../components/home/KpiFile';
 import { useUser } from '../../hooks/useUser';
+import { useEffect } from 'react';
+import { syncUserProfile } from '../../apis/auth';
 
 const HomePage = () => {
+  useEffect(() => {
+    syncUserProfile();
+  }, []);
+
   const { recruitments } = useRecruitments();
   const { name } = useUser();
 
