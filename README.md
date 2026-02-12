@@ -64,52 +64,54 @@
 ```
 
 ## 📍 라우팅 구조
+
 ```
-/home                                # 홈 화면
-
-/notice                              # 알림 목록
-
-/setup                               # 초기 설정 (1회)
-├── /job                            # 직무 선택
-├── /category                       # 관심 카테고리 선택
-└── /category/:id                   # 카테고리 세부 설정
-
-/job
-└── /result                         # 맞춤 채용 공고 결과
-
-/report                              # 역량 리포트 메인
-├── /mycard                         # 내 카드 (보유 역량)
-├── /core                           # 핵심 KPI (강점)
-│   └── /detail                     # 강점 상세 + 추천 공고
-├── /overcoming                     # 보완 KPI (약점)
-│   └── /detail                     # 약점 상세 + 학습 가이드
-└── /growth                         # 성장 로그
-    ├── /write                      # 성장 기록 작성
-    └── /timeline                   # 성장 타임라인
-
-/goals                               # 목표 관리
-├── /modify                         # 목표 수정
-└── /add                            # 목표 추가
-
-/social                              # 소셜 메인
-├── /study                          # 스터디
-│   ├── /recommend                  # 추천 스터디
-│   ├── /new                        # 스터디 생성
-│   ├── /:studyId/evaluation       # 스터디 평가
-│   └── /my                         # 내 스터디
-│       ├── /participate            # 참여 중인 스터디
-│       └── /operate                # 운영 중인 스터디
-├── /board                          # 커뮤니티 게시판
-│   ├── /new                        # 게시글 작성
-│   ├── /:boardId                   # 게시글 상세
-│   └── /:boardId/edit              # 게시글 수정
-└── /evaluation                     # 동료 평가
-    └── /my                         # 받은 평가
-
-/mypage                              # 마이페이지
-├── /edit                           # 프로필 수정
-├── /setting                        # 설정
-└── /recommend                      # 추천 공고 목록
+📦 Routes
+ ┣ 📂 /home                          # 홈 화면
+ ┣ 📂 /notice                        # 알림 목록
+ ┃
+ ┣ 📂 /setup                         # 초기 설정 (1회)
+ ┃  ┣ 📄 /job                        # 직무 선택
+ ┃  ┣ 📄 /category                   # 관심 카테고리 선택
+ ┃  ┗ 📄 /category/:id               # 카테고리 세부 설정
+ ┃
+ ┣ 📂 /job
+ ┃  ┗ 📄 /result                     # 맞춤 채용 공고 결과
+ ┃
+ ┣ 📂 /report                        # 역량 리포트 메인
+ ┃  ┣ 📄 /mycard                     # 내 카드 (보유 역량)
+ ┃  ┣ 📂 /core                       # 핵심 KPI (강점)
+ ┃  ┃  ┗ 📄 /detail                  # 강점 상세 + 추천 공고
+ ┃  ┣ 📂 /overcoming                 # 보완 KPI (약점)
+ ┃  ┃  ┗ 📄 /detail                  # 약점 상세 + 학습 가이드
+ ┃  ┗ 📂 /growth                     # 성장 로그
+ ┃     ┣ 📄 /write                   # 성장 기록 작성
+ ┃     ┗ 📄 /timeline                # 성장 타임라인
+ ┃
+ ┣ 📂 /goals                         # 목표 관리
+ ┃  ┣ 📄 /modify                     # 목표 수정
+ ┃  ┗ 📄 /add                        # 목표 추가
+ ┃
+ ┣ 📂 /social                        # 소셜 메인
+ ┃  ┣ 📂 /study                      # 스터디
+ ┃  ┃  ┣ 📄 /recommend               # 추천 스터디
+ ┃  ┃  ┣ 📄 /new                     # 스터디 생성
+ ┃  ┃  ┣ 📄 /:studyId/evaluation     # 스터디 평가
+ ┃  ┃  ┗ 📂 /my                      # 내 스터디
+ ┃  ┃     ┣ 📄 /participate          # 참여 중인 스터디
+ ┃  ┃     ┗ 📄 /operate              # 운영 중인 스터디
+ ┃  ┣ 📂 /board                      # 커뮤니티 게시판
+ ┃  ┃  ┣ 📄 /new                     # 게시글 작성
+ ┃  ┃  ┣ 📄 /:boardId                # 게시글 상세
+ ┃  ┃  ┗ 📄 /:boardId/edit           # 게시글 수정
+ ┃  ┗ 📂 /evaluation                 # 동료 평가
+ ┃     ┗ 📄 /my                      # 받은 평가
+ ┃
+ ┗ 📂 /mypage                        # 마이페이지
+    ┣ 📄 /edit                       # 프로필 수정
+    ┣ 📄 /setting                    # 설정
+    ┗ 📄 /recommend                  # 추천 공고 목록
+```
 ```
 
 ## 🛠 기술 스택 및 도입 이유
