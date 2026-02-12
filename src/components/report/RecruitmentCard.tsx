@@ -49,7 +49,10 @@ const RecruitmentCard = ({ recruitment }: { recruitment: Recruitment }) => {
         </div>
       </div>
 
-      <button className="text-caption-12B bg-primary-blue-500 text-base-100 h-[32px] rounded-lg font-bold">
+      <button
+        className="text-caption-12B bg-primary-blue-500 text-base-100 h-[32px] cursor-pointer rounded-lg"
+        onClick={() => window.open(recruitment.link, '_blank')}
+      >
         홈페이지 지원하기
       </button>
     </div>
