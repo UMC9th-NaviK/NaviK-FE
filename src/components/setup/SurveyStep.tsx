@@ -46,14 +46,10 @@ const SurveyStep = ({ categoryId }: { categoryId: string }) => {
         qB5: answers[5] ?? 0,
       };
 
-      console.log('📤 추가 정보 제출:', { portfolioId, additionalInfo });
-
       await submitAdditionalInfo({
         portfolioId,
         info: additionalInfo,
       });
-
-      console.log('✅ 추가 정보 제출 성공');
 
       // 제출 후 다시 로딩 폴링으로 이동
       navigate(`/setup/category/${categoryId}?step=loading`);
