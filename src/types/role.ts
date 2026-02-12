@@ -1,10 +1,14 @@
 export type Role = 'pm' | 'designer' | 'frontend' | 'backend';
 
 export const ROLE_MAP: Record<string, string> = {
-    "프로덕트 매니저": "pm",
+    "프로덕트 매니저" : "pm",
+    "PM" : "pm",
     "프로덕트 디자이너": "designer",
+    "DESIGNER" : "designer",
     "프론트엔드 개발자": "frontend",
-    "백엔드 개발자": "backend"
+    "FE" : "frontend",
+    "백엔드 개발자": "backend",
+    "BE" : "backend"
 };
 
 export interface RoleTheme {

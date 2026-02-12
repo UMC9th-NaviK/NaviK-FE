@@ -7,7 +7,7 @@ export type UserLevelResponse = {
 }
 
 export type UserLevelResponseResult = {
-    level : number,
+    levelValue : number,
     description : string,
     percentage : number
 }
