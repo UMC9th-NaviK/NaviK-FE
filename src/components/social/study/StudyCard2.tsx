@@ -107,7 +107,7 @@ export default function StudyCard2({
             className="bg-primary-blue-500 flex h-[48px] w-[150px] cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
             onClick={(e) => {
               e.stopPropagation();
-              (onApplyClick ?? onClick)?.();
+              onApplyClick?.();
             }}
           >
             <span className="text-body-16B text-center text-white">신청하기</span>
