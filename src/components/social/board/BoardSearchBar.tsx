@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useDebounce } from '../../../hooks/useDebounce';
 import SearchIcon from '../../../assets/social/material-symbols_search-rounded.svg';
 
 type Props = {
@@ -8,6 +10,12 @@ type Props = {
 };
 
 export default function BoardSearchBar({ value, onChange, onEnter, placeholder = '검색' }: Props) {
+  const debouncedValue = useDebounce(value, 500);
+
+  useEffect(() => {
+    onEnter(debouncedValue);
+  }, [debouncedValue, onEnter]);
+
   return (
     <div className="border-primary-blue-100 bg-base-100 mt-4 flex w-full flex-col items-center justify-center gap-2.5 self-stretch rounded-[20px] border px-4 py-[10px]">
       <div className="flex w-full items-center justify-between gap-2.5">
