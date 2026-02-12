@@ -1,8 +1,6 @@
 import { ROLE_THEME_MAP } from "../../constants/roleTheme";
 import type { KPICardDetailResponseResult } from "../../types/kpiCard";
 import { useKPIScore } from "../../hooks/queries/useKPIScore";
-import { useNickname } from "../../hooks/useUser";
-
 interface KPICommentProps {
     role : string;
     detailData: KPICardDetailResponseResult;

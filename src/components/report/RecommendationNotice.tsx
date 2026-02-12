@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROLE_THEME_MAP } from "../../constants/roleTheme";
-import type { Role } from "../../types/role"
 
 interface RecommendationNoticeProps {
     role : string;
