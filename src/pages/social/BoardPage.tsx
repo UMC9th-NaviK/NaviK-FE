@@ -146,8 +146,8 @@ export default function BoardPage() {
   }, [allBoards, searchKeyword]);
 
   return (
-    <div className="mt-4 min-h-screen">
-      <div className="pointer-events-none fixed inset-x-0 bottom-6 z-50">
+    <div className="mt-4 mb-8 min-h-screen">
+      <div className="pointer-events-none fixed inset-x-0 bottom-[100px] z-50">
         <div className="relative mx-auto max-w-[390px]">
           <button
             type="button"

@@ -327,7 +327,7 @@ const NewStudyPage = () => {
   }, [submitting, kpiLoading]);
 
   return (
-    <div>
+    <div className="mb-8">
       <div className="mt-8 self-stretch">
         <span className="text-[16px] leading-[140%] font-semibold tracking-[-0.32px] text-[#2C2C2C]">
           원하는 스터디가 없나요?

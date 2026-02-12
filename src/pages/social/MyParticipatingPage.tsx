@@ -91,7 +91,7 @@ export default function MyParticipatingPage() {
   }, [studies]);
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 mb-8">
       {sortedStudies.map((study) => {
         const percentage = calculateProgress(study.startDate, study.endDate);
         return (
