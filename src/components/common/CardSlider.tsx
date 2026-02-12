@@ -9,7 +9,7 @@ interface CardSliderProps {
 const CardSlider = ({ cards, isLoading }: CardSliderProps) => {
   const navigate = useNavigate();
 
-  const handleCardClick = (cardId: number) => {
+  const handleCardClick = () => {
     // TODO: 클릭 시 각 카드 상세 페이지로 이동하도록 구현
     if (location.pathname === '/report/core') {
       navigate('/report/core/detail')
