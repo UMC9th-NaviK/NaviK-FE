@@ -4,11 +4,13 @@ import JobSummary from './JobSummary';
 import JobKpi from './JobKpi';
 import { getJobSummary } from '../../constants/keyKPI';
 import NoteActivity from './NoteActivity';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePortfolioStore } from '../../store/usePortfolioStore';
 import { postPortfolio } from '../../apis/portfolio';
 import { uploadPortfolioPdf } from '../../apis/s3';
 import { useUserId } from '../../hooks/useUser';
+import { convertJobToShortCode, useUserStore } from '../../store/useUserStore';
+import { getUserInfo } from '../../apis/user';
 
 const CategorySummary = ({ categoryId }: { categoryId: string }) => {
   const navigate = useNavigate();
@@ -21,6 +23,27 @@ const CategorySummary = ({ categoryId }: { categoryId: string }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const userId = useUserId();
+
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      if (!userId) {
+        try {
+          const profile = await getUserInfo();
+          useUserStore.getState().setUser({
+            name: profile.name,
+            userId: profile.id,
+            nickname: profile.nickname,
+            job: convertJobToShortCode(profile.job),
+          });
+          console.log('✅ User profile loaded');
+        } catch (error) {
+          console.error('❌ Failed to load user profile:', error);
+        }
+      }
+    };
+
+    loadUserProfile();
+  }, [userId]);
 
   const handleNext = async () => {
     if (!userId) {
