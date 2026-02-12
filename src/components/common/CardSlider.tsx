@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import type { ResponseKpiCard } from '../../types/card';
 
 interface CardSliderProps {
@@ -6,9 +7,17 @@ interface CardSliderProps {
 }
 
 const CardSlider = ({ cards, isLoading }: CardSliderProps) => {
-  const handleCardClick = (cardId: number) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
     // TODO: 클릭 시 각 카드 상세 페이지로 이동하도록 구현
-    console.log(`Card with ID ${cardId} clicked`);
+    if (location.pathname === '/report/core') {
+      navigate('/report/core/detail')
+    }
+
+    else if (location.pathname === '/report/overcoming') {
+      navigate('/report/overcoming/detail')
+    }
   };
 
   if (isLoading) {
@@ -27,7 +36,7 @@ const CardSlider = ({ cards, isLoading }: CardSliderProps) => {
         <button
           key={card.kpiCardId}
           className="flex flex-1"
-          onClick={() => handleCardClick(card.kpiCardId)}
+          onClick={handleCardClick}
         >
           <img
             src={card.imageUrl}
