@@ -20,7 +20,7 @@ export const MemberSelect = ({ members, selectedMember, onSelect }: MemberSelect
         {members.map((member) => (
           <div
             key={member.id}
-            className="flex cursor-pointer flex-col items-center"
+            className="flex min-w-0 cursor-pointer flex-col items-center"
             onClick={() => onSelect(member.id)}
           >
             <div className="relative z-0 -mb-5.25 aspect-square w-full">
@@ -31,13 +31,16 @@ export const MemberSelect = ({ members, selectedMember, onSelect }: MemberSelect
               />
             </div>
             <div
-              className={`z-10 w-full rounded-lg border py-2 text-center transition-all ${
+              className={`z-10 flex min-h-[44px] w-full items-center justify-center rounded-lg border px-2 py-1 text-center transition-all ${
                 selectedMember === member.id
                   ? 'bg-primary-blue-100 border-primary-blue-200 text-primary-blue-600 text-body-16B font-bold'
                   : 'border-base-300 bg-base-100 text-base-400 text-body-14B'
               }`}
+              title={member.name}
             >
-              {member.name}
+              <span className="line-clamp-2 text-center leading-tight break-all">
+                {member.name}
+              </span>
             </div>
           </div>
         ))}
