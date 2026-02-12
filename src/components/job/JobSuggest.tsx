@@ -1,7 +1,10 @@
 import { useRef } from 'react';
 import RecruitmentCard from '../report/RecruitmentCard';
+import { useUser } from '../../hooks/useUser';
 
 const JobSuggest = () => {
+  const { name } = useUser();
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const totalItems = 20;
 
@@ -9,7 +12,7 @@ const JobSuggest = () => {
     <div className="bg-base-100 shadow-card flex flex-col gap-4 rounded-2xl py-4">
       <div className="flex items-center justify-between px-4">
         <span className="text-heading-18B text-base-900 flex">
-          <span className="text-primary-blue-500">💡김나비</span>
+          <span className="text-primary-blue-500">💡{name || '사용자'}</span>
           님을 위한 추천 공고
         </span>
         <button className="text-opacity-black-60 text-caption-12M flex items-center gap-1">

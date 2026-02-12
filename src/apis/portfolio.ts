@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { CommonResponse } from '../types/common';
 import type {
   RequestPortfolio,
@@ -9,9 +10,19 @@ import type {
 import axiosInstance from './axios';
 
 export async function postPortfolio(portfolio: RequestPortfolio): Promise<ResponsePortfolio> {
-  const { data } = await axiosInstance.post<CommonResponse<ResponsePortfolio>>(`/portfolios`, {
-    ...portfolio,
-  });
+  const accessToken = localStorage.getItem('accessToken');
+
+  const { data } = await axios.post<CommonResponse<ResponsePortfolio>>(
+    `${import.meta.env.VITE_OAUTH_API_URL}/v2/portfolios`,
+    portfolio,
+    {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+      },
+    },
+  );
 
   if (!data.isSuccess) {
     throw new Error(data.message || 'Failed to post portfolio');
