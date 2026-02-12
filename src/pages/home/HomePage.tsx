@@ -6,8 +6,14 @@ import HomeJobSuggest from '../../components/home/HomeJobSuggest';
 import HotBoardSection from '../../components/home/HotBoardSection';
 import KpiFile from '../../components/home/KpiFile';
 import { useUser } from '../../hooks/useUser';
+import { useEffect } from 'react';
+import { syncUserProfile } from '../../apis/auth';
 
 const HomePage = () => {
+  useEffect(() => {
+    syncUserProfile();
+  }, []);
+
   const { recruitments } = useRecruitments();
   const { name } = useUser();
 
@@ -19,7 +25,7 @@ const HomePage = () => {
           <HomeHeader />
           <div className="flex flex-col gap-8">
             <p className="text-heading-20B text-base-100 px-4">
-              {name}님
+              {name || '사용자'}님
               <br /> 커리어 항해를 시작할까요?
             </p>
             <KpiFile />

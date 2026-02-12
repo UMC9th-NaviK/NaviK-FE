@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import KpiCard from './KpiCard';
+import folderCore from '../../assets/images/home/folder-core.png';
+import folderOvercome from '../../assets/images/home/folder-overcome.png';
 
 type KPITab = 'core' | 'overcome';
 
@@ -12,12 +14,14 @@ const KpiFile = () => {
       ? 'text-heading-18B text-base-100 pt-3'
       : 'text-body-16M text-base-100/80 pt-2.5');
 
+  const folderImage = activeTab === 'core' ? folderCore : folderOvercome;
+
   return (
     <div className="relative px-4">
       {/* 배경 폴더 이미지 */}
       <div className="relative w-full" style={{ aspectRatio: '343 / 278' }}>
         <img
-          src={`/images/home/folder-${activeTab}.png`}
+          src={folderImage}
           alt="KPI Folder"
           className="absolute inset-0 h-full w-full object-cover"
         />
