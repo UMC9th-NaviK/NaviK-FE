@@ -6,14 +6,16 @@ export interface ApiResponse<T> {
   timestamp: string;
 }
 
-// 유저 프로필 (마이페이지)
 export interface UserProfile {
   id: number;
   profileImageUrl: string;
   nickname: string;
   job: string;
   isEntryLevel: boolean;
+  educationLevel?: string; // 추가됨
+  departmentList?: string[]; // 추가됨
 }
+
 export type RequestBasicInfo = {
   name: string;
   nickname?: string;
@@ -28,6 +30,14 @@ export type ResponseBasicInfo = {
   jobId: number;
   isEntryLevel: boolean;
 };
+
+// 수정용 요청 타입
+export interface UpdateProfileRequest {
+  nickname: string;
+  isEntryLevel: boolean;
+  educationLevel: string;
+  departmentIds: string[];
+}
 
 export type JobType = 'pm' | 'de' | 'fe' | 'be';
 
@@ -46,6 +56,6 @@ export type ResponseUserInfo = {
   nickname: string;
   job: string;
   isEntryLevel: boolean;
-  educationLevel: 'HIGH_SCHOOL' | 'ASSOCIATE' | 'BACHELOR' | 'MASTER' | 'DOCTORATE';
+  educationLevel: 'HIGH_SCHOOL' | 'ASSOCIATE' | 'BACHELOR' | 'MASTER' | 'DOCTOR';
   departmentList: string[];
 };

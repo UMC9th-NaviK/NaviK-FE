@@ -11,7 +11,7 @@ export const SelectGroup = ({ label, items, selectedItems, onItemClick }: Select
     Array.isArray(selectedItems) ? selectedItems.includes(item) : selectedItems === item;
 
   return (
-    <div className="flex gap-6">
+    <div className="flex gap-3">
       <span className="text-primary-blue-500 text-body-16B shrink-0 pt-1">{label}</span>
       <div className="flex w-70.75 flex-wrap justify-end gap-2">
         {items.map((item) => (

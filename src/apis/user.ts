@@ -1,4 +1,10 @@
-import type { ApiResponse, ResponseUserInfo, UserProfile } from '../types/user';
+import type {
+  ApiResponse,
+  ResponseUserInfo,
+  UserProfile,
+  UpdateProfileRequest,
+} from '../types/user';
+
 import axiosInstance from './axios';
 
 export const getUserProfile = async (): Promise<UserProfile> => {
@@ -16,6 +22,32 @@ export const getUserProfile = async (): Promise<UserProfile> => {
   }
 };
 
+export const getUserMyPage = async (): Promise<ResponseUserInfo> => {
+  try {
+    const response = await axiosInstance.get<ApiResponse<ResponseUserInfo>>('/users/my-page');
+    if (response.data.isSuccess) {
+      return response.data.result;
+    }
+    throw new Error(response.data.message);
+  } catch (error) {
+    console.error('마이페이지 조회 실패:', error);
+    throw error;
+  }
+};
+
+// 프로필 수정 API (PATCH)
+export const patchUserProfile = async (body: UpdateProfileRequest): Promise<ApiResponse<null>> => {
+  try {
+    const response = await axiosInstance.patch<ApiResponse<null>>('/users/my-page', body);
+    if (response.data.isSuccess) {
+      return response.data;
+    }
+    throw new Error(response.data.message);
+  } catch (error) {
+    console.error('프로필 수정 실패:', error);
+    throw error;
+  }
+};
 export async function getUserInfo(): Promise<ResponseUserInfo> {
   const { data } = await axiosInstance.get<ApiResponse<ResponseUserInfo>>('/users/my-page');
 
