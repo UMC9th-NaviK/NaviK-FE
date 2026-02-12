@@ -59,6 +59,6 @@ export type ResponseUserInfo = {
   nickname: string;
   job: string;
   isEntryLevel: boolean;
-  educationLevel: 'HIGH_SCHOOL' | 'ASSOCIATE' | 'BACHELOR' | 'MASTER' | 'DOCTORATE';
+  educationLevel: 'HIGH_SCHOOL' | 'ASSOCIATE' | 'BACHELOR' | 'MASTER' | 'DOCTOR';
   departmentList: string[];
 };
