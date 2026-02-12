@@ -87,3 +87,27 @@ export async function uploadPortfolioPdf(userId: number, file: File): Promise<st
     throw error;
   }
 }
+
+/**
+ * 프로필 이미지 업로드 (발급 + S3 업로드)
+ */
+export async function uploadProfileImage(userId: number, file: File): Promise<string> {
+  try {
+    const parts = file.name.split('.');
+    const ext = parts.length > 1 ? parts.pop() : 'png';
+    const extension = '.' + ext;
+
+    const { preSignedUrl, key } = await getPresignedUrl({
+      pathType: 'USER_PROFILE',
+      id: userId,
+      extension,
+    });
+
+    await uploadFileToS3(preSignedUrl, file);
+
+    return key;
+  } catch (error) {
+    console.error('=== uploadProfileImage 실패 ===');
+    throw error;
+  }
+}
