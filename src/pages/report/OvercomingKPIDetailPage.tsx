@@ -128,7 +128,7 @@ const OvercomingKPIDetailPage = () => {
 
                             <div className="overflow-x-auto scrollbar-hide pr-5 snap-x snap-mandatory scroll-pl-[22px]">
                                 <div className='flex flex-nowrap w-max box-border gap-[16px] scroll-smooth'>
-                                    <RecommendationNotice role={mappedRole} currentCardStudyId={null} />
+                                    <RecommendationNotice role={mappedRole} />
                                     <div className="flex-shrink-0 w-[1px] h-full" />
                                 </div>
                             </div>
