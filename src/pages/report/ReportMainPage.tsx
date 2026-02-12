@@ -2,20 +2,13 @@ import { useNavigate } from "react-router-dom";
 import ComparisonIncrease from "../../components/report/ComparisonIncrease";
 import { FOOTERPB } from "../../components/common/Footer";
 import { useState, useEffect } from "react";
-import { getUserProfile } from "../../apis/user";
 import { useLevel } from "../../hooks/queries/useLevel";
 import { useGoals } from "../../hooks/goals/useGoals";
 import { useKPIScoreMonthly } from "../../hooks/queries/useKPIScore";
+import { useProfile } from "../../hooks/useProfile";
 
 const ReportMainPage = () => {
   const navigate = useNavigate();
-
-  const [profile, setProfile] = useState({
-    id: 0,
-    name: "",
-    job: "pm",
-    profileImage: "/icons/reports/logo.svg",
-  });
 
   const ROLE_MAP: Record<string, string> = {
     "프로덕트 매니저" : "PM",
@@ -24,26 +17,9 @@ const ReportMainPage = () => {
     "백엔드 개발자": "BE",
   };
 
-  useEffect(() => {
-      const fetchUserProfile = async () => {
-          try {
-              const response = await getUserProfile();
+  const { profile } = useProfile();
 
-              setProfile({
-                id: response.id,
-                name: response.nickname,
-                profileImage: response.profileImageUrl,
-                job: ROLE_MAP[response.job],
-            });
-          }
-
-          catch (error) {
-              console.log("사용자 찾을 수 없음");
-          }
-      }
-
-      fetchUserProfile();
-  }, [])
+  const mappedRole = ROLE_MAP[profile?.job || "프로덕트 매니저"];
 
   const { data } = useLevel();
   const { goalsList } = useGoals(100, "RECENT");
@@ -83,7 +59,7 @@ const ReportMainPage = () => {
         <div className="relative flex flex-1 items-center bg-white rounded-full shadow-[0_0_10px_0_#DBEBFE] p-[10px] gap-[10px] overflow-hidden">
           <div className="flex items-center justify-center w-[65px] h-[65px] rounded-full bg-[conic-gradient(from_0deg,#4E83F9,#DBEBFE)]">
             <img 
-            src={`${profile.profileImage}`}
+            src={`${profile?.profileImageUrl}`}
             alt="프로필 이미지"
             className="flex items-center justify-center w-[55px] h-[55px] rounded-full bg-white" />
           </div>
@@ -96,12 +72,12 @@ const ReportMainPage = () => {
 
           <div className="flex-col items-center justify-center">
             <span className="text-heading-18B">
-              {profile.name} 님,
+              {profile?.nickname} 님,
             </span>
 
             <div className="flex">
               <span className="text-body-16B text-[#4E83F9]">
-                {profile.job}
+                {mappedRole}
               </span>
               <p className="text-body-16B">
                 의 성공적인 항해를 위해서🔥
@@ -182,7 +158,11 @@ const ReportMainPage = () => {
                   className="absolute w-[120px] h-[140px] right-[-22px] bottom-[-75px] p-[10px] z-0"
                   />
                 </div>
-                <p className="absolute bottom-0 text-start pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> {scoreRate}% </span> 상승했어요! </p>
+                { type === 'up' ? (
+                  <p className="absolute bottom-0 text-start pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> {scoreRate}% </span> 상승했어요! </p>
+                ) : (
+                  <p className="absolute bottom-0 text-start pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> {scoreRate}% </span> 하강했어요. </p>
+                )}
               </button>
 
               <button 
@@ -192,7 +172,11 @@ const ReportMainPage = () => {
                   <div className="flex flex-col gap-[6px]">
                     <div className="flex justify-end items-center gap-1">
                       <span className="text-body-16B text-[#4E83F9]"> {scoreRate}% </span>
-                      <span className="text-[#4E83F9] text-xs"> ▲ </span>
+                      { type === 'up' ? (
+                        <span className="text-[#4E83F9] text-xs"> ▲ </span>
+                      ) : (
+                        <span className="text-[#4E83F9] text-xs rotate-180"> ▲ </span>
+                      )}
                     </div>
 
                     <div className="flex-1 flex items-center justify-center">
@@ -206,7 +190,11 @@ const ReportMainPage = () => {
                   </div>
                 </div>
 
-                <p className="text-body-14M text-[#11111199] text-start"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> {scoreRate}% </span> 상승했어요! </p>
+                { type === 'up' ? (
+                  <p className="absolute bottom-0 text-start pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> {scoreRate}% </span> 상승했어요! </p>
+                ) : (
+                  <p className="absolute bottom-0 text-start pb-[12px] text-body-14M text-[#11111199]"> 지난 달 대비 <br /> <span className="text-body-16M text-[#4E83F9]"> {scoreRate}% </span> 하강했어요. </p>
+                )}
               </button>
             </div>
           </div>

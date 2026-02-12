@@ -3,7 +3,7 @@ import { ROLE_THEME_MAP } from "../../constants/roleTheme";
 import type { Role } from "../../types/role"
 
 interface RecommendationNoticeProps {
-    role : Role;
+    role : string;
 }
 
 const RecommendationNotice = ({ role } : RecommendationNoticeProps) => {
@@ -16,7 +16,7 @@ const RecommendationNotice = ({ role } : RecommendationNoticeProps) => {
 
     return (
         <button 
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/social/study")}
         className={`appearance-none flex flex-shrink-0 snap-start snap-always flex-col w-[240px] bg-white border border-[1px] ${isOvercomingDetailPage ? `${theme.border}` : "text-[#B8D4FE]"} rounded-[8px] p-[16px] gap-[8px]`}>
             <div className="relative w-full h-[140px] rounded-lg overflow-hidden">
                 <img

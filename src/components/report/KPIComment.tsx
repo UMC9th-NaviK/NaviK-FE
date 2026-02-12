@@ -1,14 +1,25 @@
 import { ROLE_THEME_MAP } from "../../constants/roleTheme";
 import type { KPICardDetailResponseResult } from "../../types/kpiCard";
 import { useKPIScore } from "../../hooks/queries/useKPIScore";
+import { useNickname } from "../../hooks/useUser";
 
 interface KPICommentProps {
     role : string;
     detailData: KPICardDetailResponseResult;
+    name : string;
 }
 
-const KPIComment = ({ role, detailData } : KPICommentProps) => {
+const KPIComment = ({ role, detailData, name } : KPICommentProps) => {
     const theme = ROLE_THEME_MAP[role] || ROLE_THEME_MAP['designer'];
+
+    const ROLE_MAP: Record<string, string> = {
+        "pm" : "PM",
+        "designer": "DESIGNER",
+        "frontend": "FE",
+        "backend": "BE",
+    };
+
+    const mappedRole = ROLE_MAP[role];
 
     const contentLines = detailData.content.content.split('\n').filter(line => line.trim() !== "");
         
@@ -98,11 +109,11 @@ const KPIComment = ({ role, detailData } : KPICommentProps) => {
 
             { isCore ? (
                 <span className='text-center text-body-16M text-[#111111CC]'> 
-                    전체 PM 취준생이 100명이라면, <br /> 김나비님은 그 중 상위 <span className={`text-heading-20B ${theme.primaryText}`}> {topPercentage}% </span>이에요
+                    전체 {mappedRole} 취준생이 100명이라면, <br /> {name}님은 그 중 상위 <span className={`text-heading-20B ${theme.primaryText}`}> {topPercentage}% </span>이에요
                 </span>
             ) : (
                 <span className='text-center text-body-16M text-[#111111CC]'> 
-                    전체 PM 취준생이 100명이라면, <br /> 김나비님은 그 중 하위 <span className={`text-heading-20B ${theme.primaryText}`}> {bottomPercentage}% </span>이에요
+                    전체 {mappedRole} 취준생이 100명이라면, <br /> {name}님은 그 중 하위 <span className={`text-heading-20B ${theme.primaryText}`}> {bottomPercentage}% </span>이에요
                 </span>
             ) }
 

@@ -9,7 +9,9 @@ import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCa
 import { ROLE_THEME_MAP } from '../../constants/roleTheme';
 
 const CoreKPIDetailPage = () => {
-    const { role } = useProfile();
+    const { profile, role } = useProfile();
+
+    const name = profile?.nickname as string;
 
     const mappedRole = ROLE_MAP[role];
 
@@ -108,7 +110,7 @@ const CoreKPIDetailPage = () => {
                         <div className="w-full">
                             <KPIComment 
                             role={mappedRole}
-                            detailData={detailData}
+                            detailData={detailData} name={name} 
                             />
                         </div>
                     )}

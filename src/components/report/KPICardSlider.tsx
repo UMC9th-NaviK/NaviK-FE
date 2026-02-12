@@ -13,7 +13,7 @@ const CARD_WIDTH = 284;
 const GAP = 14;
 
 const KPICardSlider = ({ role, cards, activeIndex, onIndexChange }: KPICardSliderProps) => {
-    const theme = ROLE_THEME_MAP[role];
+    const theme = ROLE_THEME_MAP[role] ?? ROLE_THEME_MAP['pm'];
 
     const sliderRef = useRef<HTMLDivElement | null>(null);
 
@@ -32,7 +32,7 @@ const KPICardSlider = ({ role, cards, activeIndex, onIndexChange }: KPICardSlide
 
         slider.addEventListener("scroll", onScroll, { passive: true });
         return () => slider.removeEventListener("scroll", onScroll);
-        
+
     }, [activeIndex, cards.length, onIndexChange]); 
 
     return (

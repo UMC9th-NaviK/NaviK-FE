@@ -10,7 +10,9 @@ import { getKPICardBottom, getKPICardDetail } from '../../apis/report/kpiCard';
 import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCard';
 
 const OvercomingKPIDetailPage = () => {
-    const { role } = useProfile();
+    const { profile, role } = useProfile();
+
+    const name = profile?.nickname as string;
 
     const mappedRole = ROLE_MAP[role];
     
@@ -20,6 +22,8 @@ const OvercomingKPIDetailPage = () => {
     const [activeIndex, setActiveIndex] = useState(0); 
     const [detailData, setDetailData] = useState<KPICardDetailResponseResult | null>(null); 
     const [loading, setLoading] = useState(true);
+
+    const [convertedValue, setConvertedValue] = useState("");
 
     useEffect(() => {
         const fetchInitialCards = async () => {
@@ -47,9 +51,15 @@ const OvercomingKPIDetailPage = () => {
             try {
                 const response = await getKPICardDetail(currentId, "weak");
 
-                console.log("API Response:", response);
-
                 setDetailData(response.result);
+
+                if (response.result.kpiCardId % 10 !== 0) {
+                    setConvertedValue(`0${response.result.kpiCardId % 10}`);
+                }
+
+                else {
+                    setConvertedValue(`1${response.result.kpiCardId % 10}`);
+                }
             } 
             
             catch (err) {
@@ -82,6 +92,7 @@ const OvercomingKPIDetailPage = () => {
                             <KPIComment 
                             role={mappedRole}
                             detailData={detailData}
+                            name={name}
                             />
                         </div>
                     )}
@@ -93,8 +104,8 @@ const OvercomingKPIDetailPage = () => {
                                 <div 
                                 className={`flex items-center w-fit shrink-0 border border-[1px] ${theme.border} bg-gradient-to-r rounded-[64px] py-[4px] px-[8px] gap-[4px]`} 
                                 style={{ backgroundImage: `linear-gradient(to right, ${theme.surfaceVar}, ${theme.primaryVar})`}}>
-                                    <p className='text-body-eng-14SB text-base-100'> PM </p>
-                                    <p className='text-body-eng-14SB text-base-100'> 10 </p>
+                                    <p className='text-body-eng-14SB text-base-100'> {role} </p>
+                                    <p className='text-body-eng-14SB text-base-100'> {convertedValue} </p>
                                 </div>
 
                                 <p className='text-heading-18B text-[#1B1B1B]'> 보완 KPI 성장의 스터디 추천 🔥 </p>
@@ -102,11 +113,7 @@ const OvercomingKPIDetailPage = () => {
 
                             <div className="overflow-x-auto scrollbar-hide pr-5 snap-x snap-mandatory scroll-pl-[22px]">
                                 <div className='flex flex-nowrap w-max box-border gap-[16px] scroll-smooth'>
-                                    <RecommendationNotice role={'pm'} />
-                                    <RecommendationNotice role={'pm'} />
-                                    <RecommendationNotice role={'pm'} />
-                                    <RecommendationNotice role={'pm'} />
-
+                                    <RecommendationNotice role={mappedRole} />
                                     <div className="flex-shrink-0 w-[1px] h-full" />
                                 </div>
                             </div>
