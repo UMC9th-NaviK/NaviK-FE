@@ -48,6 +48,13 @@ export default function StudyCard3({
     ? (statusLabelMap[recruitmentStatus] ?? recruitmentStatus)
     : '';
   const isClosed = recruitmentStatus === 'CLOSED';
+
+  function formatKpiId(id?: number) {
+    if (!id) return '';
+    const mod = id % 10 === 0 ? 10 : id % 10;
+    return String(mod).padStart(2, '0');
+  }
+
   return (
     <div className="py-2">
       <div
@@ -107,7 +114,7 @@ export default function StudyCard3({
               <div className="flex w-full items-center justify-between">
                 <span className="text-body-14B text-primary-blue-500">KPI 역량</span>
                 <span className="text-caption-12M text-opacity-black-80">
-                  {kpiId} {kpiName}
+                  {formatKpiId(kpiId)} {kpiName}
                 </span>
               </div>
             </div>
@@ -145,6 +152,12 @@ export default function StudyCard3({
           <div className="mt-4">
             <button
               type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (openChatUrl) {
+                  window.open(openChatUrl, '_blank');
+                }
+              }}
               className="flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] bg-[#FEE500] px-[61px] py-[12px] whitespace-nowrap"
             >
               <span className="text-body-16B text-center text-[#111111]">
@@ -159,7 +172,7 @@ export default function StudyCard3({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (openChatUrl) window.open(openChatUrl, '_blank');
+                  //평가페이지 이동로직
                 }}
                 className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
               >

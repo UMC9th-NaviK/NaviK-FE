@@ -19,6 +19,7 @@ interface StudyCardProps {
   periodText: string;
   network: string;
   kpiName?: string;
+  kpiId?: number;
   recruitmentStatus?: string;
   openChatUrl?: string;
   canEvaluate?: boolean;
@@ -59,6 +60,7 @@ function ApplicantCard({
       setLoading(false);
     }
   };
+
   return (
     <div className="border-primary-blue-100 flex w-full flex-col rounded-[16px] border bg-white p-4">
       <div className="flex items-start gap-4">
@@ -133,6 +135,7 @@ export default function StudyCard4({
   periodText,
   network,
   kpiName,
+  kpiId,
   recruitmentStatus,
   openChatUrl,
   canEvaluate,
@@ -168,6 +171,13 @@ export default function StudyCard4({
   const handleDecided = (studyUserId: number) => {
     setApplicants((prev) => prev.filter((a) => a.studyUserId !== studyUserId));
   };
+
+  function formatKpiId(id?: number) {
+    if (!id) return '';
+    const mod = id % 10 === 0 ? 10 : id % 10;
+    return String(mod).padStart(2, '0');
+  }
+
   return (
     <div className="py-2">
       <div className="w-full self-stretch rounded-lg bg-white shadow-[0_0_10px_0_#DBEBFE]">
@@ -236,7 +246,9 @@ export default function StudyCard4({
               <div className="flex w-full flex-col rounded-[8px] bg-[#F5F8FF] p-2">
                 <div className="flex w-full items-center justify-between">
                   <span className="text-body-14B text-primary-blue-500">KPI 역량</span>
-                  <span className="text-caption-12M text-opacity-black-80">{kpiName}</span>
+                  <span className="text-caption-12M text-opacity-black-80">
+                    {formatKpiId(kpiId)}&nbsp;{kpiName}
+                  </span>
                 </div>
               </div>
             </div>
@@ -277,10 +289,10 @@ export default function StudyCard4({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (!openChatUrl) return;
-                  window.open(openChatUrl, '_blank');
+                  if (openChatUrl) {
+                    window.open(openChatUrl, '_blank');
+                  }
                 }}
-                disabled={!openChatUrl}
                 className="flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] bg-[#FEE500] px-[61px] py-[12px] whitespace-nowrap"
               >
                 <span className="text-body-16B text-center text-[#111111]">
