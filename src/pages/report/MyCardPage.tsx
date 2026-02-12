@@ -24,7 +24,6 @@ const MyCardPage = () => {
       <KPILocalNavbar />
 
       <div className="bg-white-background flex flex-col gap-[16px] pt-[16px] pr-[16px] pl-[16px]">
-        <h1 className="text-heading-20B"> 직무 전체 역량 </h1>
         {isFetching || isLoading ? (
           <div className="flex flex-col gap-[10px] pb-[24px]">
             <div className="grid grid-cols-2 gap-4">
