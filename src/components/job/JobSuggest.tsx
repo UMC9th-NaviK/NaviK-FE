@@ -1,9 +1,11 @@
 import { useRef } from 'react';
 import RecruitmentCard from '../report/RecruitmentCard';
 import { useUser } from '../../hooks/useUser';
+import { useNavigate } from 'react-router-dom';
 
 const JobSuggest = () => {
   const { name } = useUser();
+  const navigate = useNavigate();
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const totalItems = 20;
@@ -15,7 +17,12 @@ const JobSuggest = () => {
           <span className="text-primary-blue-500">💡{name || '사용자'}</span>
           님을 위한 추천 공고
         </span>
-        <button className="text-opacity-black-60 text-caption-12M flex items-center gap-1">
+        <button
+          className="text-opacity-black-60 text-caption-12M flex items-center gap-1"
+          onClick={() => {
+            navigate('/mypage/recommend');
+          }}
+        >
           더보기
           <img src="/icons/reports/arrow-right-gray.svg" className="h-4 w-4" />
         </button>
