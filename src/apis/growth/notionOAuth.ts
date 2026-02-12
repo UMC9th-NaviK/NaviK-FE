@@ -7,7 +7,6 @@ export const getNotionOauth = async () => {
         headers: {
             Authorization: `Bearer ${token}`
         },
-        withCredentials: false,
     })
 
     return response.data;
