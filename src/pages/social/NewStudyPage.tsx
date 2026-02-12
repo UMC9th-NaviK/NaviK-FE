@@ -60,7 +60,6 @@ const NewStudyPage = () => {
         setKpiLoading(true);
 
         const jobName = jobNameByRoleIndex[activeRoleIndex];
-        console.log('[KPI] fetching for roleIndex:', activeRoleIndex, jobName);
 
         const res = await getStudyKpiCards({ jobName, size: 50 });
         console.log('[KPI] response:', res.data);
