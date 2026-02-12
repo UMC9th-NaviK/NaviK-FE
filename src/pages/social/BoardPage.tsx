@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios'; // ✅ 에러 타입을 위해 추가
+import { AxiosError } from 'axios';
 
 import AddIcon from '../../assets/social/material-symbols_edit-square-outline-rounded.svg';
 
@@ -14,7 +14,6 @@ import BoardPostCard from '../../components/social/board/BoardPostCard';
 
 type FilterKey = '전체' | '직무별' | 'HOT';
 
-// ✅ location.state의 타입을 명확하게 정의 (any 방지)
 interface BoardLocationState {
   refresh?: boolean;
 }
@@ -69,14 +68,12 @@ export default function BoardPage() {
   const [query, setQuery] = useState('');
   const [searchKeyword, setSearchKeyword] = useState('');
 
-  // ✅ 필터 변경 시 검색어 초기화 핸들러 (Effect 밖에서 처리)
   const handleFilterChange = (newFilter: FilterKey) => {
     setFilter(newFilter);
     setQuery('');
     setSearchKeyword('');
   };
 
-  // ✅ 프론트엔드 필터링 (useMemo 사용)
   const filteredBoards = useMemo(() => {
     const kw = searchKeyword.trim().toLowerCase();
     if (!kw) return allBoards;
@@ -88,7 +85,6 @@ export default function BoardPage() {
     });
   }, [allBoards, searchKeyword]);
 
-  // ✅ 서버 데이터 페칭 및 리프레시 로직
   useEffect(() => {
     let ignore = false;
 
@@ -122,14 +118,12 @@ export default function BoardPage() {
         if (res.data.isSuccess && !ignore) {
           setAllBoards(res.data.result.content);
 
-          // ✅ location.state 타입 단언 적용 (any 제거)
           const state = location.state as BoardLocationState;
           if (state?.refresh) {
             navigate(location.pathname, { replace: true, state: null });
           }
         }
       } catch (err) {
-        // ✅ AxiosError 타입 지정으로 any 제거
         const axiosError = err as AxiosError;
         console.error('[BoardPage] fetch failed:', axiosError.message);
         if (!ignore) setAllBoards([]);
