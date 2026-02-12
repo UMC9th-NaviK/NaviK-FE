@@ -49,7 +49,7 @@ const RecruitmentCard = ({ recruitment }: { recruitment: Recruitment }) => {
             <span className="text-caption-12M text-primary-blue-600">Na:viK이 추천해요!</span>
           </div>
           {recruitment.recommend && (
-            <div className="border-primary-blue-200 bg-primary-100 flex h-6 w-fit items-center justify-center rounded-xl border px-2">
+            <div className="border-primary-blue-200 bg-primary-blue-100 flex h-6 w-fit items-center justify-center rounded-xl border px-2">
               <span className="text-caption-12M text-primary-blue-600">당신에게 충분한 역량!</span>
             </div>
           )}
