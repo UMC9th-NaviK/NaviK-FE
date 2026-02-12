@@ -1,24 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ROLE_THEME_MAP } from "../../constants/roleTheme";
-import type { Role } from "../../types/role";
+import type { KPICardBase } from "../../types/kpiCard";
 
 interface KPICardSliderProps {
-    role: Role;
+    role : string;
+    cards: KPICardBase[];
+    activeIndex: number;
+    onIndexChange: (index: number) => void;
 }
 
 const CARD_WIDTH = 284;
 const GAP = 14;
 
-const KPICardSlider = ({ role }: KPICardSliderProps) => {
-    const theme = ROLE_THEME_MAP[role] || ROLE_THEME_MAP['pm'];
-    const sliderRef = useRef<HTMLDivElement | null>(null);
-    const [activeIndex, setActiveIndex] = useState(0);
+const KPICardSlider = ({ role, cards, activeIndex, onIndexChange }: KPICardSliderProps) => {
+    const theme = ROLE_THEME_MAP[role];
 
-    const items = [
-        { id: 0, img: "/icons/reports/KPIcard_2.svg" },
-        { id: 1, img: "/icons/reports/KPIcard_2.svg" },
-        { id: 2, img: "/icons/reports/KPIcard_2.svg" },
-    ];
+    const sliderRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const slider = sliderRef.current;
@@ -27,15 +24,16 @@ const KPICardSlider = ({ role }: KPICardSliderProps) => {
         const onScroll = () => {
             const scrollLeft = slider.scrollLeft;
             const index = Math.round(scrollLeft / (CARD_WIDTH + GAP));
-            
-            if (index !== activeIndex) {
-                setActiveIndex(index);
+
+            if (index !== activeIndex && index >= 0 && index < cards.length) {
+                onIndexChange(index);
             }
         };
 
         slider.addEventListener("scroll", onScroll, { passive: true });
         return () => slider.removeEventListener("scroll", onScroll);
-    }, [activeIndex]);
+        
+    }, [activeIndex, cards.length, onIndexChange]); 
 
     return (
         <div
@@ -50,18 +48,18 @@ const KPICardSlider = ({ role }: KPICardSliderProps) => {
                 scrollPaddingRight: `calc(50% - ${CARD_WIDTH / 2}px)`,
             }}
         >
-            {items.map((item, idx) => {
+            {cards.map((card, idx) => {
                 const isActive = idx === activeIndex;
 
                 return (
                     <div
-                        key={item.id}
+                        key={card.kpiCardId}
                         className="snap-center shrink-0 flex items-center justify-center"
                         style={{ width: CARD_WIDTH }}
                     >
                         {isActive ? (
                             <img
-                                src={item.img}
+                                src={card.imageUrl}
                                 alt="핵심 역량 카드"
                                 className="w-[279px] h-[416.7px] object-contain transition-all duration-300"
                             />

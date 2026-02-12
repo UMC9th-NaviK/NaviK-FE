@@ -1,29 +1,92 @@
 import ReportNavbar from '../../components/report/ReportNavbar'
 import KPIComment from '../../components/report/KPIComment'
 import RecommendationNotice from '../../components/report/RecommendationNotice'
-import type { Role } from '../../types/role';
+import { ROLE_MAP } from '../../types/role';
 import { ROLE_THEME_MAP } from '../../constants/roleTheme';
 import KPICardSlider from '../../components/report/KPICardSlider';
+import { useProfile } from '../../hooks/useProfile';
+import { useEffect, useState } from 'react';
+import { getKPICardBottom, getKPICardDetail } from '../../apis/report/kpiCard';
+import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCard';
 
-interface OvercomingKPIDetailPageProps {
-    role: Role;
-}
+const OvercomingKPIDetailPage = () => {
+    const { role } = useProfile();
 
-const OvercomingKPIDetailPage = ({ role } : OvercomingKPIDetailPageProps) => {
-    const theme = ROLE_THEME_MAP[role] || ROLE_THEME_MAP['pm'];
+    const mappedRole = ROLE_MAP[role];
+    
+    const theme = ROLE_THEME_MAP[mappedRole] || ROLE_THEME_MAP['designer'];
+
+    const [cards, setCards] = useState<KPICardBase[]>([]);
+    const [activeIndex, setActiveIndex] = useState(0); 
+    const [detailData, setDetailData] = useState<KPICardDetailResponseResult | null>(null); 
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchInitialCards = async () => {
+            try {
+                const response = await getKPICardBottom();
+
+                setCards(response.result);
+                setLoading(false);
+            } 
+            
+            catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchInitialCards();
+    }, []);
+
+    useEffect(() => {
+        if (cards.length === 0) return;
+
+        const currentId = cards[activeIndex].kpiCardId;
+
+        const fetchDetail = async () => {
+            try {
+                const response = await getKPICardDetail(currentId, "weak");
+
+                console.log("API Response:", response);
+
+                setDetailData(response.result);
+            } 
+            
+            catch (err) {
+                console.error("상세조회 실패", err);
+            }
+        };
+
+        fetchDetail();
+    }, [activeIndex, cards]);
+
+    if (loading) return <div>로딩 중...</div>;
 
     return (
         <div>
             <ReportNavbar />
             <div className='flex flex-col bg-white items-center justify-center'>
-                <KPICardSlider role='pm' />
+                <KPICardSlider 
+                role={mappedRole}
+                cards={cards} 
+                activeIndex={activeIndex} 
+                onIndexChange={setActiveIndex} 
+                />
 
                 <div 
                 className='w-full bg-white' 
                 style={{ background: `radial-gradient(circle at center, ${theme.gradientVar} 0%, transparent 100%)` }}>
                     <div className='flex flex-col pt-[32px] pb-[32px] pr-[16px] pl-[16px]'>
-                        <KPIComment role={'pm'} />
+                    {detailData && (
+                        <div className="w-full">
+                            <KPIComment 
+                            role={mappedRole}
+                            detailData={detailData}
+                            />
+                        </div>
+                    )}
                     </div>
+
                     <div className='flex flex-col pr-[16px] pl-[16px] pb-[16px] gap-[10px]'>
                         <div className={`flex flex-col rounded-[8px] p-[16px] gap-[16px] bg-white shadow-[0_0_10px_0_${theme.primaryText}]`}>
                             <div className='flex flex-col gap-[8px]'>

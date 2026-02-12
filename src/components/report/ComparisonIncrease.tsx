@@ -1,5 +1,5 @@
 interface ComparisonProps {
-    type: 'up' | 'down';
+    type: string;
     percentage: number;
 }
 

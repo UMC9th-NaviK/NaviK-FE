@@ -27,13 +27,15 @@ const LevelCard = ({ role } : LevelCardProps) => {
             try {
                 const response = await getUserLevel();
         
-                setLevel(response.result.level);
+                setLevel(response.result.levelValue);
                 setPercentage(response.result.percentage);
                 setDescription(response.result.description);
             }
     
             catch (error) {
                 console.log("사용자 찾을 수 없음");
+
+                setLevel(0);
             }
         }
 

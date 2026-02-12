@@ -17,7 +17,7 @@ const GrowthMainPage = () => {
     job: "pm",
     profileImage: "/icons/reports/logo.svg",
     englishName: ""
-});
+  });
 
   const theme = ROLE_THEME_MAP[profile.job] || ROLE_THEME_MAP['pm'];
 
