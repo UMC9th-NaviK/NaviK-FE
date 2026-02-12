@@ -8,6 +8,8 @@ import { useProfile } from '../../hooks/useProfile';
 import { useEffect, useState } from 'react';
 import { getKPICardBottom, getKPICardDetail } from '../../apis/report/kpiCard';
 import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCard';
+import { useStudyRecommend } from '../../hooks/queries/useStudyRecommend';
+import { Icon } from '@iconify/react';
 
 const OvercomingKPIDetailPage = () => {
     const { profile, role } = useProfile();
@@ -21,7 +23,7 @@ const OvercomingKPIDetailPage = () => {
     const [cards, setCards] = useState<KPICardBase[]>([]);
     const [activeIndex, setActiveIndex] = useState(0); 
     const [detailData, setDetailData] = useState<KPICardDetailResponseResult | null>(null); 
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     const [convertedValue, setConvertedValue] = useState("");
 
@@ -31,7 +33,7 @@ const OvercomingKPIDetailPage = () => {
                 const response = await getKPICardBottom();
 
                 setCards(response.result);
-                setLoading(false);
+                setIsLoading(false);
             } 
             
             catch (err) {
@@ -70,7 +72,21 @@ const OvercomingKPIDetailPage = () => {
         fetchDetail();
     }, [activeIndex, cards]);
 
-    if (loading) return <div>로딩 중...</div>;
+    const { data: studies = [] } = useStudyRecommend(null, 5);
+
+    const currentStudyId = studies.length > 0 ? studies[activeIndex].studyId : null;
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center py-10">
+                <Icon
+                    icon="line-md:loading-twotone-loop"
+                    style={{ width: '40px', height: '40px' }}
+                    className="text-primary-blue-500"
+                />
+            </div>
+        )
+    }
 
     return (
         <div>
@@ -113,7 +129,7 @@ const OvercomingKPIDetailPage = () => {
 
                             <div className="overflow-x-auto scrollbar-hide pr-5 snap-x snap-mandatory scroll-pl-[22px]">
                                 <div className='flex flex-nowrap w-max box-border gap-[16px] scroll-smooth'>
-                                    <RecommendationNotice role={mappedRole} />
+                                    <RecommendationNotice role={mappedRole} currentCardStudyId={currentStudyId} />
                                     <div className="flex-shrink-0 w-[1px] h-full" />
                                 </div>
                             </div>
@@ -133,4 +149,3 @@ const OvercomingKPIDetailPage = () => {
 }
 
 export default OvercomingKPIDetailPage
-
