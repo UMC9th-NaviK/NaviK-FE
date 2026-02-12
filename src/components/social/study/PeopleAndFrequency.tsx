@@ -61,7 +61,11 @@ export default function PeopleAndFrequency({
           disabled={count === 1}
           className={count === 1 ? 'cursor-not-allowed' : ''}
         >
-          <img src={count === 1 ? MinusIcon : MinusIcon2} alt="minus" className="h-6 w-6" />
+          <img
+            src={count === 1 ? MinusIcon : MinusIcon2}
+            alt="minus"
+            className="h-6 w-6 cursor-pointer"
+          />
         </button>
 
         <span className="text-body-14B min-w-[12px] text-center">{count}</span>
@@ -72,7 +76,11 @@ export default function PeopleAndFrequency({
           disabled={count === 7}
           className={count === 7 ? 'cursor-not-allowed' : ''}
         >
-          <img src={count === 7 ? PlusIcon2 : PlusIcon} alt="plus" className="h-6 w-6" />
+          <img
+            src={count === 7 ? PlusIcon2 : PlusIcon}
+            alt="plus"
+            className="h-6 w-6 cursor-pointer"
+          />
         </button>
 
         <span className="text-body-14M text-opacity-black-80">회</span>
