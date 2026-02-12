@@ -91,7 +91,7 @@ export type BoardCommentItem = {
   boardId: number;
   commentId: number;
   userId: number;
-  parentCommentId: number;
+  parentCommentId: number | null; //null 허용으로 변경
   content: string;
   nickname: string;
   profileImageUrl: string;
@@ -100,6 +100,7 @@ export type BoardCommentItem = {
   isEntryLevel: boolean;
   jobName: string;
   createdAt: string;
+  childResponseComments?: BoardCommentItem[];
 };
 
 export type BoardCommentListResult = {

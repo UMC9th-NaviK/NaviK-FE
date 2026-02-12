@@ -9,9 +9,12 @@ interface StudyCardProps {
   description: string;
   periodText: string;
   network: string;
+  kpiName?: string;
+  kpiId?: number;
   imageSrc?: string;
   className?: string;
   onClick?: () => void;
+  onApplyClick?: () => void;
 }
 
 export default function StudyCard2({
@@ -21,9 +24,12 @@ export default function StudyCard2({
   description,
   periodText,
   network,
+  kpiName,
+  kpiId,
   imageSrc,
   className = '',
   onClick,
+  onApplyClick,
 }: StudyCardProps) {
   return (
     <div
@@ -87,7 +93,10 @@ export default function StudyCard2({
           <div className="flex w-full flex-col rounded-[8px] bg-[#F5F8FF] p-2">
             <div className="flex w-full items-center justify-between">
               <span className="text-body-14B text-primary-blue-500">KPI 역량</span>
-              <span className="text-caption-12M text-opacity-black-80">01 문제 정의&가설 수립</span>
+              <span className="text-caption-12M text-opacity-black-80">
+                {kpiId ?? ''}&nbsp;
+                {kpiName ?? ''}
+              </span>
             </div>
           </div>
         </div>
@@ -98,7 +107,7 @@ export default function StudyCard2({
             className="bg-primary-blue-500 flex h-[48px] w-[150px] cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
             onClick={(e) => {
               e.stopPropagation();
-              onClick?.();
+              onApplyClick?.();
             }}
           >
             <span className="text-body-16B text-center text-white">신청하기</span>
