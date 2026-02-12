@@ -5,6 +5,13 @@ const RecruitmentCard = ({ recruitment }: { recruitment: Recruitment }) => {
     ? recruitment.workPlace.split(' ').slice(0, 2).join(' ')
     : '지역 미정';
 
+  const getDDayText = () => {
+    if (recruitment.dday !== null && recruitment.dday < 0) return '마감';
+    if (recruitment.dday === 0) return 'D-Day';
+    if (recruitment.dday && recruitment.dday > 0) return `D-${recruitment.dday}`;
+    return '상시';
+  };
+
   return (
     <div className="flex h-[217px] w-[284px] flex-col gap-[16px] rounded-lg border border-[#D6D6D6] px-4 py-3">
       <div className="flex flex-col gap-[16px]">
@@ -20,7 +27,7 @@ const RecruitmentCard = ({ recruitment }: { recruitment: Recruitment }) => {
 
           <div className="flex items-center justify-center gap-2">
             <div className="text-caption-12M flex h-[25px] w-[43px] items-center justify-center rounded-lg border border-[#E72326]/10 bg-[#E72326]/10 text-red-500">
-              {recruitment.dday ? `D-${recruitment.dday}` : '상시'}
+              {getDDayText()}
             </div>
           </div>
         </div>
