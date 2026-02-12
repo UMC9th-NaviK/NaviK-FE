@@ -288,7 +288,7 @@ const NewStudyPage = () => {
       const participationMethod = modeLabels[activeModeIndex]; // "온라인" | "오프라인" | "온/오프라인"
       const synergyType = activeSynergyIndex === 0 ? 'SAME_JOB' : 'DIVERSE_JOB';
 
-      const jobId = jobIdByRoleIndex[roleIndex]; // ⚠️ 임시 매핑
+      const jobId = jobIdByRoleIndex[roleIndex];
 
       const createRes = await createStudy({
         title: title.trim(),
