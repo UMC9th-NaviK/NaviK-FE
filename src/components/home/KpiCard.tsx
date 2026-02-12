@@ -15,14 +15,14 @@ import beBack from '../../assets/images/kpi/be-back.png';
 
 const cardBgMap: Record<string, string> = {
   pm: cardBgPm,
-  designer: cardBgDesigner,
+  de: cardBgDesigner,
   fe: cardBgFe,
   be: cardBgBe,
 };
 
 const cardBackMap: Record<string, string> = {
   pm: pmBack,
-  designer: designerBack,
+  de: designerBack,
   fe: feBack,
   be: beBack,
 };
@@ -43,8 +43,8 @@ const KpiCard = ({ type }: { type: 'core' | 'overcome' }) => {
   const displayCards = cardsData.slice(0, 3);
   const cards = [displayCards[0] || null, displayCards[1] || null, displayCards[2] || null];
 
-  const backImageUrl = cardBackMap[job || 'pm'];
-  const bgImage = cardBgMap[job || 'pm'];
+  const backImageUrl = cardBackMap[job || 'pm'] ?? cardBackMap['pm'];
+  const bgImage = cardBgMap[job || 'pm'] ?? cardBgMap['pm'];
 
   // 로딩 중이거나 데이터가 없을 경우
   if (isFetching || cardsData.length === 0) {

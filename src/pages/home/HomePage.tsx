@@ -25,7 +25,7 @@ const HomePage = () => {
           <HomeHeader />
           <div className="flex flex-col gap-8">
             <p className="text-heading-20B text-base-100 px-4">
-              {name}님
+              {name || '사용자'}님
               <br /> 커리어 항해를 시작할까요?
             </p>
             <KpiFile />
