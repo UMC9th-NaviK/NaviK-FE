@@ -81,9 +81,6 @@ const NewStudyPage = () => {
     fetchKpi();
   }, [activeRoleIndex]);
 
-  const roleIndex = selectedSkill?.roleIndex ?? null;
-  const kpiCardsForRole = roleIndex !== null ? (kpiCache[roleIndex] ?? []) : [];
-
   const [activePeopleIndex, setActivePeopleIndex] = useState<number | null>(null);
   const [count, setCount] = useState(1);
   const handleDecrease = () => setCount((prev) => Math.max(1, prev - 1));
