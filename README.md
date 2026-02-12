@@ -120,49 +120,65 @@
 
 | Category | Stack | 도입 이유 |
 |----------|-------|----------|
-| Language | TypeScript | 타입 안정성을 통한 런타임 오류 사전 방지 및 개발 생산성 향상 |
-| Framework | React 19 | 컴포넌트 기반 아키텍처로 재사용성 확보, 최신 기능 활용한 성능 최적화 |
-| Build Tool | Vite 7 | esbuild 기반 빠른 개발 서버 구동, 네이티브 ESM 지원으로 빌드 성능 향상 |
-| Compiler | SWC | Babel 대비 20배 빠른 컴파일 속도로 개발 경험 개선 |
+| Language | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white) | 타입 안정성을 통한 런타임 오류 사전 방지 및 개발 생산성 향상 |
+| Framework | ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black) | 컴포넌트 기반 아키텍처로 재사용성 확보, 최신 기능 활용한 성능 최적화 |
+| Build Tool | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=Vite&logoColor=white) | esbuild 기반 빠른 개발 서버 구동, 네이티브 ESM 지원으로 빌드 성능 향상 |
 
 ### State Management
 
 | Category | Stack | 도입 이유 |
 |----------|-------|----------|
-| Client State | Zustand 5 | Redux 대비 보일러플레이트 최소화, 복잡한 워크플로우(포트폴리오 제출, 인증) 상태 관리에 적합 |
-| Server State | TanStack Query 5 | 서버/클라이언트 상태 분리, 자동 캐싱·재검증으로 UX 개선, Polling을 통한 AI 분석 진행 상태 실시간 추적 |
+| Client State | ![Zustand](https://img.shields.io/badge/Zustand-443E38?style=flat-square&logo=React&logoColor=white) | Redux 대비 보일러플레이트 최소화, 복잡한 워크플로우(포트폴리오 제출, 인증) 상태 관리에 적합 |
+| Server State | ![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=flat-square&logo=ReactQuery&logoColor=white) | 서버/클라이언트 상태 분리, 자동 캐싱·재검증으로 UX 개선, Polling을 통한 AI 분석 진행 상태 실시간 추적 |
+
+### Routing
 
 | Category | Stack | 도입 이유 |
 |----------|-------|----------|
-| Router | React Router 7 | SPA 환경 선언적 라우팅, 중첩 라우팅으로 복잡한 페이지 구조 관리, Lazy Loading 코드 스플리팅 지원 |
+| Router | ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat-square&logo=ReactRouter&logoColor=white) | SPA 환경 선언적 라우팅, 중첩 라우팅으로 복잡한 페이지 구조 관리, Lazy Loading 코드 스플리팅 지원 |
 
 ### Styling & Animation
 
 | Category | Stack | 도입 이유 |
 |----------|-------|----------|
-| CSS Framework | Tailwind CSS 4 | 유틸리티 우선 접근으로 빠른 스타일링, 모바일 우선 반응형 디자인, Purge CSS로 번들 크기 최소화 |
-| Animation | Framer Motion 12 | GPU 가속 transform 애니메이션으로 60fps 유지, 복잡한 애니메이션 시퀀스 구현(스플래시, 3D 플립 카드) |
-| Lottie | Lottie React 2 | 벡터 기반 애니메이션으로 해상도 독립적, JSON 형식으로 파일 크기 최소화 |
-| Charts | Recharts 3 | React 기반으로 컴포넌트 통합 용이, KPI 분석 결과 시각화(레이더 차트, 바 차트) |
+| CSS Framework | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=TailwindCSS&logoColor=white) | 유틸리티 우선 접근으로 빠른 스타일링, 모바일 우선 반응형 디자인, Purge CSS로 번들 크기 최소화 |
+| Animation | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=Framer&logoColor=white) | GPU 가속 transform 애니메이션으로 60fps 유지, 복잡한 애니메이션 시퀀스 구현(스플래시, 3D 플립 카드) |
+| Lottie | ![Lottie](https://img.shields.io/badge/Lottie-00DDB3?style=flat-square&logo=Lottie&logoColor=white) | 벡터 기반 애니메이션으로 해상도 독립적, JSON 형식으로 파일 크기 최소화 |
+
+### Data Visualization
+
+| Category | Stack | 도입 이유 |
+|----------|-------|----------|
+| Charts | ![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=flat-square&logo=Chart.js&logoColor=white) | React 기반으로 컴포넌트 통합 용이, KPI 분석 결과 시각화(레이더 차트, 바 차트) |
 
 ### UI Components
 
 | Category | Stack | 도입 이유 |
 |----------|-------|----------|
-| Carousel | Swiper 12 | 모바일 터치 제스처 최적화, 강점/약점 카드 탐색 UI 구현 |
-| Calendar | React Day Picker 9 | 가벼운 번들 크기, 접근성 지원, 날짜 선택 UI 커스터마이징 용이 |
+| Carousel | ![Swiper](https://img.shields.io/badge/Swiper-6332F6?style=flat-square&logo=Swiper&logoColor=white) | 모바일 터치 제스처 최적화, 강점/약점 카드 탐색 UI 구현 |
+| Calendar | ![React Day Picker](https://img.shields.io/badge/React_Day_Picker-EC4899?style=flat-square&logo=React&logoColor=white) | 가벼운 번들 크기, 접근성 지원, 날짜 선택 UI 커스터마이징 용이 |
 
 ### HTTP Client
 
 | Category | Stack | 도입 이유 |
 |----------|-------|----------|
-| HTTP Client | Axios 1 | 인터셉터를 통한 JWT 토큰 자동 주입 및 갱신, 요청/응답 에러 핸들링 중앙화 |
+| HTTP Client | ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=Axios&logoColor=white) | 인터셉터를 통한 JWT 토큰 자동 주입 및 갱신, 요청/응답 에러 핸들링 중앙화 |
+
+### Development Tools
 
 | Category | Stack | 도입 이유 |
 |----------|-------|----------|
-| Package Manager | pnpm | npm/yarn 대비 디스크 공간 절약, 설치 속도 향상, 엄격한 의존성 관리로 유령 의존성 방지 |
-| Code Quality | ESLint + Prettier | 일관된 코드 스타일 유지, React Hooks 규칙 자동 검증, 팀 협업 시 코드 리뷰 부담 경감 |
-| Icons | Iconify | 단일 패키지로 다양한 아이콘 세트 사용, 온디맨드 로딩으로 번들 크기 최소화 |
+| Package Manager | ![pnpm](https://img.shields.io/badge/pnpm-F69220?style=flat-square&logo=pnpm&logoColor=white) | npm/yarn 대비 디스크 공간 절약, 설치 속도 향상, 엄격한 의존성 관리로 유령 의존성 방지 |
+| Code Quality | ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=ESLint&logoColor=white) ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=Prettier&logoColor=black) | 일관된 코드 스타일 유지, React Hooks 규칙 자동 검증, 팀 협업 시 코드 리뷰 부담 경감 |
+| Icons | ![Iconify](https://img.shields.io/badge/Iconify-1769AA?style=flat-square&logo=Iconify&logoColor=white) | 단일 패키지로 다양한 아이콘 세트 사용, 온디맨드 로딩으로 번들 크기 최소화 |
+
+### Infrastructure
+
+| Category | Stack | 도입 이유 |
+|----------|-------|----------|
+| Hosting | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=Vercel&logoColor=white) | Git 연동 자동 배포, Edge Network를 통한 빠른 글로벌 접근, Preview 환경 자동 생성 |
+| Storage | ![AWS S3](https://img.shields.io/badge/AWS_S3-569A31?style=flat-square&logo=AmazonS3&logoColor=white) | Presigned URL을 통한 직접 업로드로 서버 부하 감소, 포트폴리오 파일 안정적 저장 |
+| Notifications | ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=black) | 크로스 플랫폼 푸시 알림 지원, 백그라운드 메시지 처리, 알림 타입별 라우팅 구현 |
 
 
 ## ✨ 주요 기능 소개
