@@ -18,8 +18,8 @@ const formatKoRange = (start: string, end: string) => {
 };
 
 const participationLabelMap: Record<string, string> = {
-  ONLINE: '비대면 회의',
-  OFFLINE: '대면 회의',
+  ONLINE: '온라인',
+  OFFLINE: '오프라인',
   HYBRID: '온/오프라인',
 };
 
@@ -29,8 +29,47 @@ export default function StudyRecommendPage() {
   const [hasNext, setHasNext] = useState(true);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [applyingId, setApplyingId] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const rowRef = useRef<HTMLDivElement | null>(null);
+  const topPick = useMemo(() => {
+    if (list.length === 0) return undefined;
+    return (selectedId ? list.find((x) => x.studyId === selectedId) : list[0]) ?? list[0];
+  }, [list, selectedId]);
+
+  const others = useMemo(() => {
+    if (!topPick) return [];
+    return list.filter((x) => x.studyId !== topPick.studyId);
+  }, [list, topPick]);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const el = scrollRef.current;
+
+    const firstCard = el.querySelector<HTMLElement>('[data-card="study"]');
+    if (!firstCard) return;
+
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const gap = 16;
+    const unit = cardWidth + gap;
+
+    if (!hasNext || loading) return;
+
+    const threshold = unit * 1.5;
+    const remain = el.scrollWidth - el.scrollLeft - el.clientWidth;
+
+    if (remain <= threshold) {
+      const cursorNum = nextCursor ? Number(nextCursor) : undefined;
+
+      if (cursorNum !== undefined && Number.isFinite(cursorNum)) {
+        fetchPage(cursorNum);
+      } else {
+        console.warn('nextCursor is missing but hasNext=true');
+      }
+    }
+  };
+
   const fetchPage = async (cursor?: number) => {
     if (loading) return;
     if (!hasNext && cursor !== undefined) return;
@@ -86,30 +125,6 @@ export default function StudyRecommendPage() {
     fetchPage(undefined);
   }, []);
 
-  const topPick = list[0];
-  const others = useMemo(() => list.slice(1), [list]);
-
-  useEffect(() => {
-    const el = rowRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      if (!hasNext || loading) return;
-
-      const threshold = 80;
-      const remain = el.scrollWidth - el.scrollLeft - el.clientWidth;
-
-      if (remain <= threshold) {
-        const cursorNum = nextCursor ? Number(nextCursor) : undefined;
-        if (cursorNum !== undefined && Number.isFinite(cursorNum)) {
-          fetchPage(cursorNum);
-        } else {
-          console.warn('nextCursor is missing but hasNext=true');
-        }
-      }
-    };
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => el.removeEventListener('scroll', onScroll);
-  }, [hasNext, loading, nextCursor]);
   return (
     <div>
       <div className="mt-8 self-stretch">
@@ -133,7 +148,7 @@ export default function StudyRecommendPage() {
             }
             kpiName={topPick.kpiName}
             kpiId={topPick.kpiId}
-            onClick={() => handleApply(topPick.studyId)}
+            onApplyClick={() => handleApply(topPick.studyId)}
           />
         ) : (
           <div className="text-opacity-black-40 rounded-[16px] bg-white p-4 shadow-[0_0_10px_0_#DBEBFE]">
@@ -147,23 +162,29 @@ export default function StudyRecommendPage() {
           더 많은 추천 스터디를 보여드릴게요!
         </span>
       </div>
-      <div ref={rowRef} className="mt-3 flex gap-4 overflow-x-auto overflow-y-visible py-1">
+
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="scrollbar-hide mt-3 flex snap-x snap-mandatory flex-nowrap gap-4 overflow-x-auto scroll-smooth px-4 pb-4"
+        style={{ marginLeft: '-16px', marginRight: '-16px' }}
+      >
         {others.map((s) => (
-          <StudyCard
-            key={s.studyId}
-            title={s.title}
-            currentCount={s.participantCount}
-            maxCount={s.capacity}
-            description={s.description}
-            network={
-              participationLabelMap[topPick.participationMethod] ?? topPick.participationMethod
-            }
-            periodText={`${formatKoShort(s.startDate)} ~ ${formatKoShort(s.endDate)}`}
-            memberText={`${s.capacity}명`}
-            kpiName={s.kpiName}
-            kpiId={s.kpiId}
-            onClick={() => handleApply(s.studyId)}
-          />
+          <div key={s.studyId} data-card="study" className="shrink-0 snap-start snap-always">
+            <StudyCard
+              key={s.studyId}
+              title={s.title}
+              currentCount={s.participantCount}
+              maxCount={s.capacity}
+              description={s.description}
+              network={participationLabelMap[s.participationMethod] ?? s.participationMethod}
+              periodText={`${formatKoShort(s.startDate)} ~ ${formatKoShort(s.endDate)}`}
+              memberText={`${s.capacity}명`}
+              kpiName={s.kpiName}
+              kpiId={s.kpiId}
+              onClick={() => setSelectedId(s.studyId)}
+            />
+          </div>
         ))}
 
         {loading && (
@@ -171,10 +192,8 @@ export default function StudyRecommendPage() {
             불러오는 중...
           </div>
         )}
-        {/* {!loading && !hasNext && others.length > 0 && (
-          <div className="text-opacity-black-40 flex items-center px-2 whitespace-nowrap">끝!</div>
-        )} */}
       </div>
+
       {applyingId && (
         <div className="text-opacity-black-40 text-caption-12M mt-2">신청 처리 중...</div>
       )}
