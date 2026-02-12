@@ -31,6 +31,11 @@ export default function StudyCard2({
   onClick,
   onApplyClick,
 }: StudyCardProps) {
+  function formatKpiId(id?: number) {
+    if (!id) return '';
+    const mod = id % 10 === 0 ? 10 : id % 10;
+    return String(mod).padStart(2, '0');
+  }
   return (
     <div
       role="button"
@@ -94,7 +99,7 @@ export default function StudyCard2({
             <div className="flex w-full items-center justify-between">
               <span className="text-body-14B text-primary-blue-500">KPI 역량</span>
               <span className="text-caption-12M text-opacity-black-80">
-                {kpiId ?? ''}&nbsp;
+                {formatKpiId(kpiId) ?? ''}&nbsp;
                 {kpiName ?? ''}
               </span>
             </div>

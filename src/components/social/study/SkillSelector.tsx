@@ -1,21 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
+import type { KpiCard } from '../../../types/study';
 
 const BG = '#FFFFFF';
 
-type SelectedSkill = { roleIndex: number; itemIndex: number; text: string } | null;
+export type SelectedSkill = { roleIndex: number; kpiId: number; name: string } | null;
 
 type Props = {
   roleLabels: readonly string[];
-  getItemsByRole: (idx: number) => string[];
+  kpiCardsByRole: Record<number, KpiCard[]>;
+  kpiLoading?: boolean;
   selectedSkill: SelectedSkill;
-  onChangeSelectedSkill: (v: SelectedSkill) => void;
+  onSelect: (v: SelectedSkill) => void;
+  emptyText?: string;
+  onOpenRole: (roleIndex: number) => void;
 };
 
 export default function SkillSelector({
   roleLabels,
-  getItemsByRole,
+  kpiCardsByRole,
+  kpiLoading = false,
   selectedSkill,
-  onChangeSelectedSkill,
+  onSelect,
+  emptyText = 'KPI가 없어요.',
+  onOpenRole, // ✅ 추가
 }: Props) {
   const [openRoleIndex, setOpenRoleIndex] = useState<number | null>(null);
   const activeRoleIndex = selectedSkill?.roleIndex ?? openRoleIndex;
@@ -81,6 +88,8 @@ export default function SkillSelector({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [openRoleIndex]);
 
+  const cards = openRoleIndex !== null ? (kpiCardsByRole[openRoleIndex] ?? []) : [];
+
   return (
     <div ref={bubbleWrapRef} className="relative mt-6 flex w-full flex-col">
       <div className="flex items-center gap-2">
@@ -100,7 +109,14 @@ export default function SkillSelector({
               type="button"
               onClick={() => {
                 setOpenRoleIndex(index);
-                onChangeSelectedSkill(null);
+                onOpenRole(index); // ✅ KPI fetch 트리거
+                onSelect(null);
+                console.log(
+                  '[SkillSelector] openRoleIndex:',
+                  index,
+                  'cards:',
+                  kpiCardsByRole[index],
+                );
               }}
               className={`text-body-14M flex h-[32px] min-w-0 flex-1 cursor-pointer items-center justify-center rounded-[8px] border px-[16px] py-[8px] whitespace-nowrap transition-colors ${
                 isActive
@@ -119,10 +135,8 @@ export default function SkillSelector({
           <div className="flex w-full flex-col rounded-[8px] bg-[#F5F8FF] p-2">
             <div className="flex w-full items-center justify-between">
               <div className="flex gap-1">
-                <span className="text-caption-12B text-primary-blue-500">
-                  {String(selectedSkill.itemIndex + 1).padStart(2, '0')}
-                </span>
-                <span className="text-caption-12M text-opacity-black-80">{selectedSkill.text}</span>
+                <span className="text-caption-12B text-primary-blue-500">KPI</span>
+                <span className="text-caption-12M text-opacity-black-80">{selectedSkill.name}</span>
               </div>
               <span className="text-caption-12M text-opacity-black-80">✔️</span>
             </div>
@@ -150,19 +164,32 @@ export default function SkillSelector({
             >
               <div className="h-full overflow-hidden p-2">
                 <ul className="scrollbar-hide flex h-full flex-col gap-[14px] overflow-auto p-2">
-                  {getItemsByRole(openRoleIndex).map((t, i) => {
+                  {kpiLoading && cards.length === 0 && (
+                    <li className="text-caption-12R text-opacity-black-60 px-2 py-1">
+                      KPI 불러오는 중...
+                    </li>
+                  )}
+
+                  {!kpiLoading && cards.length === 0 && (
+                    <li className="text-caption-12R text-opacity-black-60 px-2 py-1">
+                      {emptyText}
+                    </li>
+                  )}
+
+                  {cards.map((card, i) => {
                     const isSelected =
-                      selectedSkill?.roleIndex === openRoleIndex && selectedSkill?.itemIndex === i;
+                      selectedSkill?.roleIndex === openRoleIndex &&
+                      selectedSkill?.kpiId === card.kpiId;
 
                     return (
                       <li
-                        key={t}
+                        key={card.kpiId}
                         className="group relative flex cursor-pointer items-start gap-[12px]"
                         onClick={() => {
-                          onChangeSelectedSkill({
+                          onSelect({
                             roleIndex: openRoleIndex,
-                            itemIndex: i,
-                            text: t,
+                            kpiId: card.kpiId,
+                            name: card.name,
                           });
                           setOpenRoleIndex(null);
                         }}
@@ -178,7 +205,7 @@ export default function SkillSelector({
                               : 'text-opacity-black-80'
                           }`}
                         >
-                          {t}
+                          {card.name}
                         </span>
                       </li>
                     );

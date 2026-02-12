@@ -317,7 +317,7 @@ const BoardDetailPage = () => {
 
       <div className="bg-white px-6">
         <AuthorCard
-          ProfileIcon={ProfileIcon}
+          ProfileIcon={detail.profileImageUrl ?? ProfileIcon}
           author={detail.nickname}
           authorMeta={`${detail.isEntryLevel ? '신입' : '마스터'} ${detail.jobName} | LV.${detail.level}`}
         />
@@ -410,7 +410,7 @@ const BoardDetailPage = () => {
                 authorMeta={`${c.isEntryLevel ? '신입' : '마스터'} ${c.jobName} | LV.${c.level}`}
                 content={c.content}
                 timeAgo={timeAgo(c.createdAt)}
-                profileSrc={ProfileIcon}
+                profileSrc={c.profileImageUrl ?? ProfileIcon}
                 addIconSrc={AddIcon}
                 deleteIconSrc={DeleteIcon2}
                 onAdd={() => {
@@ -455,7 +455,7 @@ const BoardDetailPage = () => {
                     authorMeta={replyMeta}
                     content={r.content}
                     timeAgo={timeAgo(r.createdAt)}
-                    profileSrc={ProfileIcon}
+                    profileSrc={r.profileImageUrl ?? ProfileIcon}
                     deleteIconSrc={DeleteIcon2}
                     enterIconSrc={enterIcon}
                     onDelete={

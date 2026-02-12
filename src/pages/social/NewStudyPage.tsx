@@ -19,61 +19,12 @@ const formatKo = (d?: Date) => {
   return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
 };
 
-const itemsPM = [
-  '문제 정의&가설 수립',
-  '데이터 기반 의사결정',
-  '서비스 구조&핵심 플로우 결정',
-  '요구사항 정의·정책 설계',
-  '실험·검증 기반 의사결정',
-  '우선순위&스코프 관리',
-  '실행력&오너십',
-  '의사결정 정렬&협업 조율',
-  'AI/LLM 활용 기획',
-  '사용자 리서치&공감',
-];
-const itemsDesigner = [
-  'UX 전략&문제 재정의',
-  '정보 구조&사용자 플로우 설계',
-  'UI 시각 디자인&비주얼 완성도',
-  '프로토타이핑&인터랙션 구현',
-  '디자인 시스템 구축·운영',
-  '데이터 기반 UX 개선',
-  'AI 디자인 활용 능력',
-  '멀티 플랫폼 이해',
-  '협업&커뮤니케이션 역량',
-  'BX/BI 브랜드 경험 설계',
-];
-const itemsFront = [
-  '웹 기본기',
-  '프레임워크 숙련도',
-  '상태관리&컴포넌트 아키텍쳐',
-  '웹 성능 최적화',
-  'API 연동&비동기 처리',
-  '반응형·크로스 브라우징 대응',
-  '테스트 코드&품질 관리',
-  'Git·PR·협업 프로세스 이해',
-  '사용자 중심 UI 개발',
-  '빌드·도구 환경 이해',
-];
-const itemsBack = [
-  '주력 언어&프레임워크 숙련도',
-  'REST API 설계·구현',
-  'DB·데이터 모델링',
-  '아키텍쳐 설계',
-  '클라우드·DevOps 환경 이해',
-  '성능·트래픽 처리 최적화',
-  '보안·인증·권한 처리',
-  '테스트·코드 품질 관리',
-  '협업·문서화&의사결정 기록',
-  '운영·모니터링&장애 대응',
-];
-
 const roleLabels = ['PM', '디자이너', '프론트엔드', '백엔드'] as const;
 const modeLabels = ['온라인', '오프라인', '온/오프라인'] as const;
 const synergyLabels = ['같은 직무끼리 모이기', '다양한 직무와 섞이기'] as const;
 const peopleLabels = ['2', '3', '4', '5', '6'] as const;
 
-type SelectedSkill = { roleIndex: number; itemIndex: number; text: string } | null;
+export type SelectedSkill = { roleIndex: number; kpiId: number; name: string } | null;
 
 const jobNameByRoleIndex: Record<number, string> = {
   0: '프로덕트 매니저',
@@ -90,53 +41,34 @@ const jobIdByRoleIndex: Record<number, number> = {
 };
 
 const NewStudyPage = () => {
-  //입력값
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [openChatUrl, setOpenChatUrl] = useState('');
 
-  //역량
   const [selectedSkill, setSelectedSkill] = useState<SelectedSkill>(null);
 
-  //KPI 캐시
   const [kpiCache, setKpiCache] = useState<Record<number, KpiCard[]>>({});
   const [kpiLoading, setKpiLoading] = useState(false);
 
-  const getItemsByRole = (idx: number) => {
-    const cached = kpiCache[idx];
-    if (cached && cached.length > 0) return cached.map((k) => k.name);
-
-    switch (idx) {
-      case 0:
-        return itemsPM;
-      case 1:
-        return itemsDesigner;
-      case 2:
-        return itemsFront;
-      case 3:
-        return itemsBack;
-      default:
-        return itemsPM;
-    }
-  };
-
-  //roleIndex(직무) 선택되면 해당 직무 KPI 카드 불러와서 캐싱
+  const [activeRoleIndex, setActiveRoleIndex] = useState<number | null>(null);
   useEffect(() => {
-    const roleIndex = selectedSkill?.roleIndex;
-    if (roleIndex === undefined || roleIndex === null) return;
-    if (kpiCache[roleIndex]?.length) return;
+    if (activeRoleIndex === null) return;
+    if (kpiCache[activeRoleIndex]?.length) return;
 
-    const fetch = async () => {
+    const fetchKpi = async () => {
       try {
         setKpiLoading(true);
-        const jobName = jobNameByRoleIndex[roleIndex];
+
+        const jobName = jobNameByRoleIndex[activeRoleIndex];
 
         const res = await getStudyKpiCards({ jobName, size: 50 });
+        console.log('[KPI] response:', res.data);
+
         if (!res.data.isSuccess) return;
 
         setKpiCache((prev) => ({
           ...prev,
-          [roleIndex]: res.data.result.content,
+          [activeRoleIndex]: res.data.result.content,
         }));
       } catch (e) {
         console.error(e);
@@ -145,16 +77,14 @@ const NewStudyPage = () => {
       }
     };
 
-    fetch();
-  }, [selectedSkill?.roleIndex]);
+    fetchKpi();
+  }, [activeRoleIndex]);
 
-  //인원, 빈도
   const [activePeopleIndex, setActivePeopleIndex] = useState<number | null>(null);
   const [count, setCount] = useState(1);
   const handleDecrease = () => setCount((prev) => Math.max(1, prev - 1));
   const handleIncrease = () => setCount((prev) => Math.min(7, prev + 1));
 
-  //날짜
   const [range, setRange] = useState<DateRange>({ from: undefined, to: undefined });
   const handleDayClick = (day: Date) => {
     setRange((prev) => {
@@ -182,6 +112,7 @@ const NewStudyPage = () => {
     const t = new Date(to).setHours(0, 0, 0, 0);
     return f < time && time < t;
   };
+
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -235,6 +166,7 @@ const NewStudyPage = () => {
   const [activeSynergyIndex, setActiveSynergyIndex] = useState<number | null>(null);
 
   const [submitting, setSubmitting] = useState(false);
+
   const handleSubmit = async () => {
     if (submitting) return;
 
@@ -248,47 +180,32 @@ const NewStudyPage = () => {
     if (!openChatUrl.trim()) return alert('오픈채팅 링크를 입력해주세요.');
 
     const roleIndex = selectedSkill.roleIndex;
+    const kpiId = selectedSkill.kpiId; // ✅ 이름 매칭 제거! 바로 사용
+    const jobId = jobIdByRoleIndex[roleIndex];
 
     try {
       setSubmitting(true);
 
-      // 1) KPI 카드 목록 조회(캐시 없으면 조회)
-      let cards = kpiCache[roleIndex];
-      if (!cards || cards.length === 0) {
-        setKpiLoading(true);
-        const jobName = jobNameByRoleIndex[roleIndex];
-
-        const res = await getStudyKpiCards({ jobName, size: 100 });
-        if (!res.data.isSuccess) {
-          alert(res.data.message ?? 'KPI 카드 조회에 실패했어요.');
-          return;
-        }
-
-        cards = res.data.result.content;
-
-        setKpiCache((prev) => ({
-          ...prev,
-          [roleIndex]: cards!,
-        }));
-      }
-
-      // 2) 선택된 KPI 이름(text)로 kpiId 찾기
-      const matched = cards.find((k) => k.name === selectedSkill.text);
-      if (!matched) {
-        alert('선택한 KPI를 서버 목록에서 찾지 못했어요. 다시 선택해주세요.');
-        return;
-      }
-      const kpiId = matched.kpiId;
-
-      // 3) 스터디 생성 payload
       const capacity = Number(peopleLabels[activePeopleIndex]);
       const startDate = new Date(range.from).toISOString();
       const endDate = new Date(range.to).toISOString();
 
-      const participationMethod = modeLabels[activeModeIndex]; // "온라인" | "오프라인" | "온/오프라인"
+      const participationMethod = modeLabels[activeModeIndex];
       const synergyType = activeSynergyIndex === 0 ? 'SAME_JOB' : 'DIVERSE_JOB';
 
-      const jobId = jobIdByRoleIndex[roleIndex];
+      console.log('[CREATE] payload:', {
+        title: title.trim(),
+        capacity,
+        description: description.trim(),
+        jobId,
+        kpiId,
+        participationMethod,
+        synergyType,
+        startDate,
+        endDate,
+        openChatUrl: openChatUrl.trim(),
+        weekTime: count,
+      });
 
       const createRes = await createStudy({
         title: title.trim(),
@@ -320,11 +237,15 @@ const NewStudyPage = () => {
       setKpiLoading(false);
     }
   };
+
   const submitButtonText = useMemo(() => {
     if (submitting) return '등록중...';
     if (kpiLoading) return 'KPI 불러오는 중...';
     return '등록하기';
   }, [submitting, kpiLoading]);
+
+  console.log('[UI] kpiCache keys:', Object.keys(kpiCache));
+  console.log('[UI] kpiCache[3] length:', (kpiCache[3] ?? []).length);
 
   return (
     <div className="mb-8">
@@ -339,7 +260,7 @@ const NewStudyPage = () => {
       <div className="mt-4">
         <div className="flex flex-col self-stretch rounded-[16px] bg-white p-4 shadow-[0_0_10px_0_#DBEBFE]">
           <div className="w-full">
-            {/*스터디명 */}
+            {/* 스터디명 */}
             <div className="flex w-full flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-body-14B text-[#111111]">멋진 스터디 이름을 지어주세요.</span>
@@ -354,7 +275,7 @@ const NewStudyPage = () => {
               />
             </div>
 
-            {/*한줄 소개 */}
+            {/* 한줄 소개 */}
             <div className="mt-6 flex w-full flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-body-14B text-[#111111]">
@@ -371,15 +292,17 @@ const NewStudyPage = () => {
               />
             </div>
 
-            {/*역량 선택(칩+말풍선+선택카드) */}
+            {/* 역량 선택 */}
             <SkillSelector
               roleLabels={roleLabels}
-              getItemsByRole={getItemsByRole}
+              kpiCardsByRole={kpiCache}
+              kpiLoading={kpiLoading}
               selectedSkill={selectedSkill}
-              onChangeSelectedSkill={setSelectedSkill}
+              onSelect={(skill) => setSelectedSkill(skill)}
+              onOpenRole={setActiveRoleIndex}
             />
 
-            {/*인원, 빈도 */}
+            {/* 인원, 빈도 */}
             <PeopleAndFrequency
               peopleLabels={peopleLabels}
               activePeopleIndex={activePeopleIndex}
@@ -395,7 +318,7 @@ const NewStudyPage = () => {
 
             <Divider />
 
-            {/*활동기간(range 달력) */}
+            {/* 활동기간 */}
             <DateRangeCalendar
               range={range}
               onDayClick={handleDayClick}
@@ -412,7 +335,7 @@ const NewStudyPage = () => {
 
             <Divider />
 
-            {/*모드 선택 */}
+            {/* 모드 선택 */}
             <div className="mt-6 flex w-full flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-body-14B text-[#111111]">어디서 참여하고 싶으신가요?</span>
@@ -440,7 +363,7 @@ const NewStudyPage = () => {
               </div>
             </div>
 
-            {/*시너지 선택 */}
+            {/* 시너지 선택 */}
             <div className="mt-6 flex w-full flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-body-14B text-[#111111]">어떤 시너지를 기대하시나요?</span>
@@ -468,7 +391,7 @@ const NewStudyPage = () => {
               </div>
             </div>
 
-            {/*오픈채팅 */}
+            {/* 오픈채팅 */}
             <div className="mt-6 flex w-full flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-body-14B text-[#111111]">
@@ -485,7 +408,7 @@ const NewStudyPage = () => {
               />
             </div>
 
-            {/*등록하기 */}
+            {/* 등록하기 */}
             <div className="mt-8 flex justify-center">
               <button
                 type="button"

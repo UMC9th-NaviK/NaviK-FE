@@ -42,7 +42,11 @@ const BoardPostCard = ({ board }: Props) => {
       </div>
 
       <div className="flex items-center gap-3">
-        <img src={ProfileIcon} alt="프로필" className="h-8 w-8 rounded-full" />
+        <img
+          src={board.profileImageUrl ?? ProfileIcon}
+          alt="프로필"
+          className="h-8 w-8 rounded-full"
+        />
         <div className="flex min-w-0 flex-1 flex-col">
           <span className="text-base-900 text-[12px] font-bold">{board.nickname}</span>
           <div className="flex justify-between">

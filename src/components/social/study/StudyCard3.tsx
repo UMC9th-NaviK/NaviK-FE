@@ -1,8 +1,9 @@
 import StudyImageFallback from '../../../assets/social/study.png';
 import CalendarIcon from '../../../assets/social/material-symbols_calendar-today-rounded.svg';
 import PersonIcon from '../../../assets/social/material-symbols_person-rounded.svg';
-
+import { useNavigate } from 'react-router-dom';
 interface StudyCardProps {
+  studyId: number;
   title: string;
   currentCount: number;
   maxCount: number;
@@ -27,6 +28,7 @@ const statusLabelMap: Record<string, string> = {
 };
 
 export default function StudyCard3({
+  studyId,
   title,
   currentCount,
   maxCount,
@@ -55,6 +57,7 @@ export default function StudyCard3({
     return String(mod).padStart(2, '0');
   }
 
+  const navigate = useNavigate();
   return (
     <div className="py-2">
       <div
@@ -172,7 +175,7 @@ export default function StudyCard3({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  //평가페이지 이동로직
+                  navigate(`/social/study/${studyId}/evaluation`);
                 }}
                 className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
               >
