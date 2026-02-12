@@ -18,7 +18,7 @@ type CardVM = {
   rating: number;
 };
 
-const statusLabelMap: Record<string, { label: string; variant?: 'gray' | 'red' }> = {
+const statusLabelMap: Record<string, { label: string; variant: 'gray' | 'red' }> = {
   RECURRING: { label: '모집중', variant: 'gray' },
   IN_PROGRESS: { label: '진행중', variant: 'gray' },
   CLOSED: { label: '종료', variant: 'red' },
@@ -27,7 +27,7 @@ const statusLabelMap: Record<string, { label: string; variant?: 'gray' | 'red' }
 const participationLabelMap: Record<string, string> = {
   ONLINE: '비대면 회의',
   OFFLINE: '대면 회의',
-  ON_OFFLINE: '온/오프라인',
+  HYBRID: '온/오프라인',
 };
 
 const formatKoRange = (start: string, end: string) => {
@@ -51,7 +51,7 @@ const toCardVM = (detail: EvaluationStudyDetail, studyId: number): CardVM => {
     tags: [
       { label: participation, variant: 'gray' },
       { label: `주 ${detail.weekTime}회`, variant: 'gray' },
-      { label: statusInfo.label, variant: statusInfo.variant },
+      { label: statusInfo.label, variant: 'red' },
     ],
     strengths: Array.isArray(detail.strengths) ? detail.strengths : [],
     improvements: Array.isArray(detail.improvements) ? detail.improvements : [],
