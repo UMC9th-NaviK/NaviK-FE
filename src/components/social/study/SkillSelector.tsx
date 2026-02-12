@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const BG = '#F5F5F5';
+const BG = '#FFFFFF';
 
 type SelectedSkill = { roleIndex: number; itemIndex: number; text: string } | null;
 
@@ -24,9 +24,11 @@ export default function SkillSelector({
   const btnRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const bubbleRef = useRef<HTMLDivElement | null>(null);
   const [bubbleLeft, setBubbleLeft] = useState(0);
+  const [arrowLeft, setArrowLeft] = useState(0);
 
   const syncBubblePos = () => {
     if (openRoleIndex === null) return;
+
     const wrap = bubbleWrapRef.current;
     const btn = btnRefs.current[openRoleIndex];
     if (!wrap || !btn) return;
@@ -34,14 +36,24 @@ export default function SkillSelector({
     const wrapRect = wrap.getBoundingClientRect();
     const btnRect = btn.getBoundingClientRect();
 
-    const boxW = 199;
+    const boxW = 200;
+    const arrowW = 16;
+    const arrowPad = 16;
+
     const centerX = btnRect.left - wrapRect.left + btnRect.width / 2;
+
     let left = centerX - boxW / 2;
 
     const min = 0;
     const max = wrapRect.width - boxW;
     left = Math.max(min, Math.min(max, left));
     setBubbleLeft(left);
+
+    let arrow = centerX - left - arrowW / 2;
+    const arrowMin = arrowPad;
+    const arrowMax = boxW - arrowPad - arrowW;
+    arrow = Math.max(arrowMin, Math.min(arrowMax, arrow));
+    setArrowLeft(arrow);
   };
 
   useEffect(() => {
@@ -119,61 +131,60 @@ export default function SkillSelector({
       )}
 
       {openRoleIndex !== null && (
-        <div
-          ref={bubbleRef}
-          className="absolute z-50"
-          style={{
-            left: bubbleLeft,
-            top: 32 + 8 + 8,
-          }}
-        >
-          <div className="flex justify-center">
-            <svg
-              width="16"
-              height="11.942"
-              viewBox="0 0 16 11.942"
-              xmlns="http://www.w3.org/2000/svg"
+        <div ref={bubbleRef} className="absolute z-50" style={{ left: bubbleLeft, top: 77 }}>
+          <div className="relative">
+            <div className="absolute -top-[11px]" style={{ left: arrowLeft }}>
+              <svg
+                width="16"
+                height="11.942"
+                viewBox="0 0 16 11.942"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M8 0L16 11.942H0L8 0Z" fill={BG} stroke="#E5E7EB" strokeWidth="1" />
+              </svg>
+            </div>
+
+            <div
+              className="border border-gray-200 shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
+              style={{ width: 208, height: 347, borderRadius: 24, background: BG }}
             >
-              <path d="M8 0L16 11.942H0L8 0Z" fill={BG} />
-            </svg>
-          </div>
+              <div className="h-full overflow-hidden p-2">
+                <ul className="scrollbar-hide flex h-full flex-col gap-[14px] overflow-auto p-2">
+                  {getItemsByRole(openRoleIndex).map((t, i) => {
+                    const isSelected =
+                      selectedSkill?.roleIndex === openRoleIndex && selectedSkill?.itemIndex === i;
 
-          <div
-            className="shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-            style={{ width: 208, height: 347, borderRadius: 24, background: BG }}
-          >
-            <div className="h-full overflow-hidden p-[16px]">
-              <ul className="flex h-full flex-col gap-[14px] overflow-auto">
-                {getItemsByRole(openRoleIndex).map((t, i) => {
-                  const isSelected =
-                    selectedSkill?.roleIndex === openRoleIndex && selectedSkill?.itemIndex === i;
-
-                  return (
-                    <li
-                      key={t}
-                      className="group relative flex cursor-pointer items-start gap-[12px]"
-                      onClick={() => {
-                        onChangeSelectedSkill({ roleIndex: openRoleIndex, itemIndex: i, text: t });
-                        setOpenRoleIndex(null);
-                      }}
-                    >
-                      <div className="pointer-events-none absolute -inset-[8px] rounded-full bg-[rgba(17,17,17,0.10)] opacity-0 transition-opacity group-hover:opacity-100" />
-                      <span className="text-caption-12B text-primary-blue-500 relative z-10 leading-[160%]">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <span
-                        className={`text-caption-12R relative z-10 leading-[160%] ${
-                          isSelected
-                            ? 'text-primary-blue-500 font-semibold'
-                            : 'text-opacity-black-80'
-                        }`}
+                    return (
+                      <li
+                        key={t}
+                        className="group relative flex cursor-pointer items-start gap-[12px]"
+                        onClick={() => {
+                          onChangeSelectedSkill({
+                            roleIndex: openRoleIndex,
+                            itemIndex: i,
+                            text: t,
+                          });
+                          setOpenRoleIndex(null);
+                        }}
                       >
-                        {t}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
+                        <div className="pointer-events-none absolute -inset-[8px] rounded-full bg-[rgba(17,17,17,0.10)] opacity-0 transition-opacity group-hover:opacity-100" />
+                        <span className="text-caption-12B text-primary-blue-500 relative z-10 leading-[160%]">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span
+                          className={`text-caption-12R relative z-10 leading-[160%] ${
+                            isSelected
+                              ? 'text-primary-blue-500 font-semibold'
+                              : 'text-opacity-black-80'
+                          }`}
+                        >
+                          {t}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

@@ -31,7 +31,8 @@ import {
 import type { BoardDetail, BoardCommentItem } from '../../types/board';
 import { timeAgo } from '../../utils/timeAgo';
 import { getJwtPayload } from '../../utils/jwt';
-
+import type { UserProfile } from '../../types/user';
+import { getUserProfile } from '../../apis/user';
 type EditState = {
   title?: string;
   content?: string;
@@ -78,28 +79,43 @@ const BoardDetailPage = () => {
     }
   }, []);
 
+  const [Me, setMe] = useState<UserProfile | null>(null);
+  useEffect(() => {
+    const fetchMe = async () => {
+      try {
+        const data = await getUserProfile();
+        setMe(data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchMe();
+  }, []);
+
   const myUserId = me?.sub ? Number(me.sub) : null;
+  const toPid = (pid: unknown) => {
+    if (pid == null) return 0;
+    const n = Number(pid);
+    return Number.isFinite(n) ? n : 0;
+  };
+
   const isMyPost = !!(detail && myUserId != null && myUserId === detail.userId);
 
-  const parentComments = useMemo(
-    () => comments.filter((c) => c.parentCommentId == null || c.parentCommentId === 0),
-    [comments],
-  );
+  const parentComments = useMemo(() => {
+    return comments.filter((c) => toPid((c as any).parentCommentId) === 0);
+  }, [comments]);
 
   const repliesByParentId = useMemo(() => {
     const map = new Map<number, BoardCommentItem[]>();
 
     comments.forEach((c) => {
-      const pid = c.parentCommentId;
+      const pid = toPid((c as any).parentCommentId);
+      if (pid === 0) return;
 
-      if (pid == null || pid === 0) return;
-
-      const parentId = Number(pid);
-      if (Number.isNaN(parentId)) return;
-
-      const arr = map.get(parentId) ?? [];
+      const arr = map.get(pid) ?? [];
       arr.push(c);
-      map.set(parentId, arr);
+      map.set(pid, arr);
     });
 
     return map;
@@ -220,7 +236,33 @@ const BoardDetailPage = () => {
         return;
       }
 
-      setComments(res.data.result.content ?? []);
+      const list = res.data.result.content ?? [];
+
+      const hasNested = list.some((x: any) => Array.isArray(x?.childResponseComments));
+
+      if (hasNested) {
+        const flattened: BoardCommentItem[] = [];
+
+        list.forEach((p: any) => {
+          flattened.push({ ...p, parentCommentId: p.parentCommentId ?? null });
+
+          const children = p.childResponseComments ?? [];
+          children.forEach((ch: any) => {
+            flattened.push({
+              ...ch,
+              parentCommentId: Number(p.commentId),
+            });
+          });
+        });
+
+        setComments(flattened);
+      } else {
+        const normalized = list.map((c: any) => ({
+          ...c,
+          parentCommentId: toPid(c.parentCommentId) === 0 ? null : toPid(c.parentCommentId),
+        }));
+        setComments(normalized);
+      }
     } catch (e) {
       console.error(e);
       setCommentError('댓글 네트워크 오류');
@@ -468,9 +510,9 @@ const BoardDetailPage = () => {
           </div>
         ) : (
           <CommentEditor
-            author="나"
-            authorMeta="마스터 | LV.3"
-            profileSrc={ProfileIcon}
+            author={Me?.nickname ?? '나'}
+            authorMeta={`${Me?.isEntryLevel ? '신입' : '마스터'} ${Me?.job}`}
+            profileSrc={Me?.profileImageUrl ?? ProfileIcon}
             value={composerValue}
             onChange={setComposerValue}
             onCancel={() => {
@@ -502,6 +544,7 @@ const BoardDetailPage = () => {
                     console.warn(res.data?.message ?? '대댓글 작성 실패');
                     return;
                   }
+                  console.log('대댓글 작성 응답:', res.data);
                 }
 
                 setComposerMode(null);
