@@ -5,17 +5,17 @@ import type { StudyRecommendation } from "../../types/study";
 
 interface RecommendationNoticeProps {
     role : string;
-    currentCardStudyId: number | null;
+    //currentCardStudyId: number | null;
 }
 
-const RecommendationNotice = ({ role, currentCardStudyId }: RecommendationNoticeProps) => {
+const RecommendationNotice = ({ role }: RecommendationNoticeProps) => {
     const location = useLocation();
     const navigate = useNavigate();
 
     const isOvercomingDetailPage = location.pathname.startsWith("/report/overcoming/detail");
     const theme = ROLE_THEME_MAP[role] || ROLE_THEME_MAP['pm'];
 
-    const { data: studyList = [], isLoading } = useStudyRecommend(currentCardStudyId, 5);
+    const { data: studyList = [], isLoading } = useStudyRecommend(null, 5);
 
     const formatDate = (dateString: string) => {
         if (!dateString) return "일정 미정";

@@ -13,19 +13,6 @@ interface StudyRecommendation {
     participationMethod: "ONLINE" | "OFFLINE" | "HYBRID";
 }
 
-interface StudyRecommendResponse {
-    isSuccess: boolean;
-    code: string;
-    message: string;
-    result: {
-        content: StudyRecommendation[];
-        pageSize: number;
-        nextCursor: number | null;
-        hasNext: boolean;
-    };
-    timestamp: string;
-}
-
 interface StudyRecommendationListResult {
     content: StudyRecommendation[];
     pageSize: number;

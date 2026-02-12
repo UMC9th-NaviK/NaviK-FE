@@ -8,7 +8,6 @@ import { useProfile } from '../../hooks/useProfile';
 import { useEffect, useState } from 'react';
 import { getKPICardBottom, getKPICardDetail } from '../../apis/report/kpiCard';
 import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCard';
-import { useStudyRecommend } from '../../hooks/queries/useStudyRecommend';
 import { Icon } from '@iconify/react';
 
 const OvercomingKPIDetailPage = () => {
@@ -72,9 +71,9 @@ const OvercomingKPIDetailPage = () => {
         fetchDetail();
     }, [activeIndex, cards]);
 
-    const { data: studies = [] } = useStudyRecommend(null, 5);
+    //const { data: studies = [] } = useStudyRecommend(null, 5);
 
-    const currentStudyId = studies.length > 0 ? studies[activeIndex].studyId : null;
+    //const currentStudyId = studies.length > 0 ? studies[activeIndex].studyId : null;
 
     if (isLoading) {
         return (
@@ -129,7 +128,7 @@ const OvercomingKPIDetailPage = () => {
 
                             <div className="overflow-x-auto scrollbar-hide pr-5 snap-x snap-mandatory scroll-pl-[22px]">
                                 <div className='flex flex-nowrap w-max box-border gap-[16px] scroll-smooth'>
-                                    <RecommendationNotice role={mappedRole} currentCardStudyId={currentStudyId} />
+                                    <RecommendationNotice role={mappedRole} currentCardStudyId={null} />
                                     <div className="flex-shrink-0 w-[1px] h-full" />
                                 </div>
                             </div>
