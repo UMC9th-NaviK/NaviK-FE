@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { uploadProfileImage } from '../../apis/s3';
 import { putUserProfileImage } from '../../apis/user';
@@ -13,6 +13,8 @@ const EditImageSection = ({ profileId, imageUrl }: Props) => {
   const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [cacheBuster, setCacheBuster] = useState(() => Date.now());
+
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
@@ -22,23 +24,26 @@ const EditImageSection = ({ profileId, imageUrl }: Props) => {
     if (!file) return;
 
     try {
+      // S3 업로드 및 서버 반영
       const uploadedKey = await uploadProfileImage(profileId, file);
       await putUserProfileImage(uploadedKey);
 
-      await queryClient.invalidateQueries({ queryKey: ['myPage'] });
+      setCacheBuster(Date.now());
 
-      alert('프로필 이미지가 변경되었습니다! ✨');
+      // 리액트 쿼리 무효화
+      await queryClient.invalidateQueries({ queryKey: ['myPage'] });
     } catch (error) {
       console.error('이미지 업데이트 실패:', error);
       alert('이미지 수정 중 오류가 발생했습니다.');
     }
   };
 
-  const displayImageUrl = imageUrl ? `${imageUrl}?t=${new Date().getTime()}` : '';
+  // 상태값(cacheBuster)을 사용하여 이미지 주소 생성
+
+  const displayImageUrl = imageUrl ? `${imageUrl}?t=${cacheBuster}` : '';
 
   return (
     <div className="absolute -top-16 left-1/2 h-32 w-32 -translate-x-1/2">
-      {/* 프로필 이미지 박스 */}
       <div
         onClick={handleImageClick}
         className="border-base-100 h-full w-full cursor-pointer overflow-hidden rounded-full border-8 bg-gray-100 transition-all hover:brightness-90 active:scale-95"
