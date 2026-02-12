@@ -1,74 +1,7 @@
-import { useState } from 'react';
-import axios from 'axios'; //
-import JobSection from '../../components/myPage/JobSection';
-import ActivitySection from '../../components/myPage/ActivitySection';
 import SubHeader from '../../components/myPage/SubHeader';
-import { EducationSection } from '../../components/myPage/EducationSection';
 import { FOOTERPB } from '../../components/common/Footer';
 import { useMyPage } from '../../hooks/useMyPage';
-import { REVERSE_EDUCATION_MAP, DEPARTMENT_MAP } from '../../constants/filterMapper';
-import { patchUserProfile } from '../../apis/user';
-import type { UserProfile } from '../../types/user';
-import { useNavigate } from 'react-router-dom';
-
-const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    nickname: profile.nickname,
-    isEntryLevel: profile.isEntryLevel,
-    educationLevel: profile.educationLevel,
-    departmentIds: profile.departmentList,
-  });
-
-  const handleSave = async () => {
-    try {
-      await patchUserProfile(formData);
-
-      navigate('/mypage');
-    } catch (error) {
-      alert('수정 실패');
-      if (axios.isAxiosError(error)) {
-        console.log('에러 발생 당시 데이터:', formData);
-        console.log('서버 응답 에러:', error.response?.data || error.message);
-      } else {
-        console.error('알 수 없는 에러:', error);
-      }
-    }
-  };
-
-  return (
-    <>
-      <div className="mt-10 flex flex-col items-center gap-6">
-        <JobSection
-          initialJob={profile.job}
-          initialIsEntry={profile.isEntryLevel}
-          onDataChange={(isEntry) => setFormData((prev) => ({ ...prev, isEntryLevel: isEntry }))}
-        />
-
-        <EducationSection
-          initialEdu={profile.educationLevel}
-          initialMajors={profile.departmentList}
-          onDataChange={(eduName, majorNames) => {
-            setFormData((prev) => ({
-              ...prev,
-              educationLevel: REVERSE_EDUCATION_MAP[eduName],
-              departmentIds: majorNames.map((name) => String(DEPARTMENT_MAP[name])),
-            }));
-          }}
-        />
-
-        <ActivitySection />
-      </div>
-
-      <button
-        onClick={handleSave}
-        className="bg-primary-blue-500 text-body-16B text-base-100 mt-10 h-12 w-85.75 rounded-lg active:brightness-90"
-      >
-        저장하기
-      </button>
-    </>
-  );
-};
+import EditProfileForm from '../../components/myPage/EditProfileForm';
 
 const EditProfilePage = () => {
   const { profile, isLoading } = useMyPage();

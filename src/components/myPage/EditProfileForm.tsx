@@ -4,34 +4,29 @@ import { REVERSE_EDUCATION_MAP, DEPARTMENT_MAP } from '../../constants/filterMap
 import ActivitySection from './ActivitySection';
 import { EducationSection } from './EducationSection';
 import JobSection from './JobSection';
-import type { UserProfile, UpdateProfileRequest } from '../../types/user'; // UpdateProfileRequest 추가
+import type { UserProfile } from '../../types/user'; // UpdateProfileRequest 추가
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    nickname: profile.nickname,
-    isEntryLevel: profile.isEntryLevel,
+    nickname: profile.nickname || '',
+    isEntryLevel: profile.isEntryLevel ?? true,
     educationLevel: profile.educationLevel || '',
     departmentIds: profile.departmentList || [],
   });
 
   const handleSave = async () => {
     try {
-      const requestBody: UpdateProfileRequest = {
-        nickname: formData.nickname,
-        isEntryLevel: formData.isEntryLevel,
-        educationLevel: formData.educationLevel,
-        departmentIds: formData.departmentIds,
-      };
+      await patchUserProfile(formData);
 
-      const res = await patchUserProfile(requestBody);
-      if (res.isSuccess) {
-        alert(' 수정 성공!');
-      }
+      navigate('/mypage');
     } catch (error) {
-      alert('수정 실패 ');
+      alert('수정 실패');
       if (axios.isAxiosError(error)) {
-        console.error('에러 상세:', error.response?.data || error.message);
+        console.log('서버 응답 에러:', error.response?.data || error.message);
       }
     }
   };
@@ -57,6 +52,7 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
             }));
           }}
         />
+
         <ActivitySection />
       </div>
 
@@ -69,5 +65,4 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
     </>
   );
 };
-
 export default EditProfileForm;
