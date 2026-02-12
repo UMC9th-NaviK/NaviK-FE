@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import SurveyItem from './SurveyItem';
 import { getSurveyQuestions } from '../../constants/survey';
 import AnalysisPage from '../../pages/job/AnalysisPage';
+import { usePortfolioStore } from '../../store/usePortfolioStore';
+import type { RequestPortfolioInfo } from '../../types/portfolio';
+import { usePostAdditionalInfo } from '../../hooks/queries/usePortfolio';
 
 const SurveyStep = ({ categoryId }: { categoryId: string }) => {
   useEffect(() => {
@@ -13,7 +16,10 @@ const SurveyStep = ({ categoryId }: { categoryId: string }) => {
   const navigate = useNavigate();
   const questions = getSurveyQuestions(categoryId);
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const portfolioId = usePortfolioStore((state) => state.portfolioId);
+  const { mutateAsync: submitAdditionalInfo } = usePostAdditionalInfo();
 
   const handleAnswerChange = (questionId: number, value: number) => {
     setAnswers((prev) => ({
@@ -22,18 +28,46 @@ const SurveyStep = ({ categoryId }: { categoryId: string }) => {
     }));
   };
 
-  const handleNext = () => {
-    setIsLoading(true);
-    // 테스트용: 3초 후 페이지 이동
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate(`/job/result`);
-    }, 3000);
+  const handleNext = async () => {
+    if (!portfolioId) {
+      alert('포트폴리오 정보가 없습니다. 다시 시도해주세요.');
+      navigate(`/setup/category/${categoryId}?step=2`);
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      const additionalInfo: RequestPortfolioInfo = {
+        qB1: answers[1] ?? 0,
+        qB2: answers[2] ?? 0,
+        qB3: answers[3] ?? 0,
+        qB4: answers[4] ?? 0,
+        qB5: answers[5] ?? 0,
+      };
+
+      console.log('📤 추가 정보 제출:', { portfolioId, additionalInfo });
+
+      await submitAdditionalInfo({
+        portfolioId,
+        info: additionalInfo,
+      });
+
+      console.log('✅ 추가 정보 제출 성공');
+
+      // 제출 후 다시 로딩 폴링으로 이동
+      navigate(`/setup/category/${categoryId}?step=loading`);
+    } catch (error) {
+      console.error('❌ 추가 정보 제출 실패:', error);
+      alert('추가 정보 제출에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isAllAnswered = questions.length === Object.keys(answers).length;
 
-  if (isLoading) {
+  if (isSubmitting) {
     return <AnalysisPage />;
   }
 
@@ -61,7 +95,11 @@ const SurveyStep = ({ categoryId }: { categoryId: string }) => {
       </div>
       {/* 버튼 - 하단 고정 */}
       <div className="absolute right-0 bottom-0 left-0 z-20 flex justify-center px-4 pb-6">
-        <ButtonRound onClick={handleNext} text="다음" disabled={!isAllAnswered} />
+        <ButtonRound
+          onClick={handleNext}
+          text={isSubmitting ? '제출 중...' : '다음'}
+          disabled={!isAllAnswered || isSubmitting}
+        />
       </div>
     </>
   );
