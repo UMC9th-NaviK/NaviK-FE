@@ -65,6 +65,7 @@ export type MyStudyItem = {
   studyId: number;
   title: string;
   kpiName: string;
+  kpiId: number;
   description: string;
   startDate: string;
   endDate: string;
