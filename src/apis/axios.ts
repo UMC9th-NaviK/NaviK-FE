@@ -24,16 +24,16 @@ axiosInstance.interceptors.request.use(
 // Response interceptor - 401 에러 시 토큰 갱신
 let isRefreshing = false;
 let failedQueue: Array<{
-  resolve: (value?: unknown) => void;
+  resolve: (token: string) => void;
   reject: (reason?: unknown) => void;
 }> = [];
 
-const processQueue = (error: Error | null, token: string | null = null) => {
+const processQueue = (error: Error | null, token: string | null) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
     } else {
-      prom.resolve(token);
+      prom.resolve(token!);
     }
   });
 
@@ -61,7 +61,7 @@ axiosInstance.interceptors.response.use(
 
       // 이미 토큰 갱신 중인 경우 대기열에 추가
       if (isRefreshing) {
-        return new Promise((resolve, reject) => {
+        return new Promise<string>((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
           .then((token) => {
