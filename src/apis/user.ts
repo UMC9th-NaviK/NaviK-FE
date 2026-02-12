@@ -4,6 +4,7 @@ import type {
   UserProfile,
   UpdateProfileRequest,
 } from '../types/user';
+import { cleanImageUrl } from '../utils/imgFormat';
 
 import axiosInstance from './axios';
 
@@ -12,7 +13,12 @@ export const getUserProfile = async (): Promise<UserProfile> => {
     const response = await axiosInstance.get<ApiResponse<UserProfile>>('/users/profile');
 
     if (response.data.isSuccess) {
-      return response.data.result;
+      const result = response.data.result;
+
+      if (result.profileImageUrl) {
+        result.profileImageUrl = cleanImageUrl(result.profileImageUrl);
+      }
+      return result;
     } else {
       throw new Error(response.data.message);
     }
@@ -26,7 +32,12 @@ export const getUserMyPage = async (): Promise<ResponseUserInfo> => {
   try {
     const response = await axiosInstance.get<ApiResponse<ResponseUserInfo>>('/users/my-page');
     if (response.data.isSuccess) {
-      return response.data.result;
+      const result = response.data.result;
+
+      if (result.profileImageUrl) {
+        result.profileImageUrl = cleanImageUrl(result.profileImageUrl);
+      }
+      return result;
     }
     throw new Error(response.data.message);
   } catch (error) {
@@ -56,3 +67,13 @@ export async function getUserInfo(): Promise<ResponseUserInfo> {
   }
   return data.result;
 }
+
+//포르필 이미지 수정
+export const putUserProfileImage = async (imageUrl: string) => {
+  const response = await axiosInstance.put('/users/profile-image', imageUrl, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.data;
+};

@@ -4,12 +4,14 @@ import { REVERSE_EDUCATION_MAP, DEPARTMENT_MAP } from '../../constants/filterMap
 import ActivitySection from './ActivitySection';
 import { EducationSection } from './EducationSection';
 import JobSection from './JobSection';
-import type { UserProfile } from '../../types/user'; // UpdateProfileRequest 추가
+import type { UserProfile } from '../../types/user';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
     nickname: profile.nickname || '',
@@ -21,6 +23,8 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
   const handleSave = async () => {
     try {
       await patchUserProfile(formData);
+
+      await queryClient.invalidateQueries({ queryKey: ['myPage'] });
 
       navigate('/mypage');
     } catch (error) {
@@ -46,7 +50,6 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
           onDataChange={(eduName, majorNames) => {
             setFormData((prev) => ({
               ...prev,
-
               educationLevel: REVERSE_EDUCATION_MAP[eduName] || '',
               departmentIds: majorNames.map((name) => String(DEPARTMENT_MAP[name] || '')),
             }));
@@ -65,4 +68,5 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
     </>
   );
 };
+
 export default EditProfileForm;
