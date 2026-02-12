@@ -36,7 +36,7 @@ const CardSlider = ({ cards, isLoading }: CardSliderProps) => {
         <button
           key={card.kpiCardId}
           className="flex flex-1"
-          onClick={() => handleCardClick(card.kpiCardId)}
+          onClick={handleCardClick}
         >
           <img
             src={card.imageUrl}
