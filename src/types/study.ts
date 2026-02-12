@@ -14,6 +14,7 @@ export type StudyRecommendation = {
   title: string;
   description: string;
   kpiName: string;
+  kpiId: number;
   startDate: string;
   endDate: string;
   capacity: number;

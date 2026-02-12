@@ -10,6 +10,7 @@ interface StudyCardProps {
   periodText: string;
   network: string;
   kpiName?: string;
+  kpiId?: number;
   imageSrc?: string;
   className?: string;
   onClick?: () => void;
@@ -24,6 +25,7 @@ export default function StudyCard2({
   periodText,
   network,
   kpiName,
+  kpiId,
   imageSrc,
   className = '',
   onClick,
@@ -91,7 +93,10 @@ export default function StudyCard2({
           <div className="flex w-full flex-col rounded-[8px] bg-[#F5F8FF] p-2">
             <div className="flex w-full items-center justify-between">
               <span className="text-body-14B text-primary-blue-500">KPI 역량</span>
-              <span className="text-caption-12M text-opacity-black-80">{kpiName ?? ''}</span>
+              <span className="text-caption-12M text-opacity-black-80">
+                {kpiId ?? ''}&nbsp;
+                {kpiName ?? ''}
+              </span>
             </div>
           </div>
         </div>

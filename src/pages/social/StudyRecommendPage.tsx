@@ -17,6 +17,12 @@ const formatKoRange = (start: string, end: string) => {
   return `${s.getFullYear()}년 ${s.getMonth() + 1}월 ${s.getDate()}일 ~ ${e.getMonth() + 1}월 ${e.getDate()}일`;
 };
 
+const participationLabelMap: Record<string, string> = {
+  ONLINE: '비대면 회의',
+  OFFLINE: '대면 회의',
+  HYBRID: '온/오프라인',
+};
+
 export default function StudyRecommendPage() {
   const [list, setList] = useState<StudyRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
@@ -122,8 +128,11 @@ export default function StudyRecommendPage() {
             maxCount={topPick.capacity}
             description={topPick.description}
             periodText={formatKoRange(topPick.startDate, topPick.endDate)}
-            network={topPick.participationMethod}
+            network={
+              participationLabelMap[topPick.participationMethod] ?? topPick.participationMethod
+            }
             kpiName={topPick.kpiName}
+            kpiId={topPick.kpiId}
             onClick={() => handleApply(topPick.studyId)}
           />
         ) : (
@@ -146,10 +155,13 @@ export default function StudyRecommendPage() {
             currentCount={s.participantCount}
             maxCount={s.capacity}
             description={s.description}
-            network={s.participationMethod}
+            network={
+              participationLabelMap[topPick.participationMethod] ?? topPick.participationMethod
+            }
             periodText={`${formatKoShort(s.startDate)} ~ ${formatKoShort(s.endDate)}`}
             memberText={`${s.capacity}명`}
             kpiName={s.kpiName}
+            kpiId={s.kpiId}
             onClick={() => handleApply(s.studyId)}
           />
         ))}
