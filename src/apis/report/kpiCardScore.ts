@@ -1,4 +1,4 @@
-import type { KPICardBase, KPICardResponse, KPIcardScoreMonthlyResult, KPIcardScorePercentageResult } from "../../types/kpiCard";
+import type { KPICardResponse, KPIcardScoreMonthlyResult, KPIcardScorePercentageResult } from "../../types/kpiCard";
 import axiosInstance from "../axios"
 
 export const getKPIScorePercentile = async (kpiCardId : number) : Promise<KPICardResponse<KPIcardScorePercentageResult>>=> {

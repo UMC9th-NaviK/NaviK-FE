@@ -4,7 +4,7 @@ import KPICardSlider from '../../components/report/KPICardSlider';
 import { useProfile } from '../../hooks/useProfile';
 import { ROLE_MAP } from '../../types/role';
 import { useState, useEffect } from 'react';
-import { getKPICardBottom, getKPICardDetail, getKPICardTop } from '../../apis/report/kpiCard';
+import { getKPICardDetail, getKPICardTop } from '../../apis/report/kpiCard';
 import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCard';
 import { ROLE_THEME_MAP } from '../../constants/roleTheme';
 

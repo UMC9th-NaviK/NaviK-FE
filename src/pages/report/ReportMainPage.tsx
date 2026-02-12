@@ -147,7 +147,7 @@ const ReportMainPage = () => {
               </div>
 
               <div className="flex flex-col gap-[8px] text-body-14M text-center">
-                {topThreeGoals.map((goal, index) => (
+                {topThreeGoals.map((goal) => (
                   <p 
                       key={goal.id}
                       className={`${goal.status === "IN_PROGRESS" ? "bg-primary-blue-500 text-white" : "bg-white text-[#0E2277]"} p-[8px] rounded-[5px]`}

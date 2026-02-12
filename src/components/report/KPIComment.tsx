@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { ROLE_THEME_MAP } from "../../constants/roleTheme";
 import type { KPICardDetailResponseResult } from "../../types/kpiCard";
-import { getKPIScorePercentile } from "../../apis/report/kpiCardScore";
 import { useKPIScore } from "../../hooks/queries/useKPIScore";
 
 interface KPICommentProps {
