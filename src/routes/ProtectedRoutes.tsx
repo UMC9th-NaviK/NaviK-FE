@@ -70,7 +70,7 @@ export const protectedRoutes: RouteObject[] = [
           { index: true, element: <ReportMainPage /> },
           { path: 'mycard', element: <MyCardPage /> },
           { path: 'core', element: <CoreKPIPage /> },
-          { path: 'core/detail', element: <CoreKPIDetailPage role={'designer'} /> },
+          { path: 'core/detail', element: <CoreKPIDetailPage /> },
           { path: 'overcoming', element: <OvercomingKPIPage /> },
           { path: 'overcoming/detail', element: <OvercomingKPIDetailPage role={'pm'} /> },
           { path: 'growth', element: <GrowthMainPage /> },
