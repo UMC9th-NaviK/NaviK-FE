@@ -86,13 +86,13 @@ const GrowthRecord = () => {
             setIsNotionAuthenticated(true);
 
             localStorage.setItem('isNotionAuthenticated', 'true');
+
+            const newParams = new URLSearchParams(searchParams);
+            newParams.delete('success');
             
-            searchParams.delete('success');
-            setSearchParams(searchParams, { replace: true });
-            
-            console.log("노션 연동이 완료되었습니다!");
+            setSearchParams(newParams, { replace: true });
         }
-    }, []);
+    }, [searchParams, setSearchParams]);
 
     return (
         <div className='flex flex-col bg-white rounded-[16px] p-[16px] gap-[10px] border border-[1px] border-primary-blue-500'>
