@@ -6,14 +6,16 @@ export interface ApiResponse<T> {
   timestamp: string;
 }
 
-// 유저 프로필 (마이페이지)
 export interface UserProfile {
   id: number;
   profileImageUrl: string;
   nickname: string;
   job: string;
   isEntryLevel: boolean;
+  educationLevel?: string; // 추가됨
+  departmentList?: string[]; // 추가됨
 }
+
 export type RequestBasicInfo = {
   name: string;
   nickname?: string;
@@ -29,17 +31,12 @@ export type ResponseBasicInfo = {
   isEntryLevel: boolean;
 };
 
-export interface UserProfile {
-  educationLevel: string; // 'BACHELOR'
-  departmentList: string[]; // ['1', '2'] 등으로 옴
-}
-
 // 수정용 요청 타입
 export interface UpdateProfileRequest {
   nickname: string;
   isEntryLevel: boolean;
   educationLevel: string;
-  departmentIds: string[]; // 조회할 땐 departmentList였지만 보낼 땐 Id로!!!!!
+  departmentIds: string[];
 }
 
 export type JobType = 'pm' | 'de' | 'fe' | 'be';

@@ -4,30 +4,34 @@ import { REVERSE_EDUCATION_MAP, DEPARTMENT_MAP } from '../../constants/filterMap
 import ActivitySection from './ActivitySection';
 import { EducationSection } from './EducationSection';
 import JobSection from './JobSection';
-import type { UserProfile } from '../../types/user';
+import type { UserProfile, UpdateProfileRequest } from '../../types/user'; // UpdateProfileRequest 추가
 import axios from 'axios';
 
 const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
   const [formData, setFormData] = useState({
     nickname: profile.nickname,
     isEntryLevel: profile.isEntryLevel,
-    educationLevel: profile.educationLevel,
-    departmentIds: profile.departmentList,
+    educationLevel: profile.educationLevel || '',
+    departmentIds: profile.departmentList || [],
   });
 
   const handleSave = async () => {
     try {
-      const res = await patchUserProfile(formData);
+      const requestBody: UpdateProfileRequest = {
+        nickname: formData.nickname,
+        isEntryLevel: formData.isEntryLevel,
+        educationLevel: formData.educationLevel,
+        departmentIds: formData.departmentIds,
+      };
+
+      const res = await patchUserProfile(requestBody);
       if (res.isSuccess) {
-        alert('수정 성공');
+        alert(' 수정 성공!');
       }
     } catch (error) {
       alert('수정 실패 ');
-
       if (axios.isAxiosError(error)) {
         console.error('에러 상세:', error.response?.data || error.message);
-      } else {
-        console.error('예상치 못한 에러:', error);
       }
     }
   };
@@ -47,12 +51,12 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
           onDataChange={(eduName, majorNames) => {
             setFormData((prev) => ({
               ...prev,
-              educationLevel: REVERSE_EDUCATION_MAP[eduName], // 한글 -> 영문
-              departmentIds: majorNames.map((name) => String(DEPARTMENT_MAP[name])), // 이름 -> ID 문자열
+
+              educationLevel: REVERSE_EDUCATION_MAP[eduName] || '',
+              departmentIds: majorNames.map((name) => String(DEPARTMENT_MAP[name] || '')),
             }));
           }}
         />
-        {/*활동 섹션*/}
         <ActivitySection />
       </div>
 
@@ -65,4 +69,5 @@ const EditProfileForm = ({ profile }: { profile: UserProfile }) => {
     </>
   );
 };
+
 export default EditProfileForm;
