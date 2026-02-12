@@ -28,6 +28,8 @@ export default function StudyEvaluationCard({
   summary,
   rating,
 }: StudyEvaluationCardProps) {
+  const hasEvaluation =
+    strengths.length > 0 || improvements.length > 0 || summary.trim().length > 0 || rating > 0;
   return (
     <BlueAccordion title={title}>
       <InfoRow icon="calendar" label="진행기간" value={periodText} />
@@ -37,14 +39,19 @@ export default function StudyEvaluationCard({
           <TagChip key={`${t.label}-${idx}`} label={t.label} variant={t.variant} />
         ))}
       </div>
-      <EvaluationSectionTitle emoji="☺️" title="동료들이 평가한 나의 강점" />
-      <EvaluationList items={strengths} />
-      <EvaluationSectionTitle emoji="🙁" title="동료들이 평가한 나의 약점" />
-      <EvaluationList items={improvements} />
 
-      <Divider />
-      <EvaluationSummary comment={summary} />
-      <StarRating rating={rating} />
+      {hasEvaluation && (
+        <>
+          <EvaluationSectionTitle emoji="☺️" title="동료들이 평가한 나의 강점" />
+          <EvaluationList items={strengths} />
+          <EvaluationSectionTitle emoji="🙁" title="동료들이 평가한 나의 약점" />
+          <EvaluationList items={improvements} />
+
+          <Divider />
+          <EvaluationSummary comment={summary} />
+          <StarRating rating={rating} />
+        </>
+      )}
     </BlueAccordion>
   );
 }
