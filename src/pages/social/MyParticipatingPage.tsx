@@ -96,6 +96,7 @@ export default function MyParticipatingPage() {
         const percentage = calculateProgress(study.startDate, study.endDate);
         return (
           <StudyCard3
+            studyId={study.studyId}
             key={study.studyUserId}
             title={study.title}
             currentCount={study.currentParticipants}
