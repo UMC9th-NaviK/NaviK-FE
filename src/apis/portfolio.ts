@@ -13,7 +13,7 @@ export async function postPortfolio(portfolio: RequestPortfolio): Promise<Respon
   const accessToken = localStorage.getItem('accessToken');
 
   const { data } = await axios.post<CommonResponse<ResponsePortfolio>>(
-    `${import.meta.env.VITE_OAUTH_API_URL}/portfolios`,
+    `${import.meta.env.VITE_OAUTH_API_URL}/v2/portfolios`,
     portfolio,
     {
       withCredentials: true,
