@@ -309,7 +309,7 @@ export default function StudyCard4({
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation(); // 카드 토글 방지
-                    navigate(`/study/${studyId}/evaluation`);
+                    navigate(`/social/study/${studyId}/evaluation`);
                   }}
                   className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
                 >
