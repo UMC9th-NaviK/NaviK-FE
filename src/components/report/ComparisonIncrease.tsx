@@ -4,26 +4,40 @@ interface ComparisonProps {
 }
 
 const ComparisonIncrease = ({ type, percentage } : ComparisonProps) => {
-    const getImagePath = () => {
+    const getImagePath = () : string | null => {
+        const p = Math.abs(percentage);
+
         if (type === 'up') {
-            if (percentage >= 30) return "/images/growth/increasing_3.png";
-            if (percentage >= 20) return "/images/growth/increasing_2.png";
-            if (percentage >= 10) return "/images/growth/increasing_1.png";
+            if (p >= 30) return "/images/growth/increasing_3.png";
+            if (p >= 20) return "/images/growth/increasing_2.png";
+            if (p >= 10) return "/images/growth/increasing_1.png";
+
+            return null;
         } 
 
         if (type === 'down') {
-            if (percentage >= 30) return "/images/growth/decreasing_3.png";
-            if (percentage >= 20) return "/images/growth/decreasing_2.png";
-            if (percentage >= 10) return "/images/growth/decreasing_1.png";
+            if (p >= 30) return "/images/growth/decreasing_3.png";
+            if (p >= 20) return "/images/growth/decreasing_2.png";
+            if (p >= 10) return "/images/growth/decreasing_1.png";
+
+            return null;
         }
+
+        return null;
     };
+
+    const imagePath = getImagePath();
+
+    if (!imagePath) {
+        return <div className="w-full h-full bg-base-100 min-h-[76.05px]" />;
+    }
 
     return (
         <div className="relative inline-block">
             <img 
-                src={getImagePath()} 
-                alt={`${percentage}% ${type === 'up' ? '증가' : '감소'}`}
-                className="w-full h-auto"
+            src={imagePath} 
+            alt={`${percentage}% ${type === 'up' ? '증가' : '감소'}`}
+            className="w-full h-auto"
             />
         </div>
     )

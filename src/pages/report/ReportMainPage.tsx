@@ -134,7 +134,7 @@ const ReportMainPage = () => {
               </div>
             </div>
 
-            <div className="flex flex-1 justify-between items-center">
+            <div className="flex flex-1 items-end justify-between">
               <p className="text-body-16M text-black"> 완료할 목표 </p>
               <span className="text-heading-20B text-[#4E83F9]"> {progressGoalsCount} 개 </span>
             </div>
@@ -179,12 +179,12 @@ const ReportMainPage = () => {
                       )}
                     </div>
 
-                    <div className="flex-1 flex items-center justify-center">
+                    <div className="flex flex-1 h-[76.05px] items-center justify-center">
                       <ComparisonIncrease type={type} percentage={scoreRate} />
                     </div>
                   </div>
 
-                  <div className="flex flex-1 justify-between"> 
+                  <div className="flex flex-1 justify-between items-end"> 
                     <p className="text-caption-12R text-[#11111166]"> {lastMonth}월 </p>
                     <p className="text-caption-12R text-[#11111166]"> {currentMonth}월 </p>
                   </div>
