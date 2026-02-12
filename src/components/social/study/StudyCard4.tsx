@@ -258,10 +258,15 @@ export default function StudyCard4({
                 <span className="text-caption-12M text-white">{network}</span>
               </div>
 
-              <div className="absolute right-4 bottom-4 left-4 flex flex-col items-start gap-[10px] self-stretch rounded-[1000px] bg-[rgba(255,255,255,0.8)] shadow-[0_0_10px_0_rgba(17,17,17,0.2)] backdrop-blur-[2px]">
-                <div className="flex w-[103px] items-center justify-end gap-[10px] rounded-[1000px] bg-[linear-gradient(270deg,#4E83F9_0%,#DBEBFE_100%)] px-[8px] py-[6px]">
-                  <div className="flex flex-col items-center justify-center gap-[10px] rounded-[1000px] bg-[#F5F8FF] px-[8px] py-[4px]">
-                    <span className="text-body-14B text-primary-blue-500">{percentage}%</span>
+              <div className="absolute right-4 bottom-4 left-4 flex flex-col items-start gap-[10px] self-stretch overflow-hidden rounded-[1000px] bg-[rgba(255,255,255,0.8)] shadow-[0_0_10px_0_rgba(17,17,17,0.2)] backdrop-blur-[2px]">
+                <div
+                  className="flex items-center justify-end gap-[10px] rounded-[1000px] bg-[linear-gradient(270deg,#4E83F9_0%,#DBEBFE_100%)] px-[8px] py-[6px] transition-all duration-500 ease-out"
+                  style={{ width: `${percentage}%`, minWidth: '60px' }}
+                >
+                  <div className="flex min-w-[45px] flex-col items-center justify-center gap-[10px] rounded-[1000px] bg-[#F5F8FF] px-[8px] py-[4px]">
+                    <span className="text-primary-blue-500 text-body-14B whitespace-nowrap">
+                      {percentage}%
+                    </span>
                   </div>
                 </div>
               </div>

@@ -11,7 +11,8 @@ interface StudyCardProps {
   periodText: string;
   network: string;
   kpiName: string;
-  recruitmentStatus?: string;
+  kpiId?: number;
+  recruitmentStatus?: string; //모집상태
   canEvaluate?: boolean;
   openChatUrl?: string;
   imageSrc?: string;
@@ -34,6 +35,7 @@ export default function StudyCard3({
   periodText,
   network,
   kpiName,
+  kpiId,
   recruitmentStatus,
   canEvaluate,
   openChatUrl,
@@ -45,6 +47,7 @@ export default function StudyCard3({
   const statusLabel = recruitmentStatus
     ? (statusLabelMap[recruitmentStatus] ?? recruitmentStatus)
     : '';
+  const isClosed = recruitmentStatus === 'CLOSED';
   return (
     <div className="py-2">
       <div
@@ -62,8 +65,16 @@ export default function StudyCard3({
         <div className="w-full">
           <div className="flex items-center justify-between">
             <span className="text-heading-18B">{title}</span>
-            <div className="flex h-[29px] w-[56px] items-center justify-center rounded-[100px] border border-[0.5px] border-[#B8D4FE] bg-[#DBEBFE] px-[12px] py-[6px]">
-              <span className="text-caption-12M text-primary-blue-900 whitespace-nowrap">
+            <div
+              className={`flex h-[29px] w-[56px] items-center justify-center rounded-[100px] border px-[12px] py-[6px] ${
+                isClosed ? 'border-[#FECACA] bg-[#FEE2E2]' : 'border-[#B8D4FE] bg-[#DBEBFE]'
+              }`}
+            >
+              <span
+                className={`text-caption-12M whitespace-nowrap ${
+                  isClosed ? 'text-red-500' : 'text-primary-blue-900'
+                }`}
+              >
                 {statusLabel}
               </span>
             </div>
@@ -95,7 +106,9 @@ export default function StudyCard3({
             <div className="flex w-full flex-col rounded-[8px] bg-[#F5F8FF] p-2">
               <div className="flex w-full items-center justify-between">
                 <span className="text-body-14B text-primary-blue-500">KPI 역량</span>
-                <span className="text-caption-12M text-opacity-black-80">{kpiName}</span>
+                <span className="text-caption-12M text-opacity-black-80">
+                  {kpiId} {kpiName}
+                </span>
               </div>
             </div>
           </div>
@@ -114,10 +127,16 @@ export default function StudyCard3({
             <div className="absolute top-[12px] right-[12px] inline-flex items-center justify-center gap-[10px] rounded-[8px] border border-[#A6A6A6] bg-[rgba(17,17,17,0.4)] px-2 py-1 backdrop-blur-[2px]">
               <span className="text-caption-12M text-white">{network}</span>
             </div>
-            <div className="absolute right-4 bottom-4 left-4 flex flex-col items-start gap-[10px] self-stretch rounded-[1000px] bg-[rgba(255,255,255,0.8)] shadow-[0_0_10px_0_rgba(17,17,17,0.2)] backdrop-blur-[2px]">
-              <div className="flex w-[103px] items-center justify-end gap-[10px] rounded-[1000px] bg-[linear-gradient(270deg,#4E83F9_0%,#DBEBFE_100%)] px-[8px] py-[6px]">
-                <div className="flex flex-col items-center justify-center gap-[10px] rounded-[1000px] bg-[#F5F8FF] px-[8px] py-[4px]">
-                  <span className="text-primary-blue-500 text-body-14B">{percentage}%</span>
+
+            <div className="absolute right-4 bottom-4 left-4 flex flex-col items-start gap-[10px] self-stretch overflow-hidden rounded-[1000px] bg-[rgba(255,255,255,0.8)] shadow-[0_0_10px_0_rgba(17,17,17,0.2)] backdrop-blur-[2px]">
+              <div
+                className="flex items-center justify-end gap-[10px] rounded-[1000px] bg-[linear-gradient(270deg,#4E83F9_0%,#DBEBFE_100%)] px-[8px] py-[6px] transition-all duration-500 ease-out"
+                style={{ width: `${percentage}%`, minWidth: '60px' }}
+              >
+                <div className="flex min-w-[45px] flex-col items-center justify-center gap-[10px] rounded-[1000px] bg-[#F5F8FF] px-[8px] py-[4px]">
+                  <span className="text-primary-blue-500 text-body-14B whitespace-nowrap">
+                    {percentage}%
+                  </span>
                 </div>
               </div>
             </div>
