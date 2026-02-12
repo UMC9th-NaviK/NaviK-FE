@@ -318,26 +318,30 @@ export default function StudyCard4({
               </div>
             )}
 
-            <div className="mt-6">
-              <h2 className="text-heading-20B text-[#111111]">스터디 신청 현황</h2>
-              <p className="text-body-14M text-opacity-black-40 mt-1">
-                스터디에 함께하고 싶은 멤버를 골라보세요
-              </p>
-            </div>
+            {!isClosed && (
+              <>
+                <div className="mt-6">
+                  <h2 className="text-heading-20B text-[#111111]">스터디 신청 현황</h2>
+                  <p className="text-body-14M text-opacity-black-40 mt-1">
+                    스터디에 함께하고 싶은 멤버를 골라보세요
+                  </p>
+                </div>
 
-            <div className="mt-3 flex flex-col gap-3">
-              {loadingApplicants && <p>불러오는 중...</p>}
-              {!loadingApplicants && applicants.length === 0 && (
-                <p className="text-opacity-black-40">아직 신청자가 없습니다.</p>
-              )}
-              {applicants.map((applicant) => (
-                <ApplicantCard
-                  key={applicant.studyUserId}
-                  applicant={applicant}
-                  onDecided={handleDecided}
-                />
-              ))}
-            </div>
+                <div className="mt-3 flex flex-col gap-3">
+                  {loadingApplicants && <p>불러오는 중...</p>}
+                  {!loadingApplicants && applicants.length === 0 && (
+                    <p className="text-opacity-black-40">아직 신청자가 없습니다.</p>
+                  )}
+                  {applicants.map((applicant) => (
+                    <ApplicantCard
+                      key={applicant.studyUserId}
+                      applicant={applicant}
+                      onDecided={handleDecided}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
