@@ -1,6 +1,6 @@
-import type { Role, RoleTheme } from "../types/role"
+import type { RoleTheme } from "../types/role"
 
-export const ROLE_THEME_MAP: Record<Role, RoleTheme> = {
+export const ROLE_THEME_MAP: Record<string, RoleTheme> = {
     pm: {
         surfaceBg: 'bg-role-pm-surface',
         surfaceText: 'text-role-pm-surface',

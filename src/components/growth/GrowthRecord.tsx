@@ -1,22 +1,98 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { postGrowthLog, postGrowthLogRetry } from "../../apis/growth/growth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { getNotionOauth } from "../../apis/growth/notionOAuth";
+import { useSearchParams } from "react-router-dom";
 
 const GrowthRecord = () => {
+    const queryClient = useQueryClient();
+    
     const [content, setContent] = useState("");
 
     const [notionUrl, setNotionUrl] = useState("");
     const [githubUrl, setGithubUrl] = useState("");
 
-    const [isNotionAuthenticated, setIsNotionAuthenticated] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [isNotionAuthenticated, setIsNotionAuthenticated] = useState(() => localStorage.getItem('isNotionAuthenticated') === 'true');
 
     const hasContent = content.length > 0;
     const hasNotion = notionUrl.length > 0;
     const hasGithub = githubUrl.length > 0;
 
-    const handleNotionAuth = () => {
-        setIsNotionAuthenticated(true);
-        
-        //ui 구현을 위해 클릭 시 인증으로 간주
+    const { mutate: retryAI } = useMutation({
+        mutationFn: (growthLogId: number) => postGrowthLogRetry(growthLogId),
+        onSuccess: (response) => {
+            if (response.result.status === 'FAILED') return;
+    
+            queryClient.invalidateQueries({ queryKey: ['growthLogs'] });
+        },
+        onError: (error) => {
+            console.error(error);
+        }
+    });
+    
+    const { mutate: createLog } = useMutation({
+        mutationFn: postGrowthLog,
+        onSuccess: (response) => {
+            if (response.result.status === 'FAILED') {
+                retryAI(response.result.id);
+                return;
+            }
+    
+            queryClient.invalidateQueries({ queryKey: ['growthLogs'] });
+            handleCancelGrowthLog();
+        },
+        onError: (error) => {
+            console.error(error);
+        }
+    });
+    
+    const handleAddingGrowthLog = () => {
+        const trimmedContent = content.trim();
+        const trimmedNotion = notionUrl.trim();
+        const trimmedGithub = githubUrl.trim();
+    
+        if (!trimmedContent && !trimmedNotion && !trimmedGithub) {
+            return;
+        }
+    
+        createLog({ content : trimmedContent || trimmedNotion || trimmedGithub });
+    }
+    
+    const handleCancelGrowthLog = () => {
+        setContent("");
+        setNotionUrl("");
+        setGithubUrl("");
+    }
+
+    const handleNotionAuth = async () => {
+        try {
+            const response = await getNotionOauth();
+
+            if (response.isSuccess && response.result.authorizationUrl) {
+                window.location.href = response.result.authorizationUrl;
+            }
+        }
+
+        catch (error) {
+            console.error("노션 URL을 가져오는데 실패했습니다.", error);
+        }
     };
+
+    useEffect(() => {
+        const isSuccess = searchParams.get('success');
+    
+        if (isSuccess === 'true') {
+            setIsNotionAuthenticated(true);
+
+            localStorage.setItem('isNotionAuthenticated', 'true');
+            
+            searchParams.delete('success');
+            setSearchParams(searchParams, { replace: true });
+            
+            console.log("노션 연동이 완료되었습니다!");
+        }
+    }, []);
 
     return (
         <div className='flex flex-col bg-white rounded-[16px] p-[16px] gap-[10px] border border-[1px] border-primary-blue-500'>
@@ -91,10 +167,15 @@ const GrowthRecord = () => {
                 </div>
 
                 <div className="flex flex-1 items-center justify-center gap-[16px]">
-                    <button className="flex items-center justify-center w-full h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-base-200">
+                    <button 
+                    onClick={handleCancelGrowthLog}
+                    className="flex items-center justify-center w-full h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-base-200">
                         <p className="text-body-16B text-base-600 text-center"> 취소 </p>
                     </button>
-                    <button className="flex items-center justify-center w-full h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-primary-blue-500">
+
+                    <button 
+                    onClick={handleAddingGrowthLog}
+                    className="flex items-center justify-center w-full h-[48px] py-[12px] rounded-[8px] gap-[10px] bg-primary-blue-500">
                         <p className="text-body-16B text-base-100 text-center"> 작성 완료 </p>
                     </button>
                 </div>
