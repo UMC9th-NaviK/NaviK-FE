@@ -29,6 +29,11 @@ export default function StudyCard({
   className = '',
   onClick,
 }: StudyCardProps) {
+  function formatKpiId(id?: number) {
+    if (!id) return '';
+    const mod = id % 10 === 0 ? 10 : id % 10;
+    return String(mod).padStart(2, '0');
+  }
   return (
     <div
       role="button"
@@ -76,7 +81,7 @@ export default function StudyCard({
         </div>
         <div className="border-primary-blue-100 mt-2 inline-flex items-center gap-[10px] rounded-[8px] border bg-[#F5F8FF] px-2 py-1">
           <span className="text-primary-blue-500 text-caption-12M">
-            {kpiId}&nbsp;{kpiName}
+            {formatKpiId(kpiId)}&nbsp;{kpiName}
           </span>
         </div>
       </div>
