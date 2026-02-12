@@ -2,6 +2,7 @@ import StudyImageFallback from '../../../assets/social/study.png';
 import CalendarIcon from '../../../assets/social/material-symbols_calendar-today-rounded.svg';
 import PersonIcon from '../../../assets/social/material-symbols_person-rounded.svg';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getStudyApplicants, decideStudyApplicant } from '../../../apis/study';
 import type { StudyApplicant } from '../../../types/study';
 import ClickIcon from '../../../assets/social/material-symbols_arrow-back-ios-new-rounded (1).svg';
@@ -146,6 +147,7 @@ export default function StudyCard4({
   const [loadingApplicants, setLoadingApplicants] = useState(false);
 
   const isClosed = recruitmentStatus === 'CLOSED';
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!open) return;
@@ -305,6 +307,10 @@ export default function StudyCard4({
               <div className="mt-2">
                 <button
                   type="button"
+                  onClick={(e) => {
+                    e.stopPropagation(); // 카드 토글 방지
+                    navigate(`/study/${studyId}/evaluation`);
+                  }}
                   className="bg-primary-blue-500 flex h-[48px] w-full cursor-pointer items-center justify-center gap-[10px] rounded-[8px] px-[61px] py-[12px] whitespace-nowrap"
                 >
                   <span className="text-body-16B text-center text-white">평가하기</span>
