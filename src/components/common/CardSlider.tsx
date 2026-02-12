@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import type { ResponseKpiCard } from '../../types/card';
 
 interface CardSliderProps {
@@ -6,9 +7,17 @@ interface CardSliderProps {
 }
 
 const CardSlider = ({ cards, isLoading }: CardSliderProps) => {
+  const navigate = useNavigate();
+
   const handleCardClick = (cardId: number) => {
     // TODO: 클릭 시 각 카드 상세 페이지로 이동하도록 구현
-    console.log(`Card with ID ${cardId} clicked`);
+    if (location.pathname === '/report/core') {
+      navigate('/report/core/detail')
+    }
+
+    else if (location.pathname === '/report/overcoming') {
+      navigate('/report/overcoming/detail')
+    }
   };
 
   if (isLoading) {
