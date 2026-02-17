@@ -2,7 +2,9 @@ import axios from 'axios';
 import { refreshAccessToken } from './auth';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_API_URL,
+  baseURL: import.meta.env.PROD
+    ? '/api/v1' // 배포
+    : import.meta.env.VITE_SERVER_API_URL, // 로컬
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
