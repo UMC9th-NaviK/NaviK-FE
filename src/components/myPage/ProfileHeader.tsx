@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import bedgeImg from '../../../public/images/mypage/bedgeImg.svg';
+import bedgeImg from '../../assets/images/mypage/bedgeImg.svg';
 import { type RoleType, bgStyles, roleImages } from '../myPage/profiledata';
 import { Link } from 'react-router-dom';
 import type { ResponseUserInfo } from '../../types/user';
