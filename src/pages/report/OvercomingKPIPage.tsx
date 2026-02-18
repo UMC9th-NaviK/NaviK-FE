@@ -4,10 +4,14 @@ import CardSlider from '../../components/common/CardSlider';
 import RecommendationNotice from '../../components/report/RecommendationNotice';
 import { FOOTERPB } from '../../components/common/Footer';
 import { useGetOvercomeKpiCards } from '../../hooks/queries/useKpiCards';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../hooks/useUser';
 
 const OvercomingKPIPage = () => {
+  const { name } = useUser();
   const { data, isFetching } = useGetOvercomeKpiCards();
   const cards = data || [];
+  const navigate = useNavigate();
 
   return (
     <div className={`${FOOTERPB} flex min-h-screen flex-col`}>
@@ -28,7 +32,8 @@ const OvercomingKPIPage = () => {
           <div className="flex flex-col gap-[16px] rounded-[8px] bg-white p-[16px] shadow-[0_0_10px_0_#DBEBFE]">
             <p className="text-heading-18B text-[#1B1B1B]">
               {' '}
-              <span className="text-[#4E83F9]"> 김나비</span>님을 위한 추천 스터디 📚{' '}
+              <span className="text-[#4E83F9]"> 📚{name || '사용자'}</span>님을 위한 추천 스터디
+              📚{' '}
             </p>
             <div className="scrollbar-hide snap-x snap-mandatory scroll-pl-[22px] overflow-x-auto pr-5">
               <div className="box-border flex w-max flex-nowrap gap-[16px] scroll-smooth">
@@ -42,7 +47,12 @@ const OvercomingKPIPage = () => {
             </div>
 
             <div className="flex flex-1 justify-end gap-[4px]">
-              <p className="text-caption-12M text-[#11111199]"> 전체 스터디 보러가기 </p>
+              <button
+                onClick={() => navigate(`/social/study`)}
+                className="text-caption-12M cursor-pointer text-[#11111199]"
+              >
+                전체 스터디 보러가기
+              </button>
               <img
                 src="/icons/reports/material-symbols_arrow-back-ios-new-rounded.svg"
                 alt=""
