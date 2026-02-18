@@ -180,14 +180,15 @@ const CoreKPIDetailPage = () => {
                 {' '}
                 노력으로 성장한 나의 독보적인 강점 역량, 친구들에게 전달할까요?{' '}
                 </p>
-                <button className="flex h-[48px] gap-[10px] rounded-[8px] bg-[linear-gradient(91.12deg,_#4F5BD5_0%,_#962FBF_25%,_#D62976_50%,_#FA7E1E_75%,_#FEDA75_100%)] pt-[12px] pr-[100px] pb-[12px] pl-[100px]">
-                <img
-                    src="/icons/reports/icon-park-outline_send.svg"
-                    alt="인스타그램 바로가기"
-                    className=""
-                    onClick={shareToInstagramStory}
-                />
-                <p className="text-body-16M flex-1 text-[#F5F8FF]"> Instagram 공유 </p>
+                <button 
+                onClick={shareToInstagramStory}
+                className="flex h-[48px] gap-[10px] rounded-[8px] bg-[linear-gradient(91.12deg,_#4F5BD5_0%,_#962FBF_25%,_#D62976_50%,_#FA7E1E_75%,_#FEDA75_100%)] pt-[12px] pr-[100px] pb-[12px] pl-[100px]">
+                    <img
+                        src="/icons/reports/icon-park-outline_send.svg"
+                        alt="인스타그램 바로가기"
+                        className=""
+                    />
+                    <p className="text-body-16M flex-1 text-[#F5F8FF]"> Instagram 공유 </p>
                 </button>
             </div>
             </div>
