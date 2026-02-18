@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import SubHeader from '../../components/myPage/SubHeader';
+import { FOOTERPB } from '../../components/common/Footer';
 
 const SettingPage = () => {
   return (
@@ -44,7 +45,7 @@ const SettingPage = () => {
         </section>
 
         {/*(버전, 문의, 로그아웃) */}
-        <div className="mt-25 flex flex-col gap-4 px-1">
+        <div className={`mt-25 flex flex-col gap-4 px-1 ${FOOTERPB}`}>
           <div className="text-opacity-black-40 text-body-14R flex justify-between">
             <span>현재 버전</span>
             <span>v1.4.6(3)</span>
