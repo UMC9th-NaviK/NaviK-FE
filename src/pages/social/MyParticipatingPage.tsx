@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import StudyCard3 from '../../components/social/study/StudyCard3';
 import { getMyStudies } from '../../apis/study';
 import type { MyStudyItem } from '../../types/study';
+import { useNavigate } from 'react-router-dom';
 
 function formatPeriod(start: string, end: string) {
   const s = new Date(start);
@@ -38,6 +39,11 @@ function calculateProgress(start: string, end: string) {
 }
 
 export default function MyParticipatingPage() {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate(`/social/study/recommend`);
+  };
+
   const [studies, setStudies] = useState<MyStudyItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [cursor, setCursor] = useState<number | undefined>(undefined);
@@ -90,6 +96,22 @@ export default function MyParticipatingPage() {
     });
   }, [studies]);
 
+  if (studies.length === 0 && !loading) {
+    return (
+      <div className="text-base-500 pt-60 text-center text-sm">
+        <p>참여 중인 스터디가 없습니다.</p>
+        <p>맞춤 스터디를 찾아보세요!</p>
+        <button
+          type="button"
+          onClick={onClick}
+          className="bg-primary-blue-500 mt-4 rounded px-4 py-2 text-white"
+        >
+          맞춤 스터디 찾기
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-2 mb-8">
       {sortedStudies.map((study) => {
@@ -119,7 +141,7 @@ export default function MyParticipatingPage() {
         <button
           onClick={fetchStudies}
           disabled={loading}
-          className="mt-4 w-full text-sm text-blue-500"
+          className="w-full pt-60 text-sm text-blue-500"
         >
           {loading ? '불러오는 중...' : '더보기'}
         </button>
