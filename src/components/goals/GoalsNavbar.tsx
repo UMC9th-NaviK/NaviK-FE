@@ -36,11 +36,21 @@ const GoalsNavbar = ({ goalId } : GoalsNavbarProps) => {
         });
     }
 
+    const handleClick = () => {
+        if (location.pathname === '/goals') {
+            navigate('/report');
+        }
+
+        else {
+            navigate('/goals');
+        }
+    }
+
     return (
         <nav className='flex bg-white items-center p-[24px] gap-[10px]'>
             <div className='flex flex-1 items-center justify-between'>
                 <button
-                onClick={() => navigate(-1)}>
+                onClick={handleClick}>
                     <img 
                     src="/icons/reports/prevButton.svg"
                     alt="뒤로가기 버튼"
