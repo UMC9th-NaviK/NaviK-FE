@@ -9,9 +9,11 @@ import { useEffect, useState } from 'react';
 import { getKPICardBottom, getKPICardDetail } from '../../apis/report/kpiCard';
 import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCard';
 import { Icon } from '@iconify/react';
+import { useStudyRecommend } from '../../hooks/queries/useStudyRecommend';
 
 const OvercomingKPIDetailPage = () => {
   const { profile, role } = useProfile();
+  const { data = [] } = useStudyRecommend(null, 5);
 
   const name = profile?.nickname as string;
 
@@ -126,7 +128,9 @@ const OvercomingKPIDetailPage = () => {
 
               <div className="scrollbar-hide snap-x snap-mandatory scroll-pl-[22px] overflow-x-auto pr-5">
                 <div className="box-border flex w-max flex-nowrap gap-[16px] scroll-smooth">
-                  <RecommendationNotice role={mappedRole} />
+                  {data && data.length > 0 && (
+                    <RecommendationNotice role={mappedRole} study={data[0]} />
+                  )}
                   <div className="h-full w-[1px] flex-shrink-0" />
                 </div>
               </div>
