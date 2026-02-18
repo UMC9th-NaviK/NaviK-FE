@@ -73,7 +73,7 @@ const CoreKPIDetailPage = () => {
     }
 
     const shareToInstagramStory = async () => {
-        const currentCardImageUrl = cards[activeIndex]?.sharedImageUrl;
+        const currentCardImageUrl = cards[activeIndex]?.sharedImageUrl
         if (!currentCardImageUrl) return;
     
         setSharing?.(true);
