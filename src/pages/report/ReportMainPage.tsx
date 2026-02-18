@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useLevel } from '../../hooks/queries/useLevel';
 import { useGoals } from '../../hooks/goals/useGoals';
 import { useKPIScoreMonthly } from '../../hooks/queries/useKPIScore';
-import { useProfile } from '../../hooks/useProfile';
+import { useMyPage } from '../../hooks/useMyPage';
 
 const ReportMainPage = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const ReportMainPage = () => {
     '백엔드 개발자': 'BE',
   };
 
-  const { profile } = useProfile();
+  const { profile } = useMyPage();
 
   const mappedRole = ROLE_MAP[profile?.job || '프로덕트 매니저'];
 
@@ -73,7 +73,7 @@ const ReportMainPage = () => {
           />
 
           <div className="flex-col items-center justify-center">
-            <span className="text-heading-18B">{profile?.nickname} 님,</span>
+            <span className="text-heading-18B">{profile?.nickname || profile?.name} 님,</span>
 
             <div className="flex">
               <span className="text-body-16B text-[#4E83F9]">{mappedRole}</span>
