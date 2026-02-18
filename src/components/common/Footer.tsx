@@ -1,12 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import DOC from '../../../public/icons/footer/Doc.svg';
-import Graph from '../../../public/icons/footer/Graph.svg';
-import Chat from '../../../public/icons/footer/Chat.svg';
-import User from '../../../public/icons/footer/Users.svg';
-import DOCOn from '../../../public/icons/footer/DocOn.svg';
-import GraphOn from '../../../public/icons/footer/GraphOn.svg';
-import ChatOn from '../../../public/icons/footer/ChatOn.svg';
-import UserOn from '../../../public/icons/footer/UsersOn.svg';
+import DOC from '../../assets/icons/footer/Doc.svg';
+import Graph from '../../assets/icons/footer/Graph.svg';
+import Chat from '../../assets/icons/footer/Chat.svg';
+import User from '../../assets/icons/footer/Users.svg';
+import DOCOn from '../../assets/icons/footer/DocOn.svg';
+import GraphOn from '../../assets/icons/footer/GraphOn.svg';
+import ChatOn from '../../assets/icons/footer/ChatOn.svg';
+import UserOn from '../../assets/icons/footer/UsersOn.svg';
 
 export const FOOTERPB = 'pb-21';
 const Footer = () => {
