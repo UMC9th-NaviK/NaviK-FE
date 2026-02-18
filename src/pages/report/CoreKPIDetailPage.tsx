@@ -8,7 +8,6 @@ import { getKPICardDetail, getKPICardTop } from '../../apis/report/kpiCard';
 import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCard';
 import { ROLE_THEME_MAP } from '../../constants/roleTheme';
 import { Icon } from '@iconify/react';
-import { FOOTERPB } from '../../components/common/Footer';
 
 const CoreKPIDetailPage = () => {
   const { profile, role } = useProfile();
