@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { makeExcerpt } from '../../utils/makeExcerpt';
 import FavoriteIcon from '../../assets/social/material-symbols_favorite-outline-rounded.svg';
 import ChatIcon from '../../assets/social/material-symbols_chat-outline-rounded.svg';
-import ProfileIcon from '../../assets/social/Ellipse 30.svg';
+import ProfileIcon from '../../assets/images/profile.png';
 import type { BoardListItem } from '../../types/board';
 import { timeAgo } from '../../utils/timeAgo';
 
