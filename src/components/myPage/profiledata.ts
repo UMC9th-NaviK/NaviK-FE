@@ -30,3 +30,10 @@ export const convertJobToRole = (job: string): RoleType => {
 
   return jobMap[job] || 'FE';
 };
+
+export const borderStyles: Record<RoleType, string> = {
+  PM: 'border-[#BDADFF]',
+  DESIGNER: 'border-[#FDBAB7]',
+  FE: 'border-[#FEA8FB]',
+  BE: 'border-[#A4FCC5]',
+};

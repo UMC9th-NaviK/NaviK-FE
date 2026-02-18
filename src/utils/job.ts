@@ -12,3 +12,14 @@ export function jobNameFromSub(sub: string | undefined): string | null {
       return null;
   }
 }
+
+export function convertJobToKorean(job: string): string {
+  const jobMapping: Record<string, string> = {
+    pm: '프로덕트 매니저',
+    fe: '프론트엔드 개발자',
+    be: '백엔드 개발자',
+    de: '프로덕트 디자이너',
+  };
+
+  return jobMapping[job] || job;
+}

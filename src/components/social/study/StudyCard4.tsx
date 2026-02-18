@@ -9,6 +9,7 @@ import ClickIcon from '../../../assets/social/material-symbols_arrow-back-ios-ne
 import StarIcon from '../../../assets/social/material-symbols_star-rounded.svg';
 import HalfStarIcon from '../../../assets/social/ic_round-star-half.svg';
 import EmptyStarIcon from '../../../assets/social/material-symbols_star-outline-rounded.svg';
+import ProfileIcon from '../../../assets/images/profile.png';
 
 interface StudyCardProps {
   studyId: number;
@@ -66,7 +67,7 @@ function ApplicantCard({
     <div className="border-primary-blue-100 flex w-full flex-col rounded-[16px] border bg-white p-4">
       <div className="flex items-start gap-4">
         <img
-          src={applicant.profileImageUrl}
+          src={applicant.profileImageUrl || ProfileIcon}
           alt="프로필 이미지"
           className="aspect-square h-[48px] w-[48px] flex-shrink-0 rounded-full"
         />

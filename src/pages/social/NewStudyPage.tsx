@@ -13,6 +13,7 @@ import Divider from '../../components/common/Divider';
 
 import { createStudy, getStudyKpiCards } from '../../apis/study';
 import type { KpiCard } from '../../types/study';
+import { useNavigate } from 'react-router-dom';
 
 const formatKo = (d?: Date) => {
   if (!d) return '';
@@ -41,6 +42,7 @@ const jobIdByRoleIndex: Record<number, number> = {
 };
 
 const NewStudyPage = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [openChatUrl, setOpenChatUrl] = useState('');
@@ -228,6 +230,7 @@ const NewStudyPage = () => {
 
       const studyId = createRes.data.result;
       alert('스터디가 생성됐어요!');
+      navigate(`/social/study/my/operate`);
       console.log('created studyId:', studyId);
     } catch (e) {
       console.error(e);
