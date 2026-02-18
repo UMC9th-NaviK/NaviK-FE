@@ -11,10 +11,9 @@ const CardSlider = ({ cards, isLoading, type }: CardSliderProps) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    // TODO: 클릭 시 각 카드 상세 페이지로 이동하도록 구현
-    if (location.pathname === '/report/core' || type == 'core') {
+    if (location.pathname === '/report/core' || type === 'core') {
       navigate('/report/core/detail');
-    } else if (location.pathname === '/report/overcoming' || type == 'overcome') {
+    } else if (location.pathname === '/report/overcoming' || type === 'overcome') {
       navigate('/report/overcoming/detail');
     }
   };
