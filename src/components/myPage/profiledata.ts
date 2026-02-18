@@ -1,7 +1,7 @@
 import PMImg from '../../assets/images/mypage/PmImg.svg';
 import DesginerImg from '../../assets/images/mypage/designerImg.svg';
 import FeImg from '../../assets/images/mypage/FeImg.svg';
-import BeImg from '../../assets/images/mypage/FeImg.svg';
+import BeImg from '../../assets/images/mypage/BeImg.svg';
 
 export type RoleType = 'PM' | 'DESIGNER' | 'FE' | 'BE';
 
