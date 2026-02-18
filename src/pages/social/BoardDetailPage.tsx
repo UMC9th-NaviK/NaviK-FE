@@ -2,7 +2,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
 import FavoriteIcon from '../../assets/social/material-symbols_favorite-outline-rounded.svg';
 import FavoriteIcon2 from '../../assets/social/material-symbols_favorite-rounded.svg';
-import ProfileIcon from '../../assets/social/Ellipse 30.svg';
+import ProfileIcon from '../../assets/images/profile.png';
 import BackIcon from '../../assets/social/material-symbols_arrow-back-ios-new-rounded.svg';
 import MoreIcon from '../../assets/social/material-symbols_more-horiz.svg';
 import MessageIcon from '../../assets/social/majesticons_chat-2-line.svg';

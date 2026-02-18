@@ -1,3 +1,5 @@
+import ProfileIcon from '../../../../assets/images/profile.png';
+
 type Props = {
   author: string;
   authorMeta: string;
@@ -25,7 +27,7 @@ export default function CommentEditor({
         <div className="flex w-full items-start justify-between">
           <div className="flex min-w-0 items-start gap-3">
             <img
-              src={profileSrc}
+              src={profileSrc || ProfileIcon}
               alt="프로필"
               className="h-10 w-10 shrink-0 rounded-full object-cover"
             />

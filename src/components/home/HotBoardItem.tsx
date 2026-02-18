@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { makeExcerpt } from '../../utils/makeExcerpt';
 import FavoriteIcon from '../../assets/social/material-symbols_favorite-outline-rounded.svg';
 import ChatIcon from '../../assets/social/material-symbols_chat-outline-rounded.svg';
-import ProfileIcon from '../../assets/social/Ellipse 30.svg';
+import ProfileIcon from '../../assets/images/profile.png';
 import type { BoardListItem } from '../../types/board';
 import { timeAgo } from '../../utils/timeAgo';
 
@@ -38,7 +38,11 @@ const HotBoardItem = ({ post }: { post: BoardListItem }) => {
 
       <div className="flex w-full items-center justify-between">
         <div className="flex w-full items-center gap-2">
-          <img src={ProfileIcon} alt="프로필" className="h-8 w-8 rounded-full object-cover" />
+          <img
+            src={post.profileImageUrl || ProfileIcon}
+            alt="프로필"
+            className="h-8 w-8 rounded-full object-cover"
+          />
           <div className="flex min-w-0 flex-1 flex-col">
             <span className="text-base-900 text-caption-12B">{post.nickname}</span>
 
