@@ -1,3 +1,7 @@
+import KaKaoIcon from '../../assets/icons/login/kakao.svg';
+import GoogleIcon from '../../assets/icons/login/google.svg';
+import NaverIcon from '../../assets/icons/login/naver.svg';
+
 type LoginButtonProps = {
   platform: 'google' | 'naver' | 'kakao';
 };
@@ -32,7 +36,7 @@ const handleNaverLogin = () => {
 const platformConfig = {
   google: {
     name: 'Google',
-    imageSrc: '/icons/login/google.svg',
+    imageSrc: GoogleIcon,
     bgColor: 'bg-white',
     textColor: 'text-base-900',
     borderColor: 'border border-base-900',
@@ -40,7 +44,7 @@ const platformConfig = {
   },
   naver: {
     name: 'Naver',
-    imageSrc: '/icons/login/naver.svg',
+    imageSrc: NaverIcon,
     bgColor: 'bg-[#03C75A]',
     textColor: 'text-white',
     borderColor: 'border border-[#03C75A]',
@@ -48,7 +52,7 @@ const platformConfig = {
   },
   kakao: {
     name: '카카오톡',
-    imageSrc: '/icons/login/kakao.svg',
+    imageSrc: KaKaoIcon,
     bgColor: 'bg-[#FEE500]',
     textColor: 'text-base-900',
     borderColor: 'border border-[#FEE500]',

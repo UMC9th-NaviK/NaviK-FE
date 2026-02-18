@@ -1,5 +1,5 @@
-import TeamMemberOn from '../../../../public/images/social/TeamMemberOn.svg';
-import TeamMemberOff from '../../../../public/images/social/TeamMemeberOff.svg';
+import TeamMemberOn from '../../../assets/images/social/TeamMemberOn.svg';
+import TeamMemberOff from '../../../assets/images/social/TeamMemeberOff.svg';
 
 interface Member {
   id: number;
