@@ -72,60 +72,8 @@ const CoreKPIDetailPage = () => {
         );
     }
 
-    /*
     const shareToInstagramStory = async () => {
-        const currentCardImageUrl = cards[activeIndex]?.imageUrl;
-
-        if (!currentCardImageUrl) {
-            alert('공유할 이미지가 없습니다.');
-            return;
-        }
-
-        setSharing?.(true);
-
-        try {
-        const response = await fetch(currentCardImageUrl, {
-            mode: 'cors',
-        });
-    
-        const blob = await response.blob();
-    
-        const file = new File(
-            [blob],
-            `navik-kpi-card-${activeIndex}.png`,
-            { type: 'image/png' }
-        );
-
-          // ✅ Web Share API (파일 지원 브라우저)
-        if (navigator.share && navigator.canShare?.({ files: [file] })) {
-            await navigator.share({
-                title: 'NaviK 역량 카드',
-                text: '내 강점 역량을 확인해보세요!',
-                files: [file],
-            });
-        } else {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `navik-kpi-card-${activeIndex}.png`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            alert('이미지를 저장한 후 인스타그램 스토리에 업로드해주세요.');
-            }
-        } catch (error) {
-            console.error('공유 실패:', error);
-            alert('공유 중 오류가 발생했습니다.');
-        } finally {
-            setSharing?.(false);
-        }
-    };
-    */
-
-    const shareToInstagramStory = async () => {
-        const currentCardImageUrl = cards[activeIndex]?.imageUrl;
+        const currentCardImageUrl = cards[activeIndex]?.sharedImageUrl;
         if (!currentCardImageUrl) return;
     
         setSharing?.(true);
@@ -182,13 +130,13 @@ const CoreKPIDetailPage = () => {
                 </p>
                 <button 
                 onClick={shareToInstagramStory}
-                className="flex h-[48px] gap-[10px] rounded-[8px] bg-[linear-gradient(91.12deg,_#4F5BD5_0%,_#962FBF_25%,_#D62976_50%,_#FA7E1E_75%,_#FEDA75_100%)] pt-[12px] pr-[100px] pb-[12px] pl-[100px]">
+                className="flex w-full items-center justify-center h-[48px] gap-[10px] rounded-[8px] bg-[linear-gradient(91.12deg,_#4F5BD5_0%,_#962FBF_25%,_#D62976_50%,_#FA7E1E_75%,_#FEDA75_100%)] pt-[12px] pb-[12px]">
                     <img
                         src="/icons/reports/icon-park-outline_send.svg"
                         alt="인스타그램 바로가기"
                         className=""
                     />
-                    <p className="text-body-16M flex-1 text-[#F5F8FF]"> Instagram 공유 </p>
+                    <p className="text-body-16M text-[#F5F8FF]"> Instagram 공유 </p>
                 </button>
             </div>
             </div>
