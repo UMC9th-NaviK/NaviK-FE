@@ -11,7 +11,7 @@ const GrowthTimeline = () => {
                 <p className="text-body-14M text-[#11111166]"> 나의 활동을 바로 입력하고 성장 그래프로 확인해보세요! </p>
             </div>
             <div className='flex flex-1 items-center justify-center'>
-                <GrowthChart width={'100%'} height={'100%'} unit={'MONTH'} type={'USER_INPUT'} />
+                <GrowthChart width={'100%'} height={'100%'} unit={'MONTH'} />
             </div>
             <button 
             className="bottom-0 bg-primary-blue-500 w-full rounded-[10px] px-[15px] py-[12px]"

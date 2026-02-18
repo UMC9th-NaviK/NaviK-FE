@@ -28,7 +28,7 @@ const TimelinePage = () => {
 
       <div className="flex-1 flex flex-col min-h-0 px-[16px]">
         <div className="z-10 bg-white flex-shrink-0 h-[267px]">
-          <GrowthChart width="100%" height="100%" unit={"MONTH"} type={"USER_INPUT"} />
+          <GrowthChart width="100%" height="100%" unit={"MONTH"} />
         </div>
 
         <div className="flex-1 overflow-y-auto pb-[16px] scrollbar-hide">
