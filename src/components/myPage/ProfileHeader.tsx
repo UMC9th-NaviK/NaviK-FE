@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import bedgeImg from '../../assets/images/mypage/bedgeImg.svg';
 import ProfileIcon from '../../assets/images/profile.png';
-import { type RoleType, bgStyles, roleImages } from '../myPage/profiledata';
+import { type RoleType, bgStyles, borderStyles, roleImages } from '../myPage/profiledata';
 import { Link } from 'react-router-dom';
 import type { ResponseUserInfo } from '../../types/user';
 
@@ -36,25 +36,10 @@ const ProfileHeader = ({ role, profile }: HeaderProps) => {
         {/* 유저 정보 섹션 */}
         <div className="relative z-10 flex h-16 items-center gap-5 pt-3">
           <Link className="relative h-20 w-20" to={'/mypage/edit'}>
-            <div
-              className={`h-full w-full rounded-full bg-cover bg-center ${
-                profile?.profileImageUrl ? 'bg-white' : 'bg-base-300'
-              }`}
-              style={{
-                backgroundImage: profile?.profileImageUrl
-                  ? `url(${profile.profileImageUrl})`
-                  : `url(${ProfileIcon})`,
-              }}
-            >
-              {!profile?.profileImageUrl && (
-                <div className="flex h-full w-full items-center justify-center">
-                  <Icon
-                    icon="material-symbols:person-rounded"
-                    className="text-base-400 h-10 w-10"
-                  />
-                </div>
-              )}
-            </div>
+            <img
+              src={profile.profileImageUrl || ProfileIcon}
+              className="h-full w-full rounded-full bg-cover bg-center"
+            />
             <div className="bg-base-200 absolute right-0 bottom-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full">
               <Icon icon="material-symbols:edit-outline" className="h-5 w-5" />
             </div>
@@ -68,7 +53,7 @@ const ProfileHeader = ({ role, profile }: HeaderProps) => {
         </div>
 
         {/* 직무 영문 표시 섹션 */}
-        <div className="relative z-10 flex h-10 w-84 items-center justify-center gap-5 self-center rounded-3xl bg-white/30 px-5">
+        <div className="relative z-10 mx-5.5 flex h-10 w-full items-center justify-center gap-5 self-center rounded-3xl bg-white/30 px-5">
           <span className="text-body-eng-14SB tracking-wider text-white uppercase">
             {role === 'PM' && 'PRODUCT MANAGER'}
             {role === 'DESIGNER' && 'PRODUCT DESIGNER'}
@@ -78,10 +63,12 @@ const ProfileHeader = ({ role, profile }: HeaderProps) => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-1/2 z-20 flex h-16 w-85.75 -translate-x-1/2 translate-y-1/2 flex-col justify-center overflow-hidden rounded-xl border border-[#BDADFF] bg-white px-4 text-black shadow-lg backdrop-blur-md">
+      <div
+        className={`absolute inset-x-4 bottom-0 z-20 flex h-16 translate-y-1/2 flex-col justify-center overflow-hidden rounded-xl border ${borderStyles[role]} bg-white px-4 text-black shadow-lg backdrop-blur-md`}
+      >
         <img
           src={bedgeImg}
-          className="pointer-events-none absolute top-1/2 right-2 h-24 w-24 -translate-y-1/2"
+          className="pointer-events-none absolute top-1/2 right-0 h-24 w-24 -translate-y-1/2"
           alt="background badge"
         />
         <div className="relative z-10 pl-3">

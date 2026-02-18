@@ -6,11 +6,11 @@ import AddIcon from '../../assets/social/material-symbols_edit-square-outline-ro
 
 import type { BoardListItem } from '../../types/board';
 import { getBoardList, getHotBoardList, getJobBoardList } from '../../apis/board';
-import { getJwtPayload } from '../../utils/jwt';
-import { jobNameFromSub } from '../../utils/job';
+import { convertJobToKorean } from '../../utils/job';
 
 import BoardSearchBar from '../../components/social/board/BoardSearchBar';
 import BoardPostCard from '../../components/social/board/BoardPostCard';
+import { useUser } from '../../hooks/useUser';
 
 type FilterKey = '전체' | '직무별' | 'HOT';
 
@@ -63,6 +63,8 @@ export default function BoardPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { job } = useUser();
+
   const [allBoards, setAllBoards] = useState<BoardListItem[]>([]);
   const [filter, setFilter] = useState<FilterKey>('전체');
   const [query, setQuery] = useState('');
@@ -96,21 +98,16 @@ export default function BoardPage() {
         if (filter === 'HOT') {
           res = await getHotBoardList(baseParams);
         } else if (filter === '직무별') {
-          const token = localStorage.getItem('accessToken');
-          if (!token) {
+          if (!job) {
+            console.warn('⚠️ No job info available');
             if (!ignore) setAllBoards([]);
             return;
           }
 
-          const payload = getJwtPayload(token);
-          const myJobName = jobNameFromSub(payload?.sub);
+          // job을 한글로 변환
+          const jobNameKorean = convertJobToKorean(job);
 
-          if (!myJobName) {
-            if (!ignore) setAllBoards([]);
-            return;
-          }
-
-          res = await getJobBoardList({ ...baseParams, jobName: myJobName });
+          res = await getJobBoardList({ ...baseParams, jobName: jobNameKorean });
         } else {
           res = await getBoardList({ ...baseParams, sort: ['createdAt,desc'] });
         }

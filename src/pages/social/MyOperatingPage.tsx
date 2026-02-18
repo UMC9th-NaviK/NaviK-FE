@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import StudyCard4 from '../../components/social/study/StudyCard4';
 import { getMyStudies } from '../../apis/study';
 import type { MyStudyItem } from '../../types/study';
+import { useNavigate } from 'react-router-dom';
 
 const participationLabelMap: Record<string, string> = {
   ONLINE: '온라인',
@@ -35,6 +36,11 @@ function formatPeriod(start: string, end: string) {
   return `${s.getFullYear()}년 ${s.getMonth() + 1}월 ${s.getDate()}일 ~ ${e.getMonth() + 1}월 ${e.getDate()}일`;
 }
 export default function MyOperatingPage() {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate(`/social/study/new`);
+  };
+
   const [studies, setStudies] = useState<MyStudyItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [cursor, setCursor] = useState<number | undefined>(undefined);
@@ -93,6 +99,22 @@ export default function MyOperatingPage() {
     });
   }, [studies]);
 
+  if (studies.length === 0 && !loading) {
+    return (
+      <div className="text-base-500 pt-60 text-center text-sm">
+        <p>운영 중인 스터디가 없습니다.</p>
+        <p>새로운 스터디를 만들어보세요!</p>
+        <button
+          type="button"
+          onClick={onClick}
+          className="bg-primary-blue-500 mt-4 rounded px-4 py-2 text-white"
+        >
+          스터디 만들기
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-2 mb-8">
       {sortedStudies.map((study) => {
@@ -122,7 +144,7 @@ export default function MyOperatingPage() {
           type="button"
           onClick={fetchStudies}
           disabled={loading}
-          className="mt-4 w-full text-sm text-blue-500 disabled:opacity-60"
+          className="w-full pt-60 text-sm text-blue-500"
         >
           {loading ? '불러오는 중...' : '더보기'}
         </button>
