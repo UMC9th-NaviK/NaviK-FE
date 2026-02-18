@@ -4,19 +4,18 @@ import type { ResponseKpiCard } from '../../types/card';
 interface CardSliderProps {
   cards: ResponseKpiCard[];
   isLoading?: boolean;
+  type?: 'core' | 'overcome';
 }
 
-const CardSlider = ({ cards, isLoading }: CardSliderProps) => {
+const CardSlider = ({ cards, isLoading, type }: CardSliderProps) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     // TODO: 클릭 시 각 카드 상세 페이지로 이동하도록 구현
-    if (location.pathname === '/report/core') {
-      navigate('/report/core/detail')
-    }
-
-    else if (location.pathname === '/report/overcoming') {
-      navigate('/report/overcoming/detail')
+    if (location.pathname === '/report/core' || type == 'core') {
+      navigate('/report/core/detail');
+    } else if (location.pathname === '/report/overcoming' || type == 'overcome') {
+      navigate('/report/overcoming/detail');
     }
   };
 
@@ -35,7 +34,7 @@ const CardSlider = ({ cards, isLoading }: CardSliderProps) => {
       {cards.map((card) => (
         <button
           key={card.kpiCardId}
-          className="flex flex-1"
+          className="flex flex-1 cursor-pointer"
           onClick={handleCardClick}
         >
           <img

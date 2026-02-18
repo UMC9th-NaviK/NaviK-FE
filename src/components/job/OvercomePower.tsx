@@ -9,7 +9,7 @@ const OvercomePower = () => {
 
   return (
     <div className="flex flex-col">
-      <CardSlider cards={cards} isLoading={isFetching} />
+      <CardSlider cards={cards} isLoading={isFetching} type="overcome" />
       <div className="mb-6.75 flex flex-col gap-4 p-4">
         <span className="flex items-center gap-2">
           <img src="/icons/jobs/mouse-cursor.svg" className="h-6 w-6" />
