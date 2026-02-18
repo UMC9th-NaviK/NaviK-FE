@@ -35,7 +35,7 @@ const PolicyDetailView = ({ policyId }: PolicyDetailViewProps) => {
           <div className="bg-gray-background flex flex-col gap-2 rounded-lg p-4">
             <p className="text-body-14M text-opacity-black-60">부칙</p>
             <p className="text-body-14R text-opacity-black-40">
-              본 약관은 2026년 1월 ○일부터 시행합니다.
+              본 약관은 2026년 1월 31일부터 시행합니다.
             </p>
           </div>
         </div>
