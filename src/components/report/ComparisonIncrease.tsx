@@ -26,6 +26,8 @@ const ComparisonIncrease = ({ type, percentage } : ComparisonProps) => {
 
             return null;
         }
+
+        return null
     };
 
     const imagePath = getImagePath();
