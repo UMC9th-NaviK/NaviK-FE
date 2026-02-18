@@ -23,18 +23,18 @@ const CoreKPIDetailPage = () => {
     const [detailData, setDetailData] = useState<KPICardDetailResponseResult | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const [sharing, setSharing] = useState(false);
+    const [_, setSharing] = useState(false);
 
     useEffect(() => {
         const fetchInitialCards = async () => {
         try {
-            const response = await getKPICardTop();
+                const response = await getKPICardTop();
 
-            setCards(response.result);
-            setLoading(false);
-        } catch (err) {
-            console.error(err);
-        }
+                setCards(response.result);
+                setLoading(false);
+            } catch (err) {
+                console.error(err);
+            }
         };
 
         fetchInitialCards();
@@ -151,16 +151,6 @@ const CoreKPIDetailPage = () => {
         } finally {
             setSharing?.(false);
         }
-    };
-    
-    const handleDownloadFallback = (url: string) => {
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'my-card.png';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        alert('공유 기능을 사용할 수 없어 이미지를 저장했습니다.\n갤러리에서 불러와 스토리에 올려주세요!');
     };
 
     return (
