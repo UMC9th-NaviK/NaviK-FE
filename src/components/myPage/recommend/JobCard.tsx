@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import type { Recruitment } from '../../../types/recruits';
+import CompanyLogo from '../../../assets/images/mypage/companyLogo.png';
 
 interface JobCardProps {
   data: Recruitment;
@@ -43,15 +44,12 @@ export const JobCard = ({ data }: JobCardProps) => {
       <div className="flex items-start gap-3">
         {/* 기업 로고 */}
         <div className="border-base-100 flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border bg-white">
-          {companyLogo ? (
-            <img src={companyLogo} alt={companyName} className="h-full w-full object-contain" />
-          ) : (
-            <div
-              className={`h-full w-full ${isApplicable ? 'bg-primary-blue-500' : 'bg-base-300'}`}
-            />
-          )}
+          <img
+            src={companyLogo || CompanyLogo}
+            alt={companyName}
+            className="h-full w-full object-contain"
+          />
         </div>
-
         <div className="flex w-full min-w-0 flex-col">
           {/* 회사, 공고 제목 */}
           <div className="mb-4 flex flex-col gap-1">

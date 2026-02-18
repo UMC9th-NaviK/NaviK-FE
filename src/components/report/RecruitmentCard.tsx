@@ -1,4 +1,5 @@
 import type { Recruitment } from '../../types/recruits';
+import CompanyLogo from '../../assets/images/mypage/companyLogo.png';
 
 const RecruitmentCard = ({ recruitment }: { recruitment: Recruitment }) => {
   const locationTag = recruitment.workPlace
@@ -18,7 +19,7 @@ const RecruitmentCard = ({ recruitment }: { recruitment: Recruitment }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-center gap-2">
             <img
-              src={recruitment.companyLogo}
+              src={recruitment.companyLogo || CompanyLogo}
               className="h-6 w-auto shrink-0 object-contain"
               alt={`${recruitment.companyName} logo`}
             />

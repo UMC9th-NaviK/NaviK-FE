@@ -33,7 +33,7 @@ const CoreKPIPage = () => {
           </div>
           <div className="flex flex-col gap-[16px] rounded-[8px] bg-white py-[16px] pl-[16px] shadow-[0_0_10px_0_#DBEBFE]">
             <p className="text-heading-18B text-[#1B1B1B]">
-              <span className="text-[#4E83F9]"> {name}</span>님을 위한 추천 공고 💡
+              <span className="text-[#4E83F9]"> {name || '사용자'}</span>님을 위한 추천 공고 💡
             </p>
             <div className="scrollbar-hide snap-x snap-mandatory scroll-pl-[18px] overflow-x-auto">
               <div className="scrollbar-hide box-border flex snap-start snap-always flex-nowrap gap-[16px] scroll-smooth">
