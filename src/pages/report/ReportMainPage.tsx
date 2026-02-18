@@ -69,7 +69,7 @@ const ReportMainPage = () => {
           <img
             src="/icons/reports/profileCompass.svg"
             alt="프로필 나침반 아이콘"
-            className="absolute top-[px] right-[10px] z-0 h-[100px] w-[100px] rotate-[0deg] blur-[0.8px]"
+            className="absolute right-[10px] z-0 h-[100px] w-[100px] rotate-[0deg] blur-[0.8px]"
           />
 
           <div className="flex-col items-center justify-center">

@@ -38,7 +38,11 @@ const HotBoardItem = ({ post }: { post: BoardListItem }) => {
 
       <div className="flex w-full items-center justify-between">
         <div className="flex w-full items-center gap-2">
-          <img src={ProfileIcon} alt="프로필" className="h-8 w-8 rounded-full object-cover" />
+          <img
+            src={post.profileImageUrl || ProfileIcon}
+            alt="프로필"
+            className="h-8 w-8 rounded-full object-cover"
+          />
           <div className="flex min-w-0 flex-1 flex-col">
             <span className="text-base-900 text-caption-12B">{post.nickname}</span>
 
