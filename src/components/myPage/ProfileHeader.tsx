@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import bedgeImg from '../../assets/images/mypage/bedgeImg.svg';
+import ProfileIcon from '../../assets/images/profile.png';
 import { type RoleType, bgStyles, roleImages } from '../myPage/profiledata';
 import { Link } from 'react-router-dom';
 import type { ResponseUserInfo } from '../../types/user';
@@ -42,7 +43,7 @@ const ProfileHeader = ({ role, profile }: HeaderProps) => {
               style={{
                 backgroundImage: profile?.profileImageUrl
                   ? `url(${profile.profileImageUrl})`
-                  : 'none',
+                  : `url(${ProfileIcon})`,
               }}
             >
               {!profile?.profileImageUrl && (

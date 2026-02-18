@@ -24,7 +24,7 @@ const ResultPage = () => {
       return;
     }
   });
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(1);
 
   const CurrentComponent = TABS[selected].component;
 
