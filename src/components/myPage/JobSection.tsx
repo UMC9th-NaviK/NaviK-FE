@@ -8,10 +8,10 @@ interface JobSectionProps {
 
 const JobSection = ({ initialJob, initialIsEntry, onDataChange }: JobSectionProps) => {
   // ✅ 서버에서 넘어온 isEntryLevel 값에 따라 초기 상태 결정
-  const [experience, setExperience] = useState<'신입' | '경력자'>(
-    initialIsEntry === false ? '경력자' : '신입',
+  const [experience, setExperience] = useState<'신입' | '경력'>(
+    initialIsEntry === false ? '경력' : '신입',
   );
-  const handleToggle = (val: '신입' | '경력자') => {
+  const handleToggle = (val: '신입' | '경력') => {
     setExperience(val);
     onDataChange?.(val === '신입'); // 신입이면 true, 경력자면 false 전달
   };
@@ -37,14 +37,14 @@ const JobSection = ({ initialJob, initialIsEntry, onDataChange }: JobSectionProp
           신입
         </button>
         <button
-          onClick={() => handleToggle('경력자')}
+          onClick={() => handleToggle('경력')}
           className={`text-body-14B h-9.5 flex-1 rounded-[64px] py-2 transition-all duration-200 ${
-            experience === '경력자'
+            experience === '경력'
               ? 'bg-base-100 text-primary-blue-500 shadow-[0px_2px_5px_0px_rgba(0,0,0,0.1)]'
               : 'text-opacity-black-20'
           }`}
         >
-          경력자
+          경력
         </button>
       </div>
     </section>
