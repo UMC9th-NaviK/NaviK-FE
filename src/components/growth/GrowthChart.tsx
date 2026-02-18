@@ -11,7 +11,6 @@ interface GrowthChartProps {
     width : number | string;
     height : number | string;
     unit : string;
-    type : string;
 }
 
 const PADDING_Y = 30;
@@ -19,7 +18,7 @@ const BAR_WIDTH = 38.57;
 
 type Point = { x: number; y: number };
 
-const GrowthChart = ({ width, height, unit, type } : GrowthChartProps) => {
+const GrowthChart = ({ width, height, unit } : GrowthChartProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     
     const [chartData, setChartData] = useState<DataItem[]>([]);
@@ -32,10 +31,10 @@ const GrowthChart = ({ width, height, unit, type } : GrowthChartProps) => {
 
     useEffect(() => {
         const fetchTimelineData = async () => {
-            if (!unit || !type || type === "") return;
+            if (!unit) return;
 
             try {
-                const response = await getGrowthLogAggregateScore(unit, type); //
+                const response = await getGrowthLogAggregateScore(unit); //
                 if (response.isSuccess && response.result) {
                     const formattedData: DataItem[] = response.result
                         .slice(-7)
@@ -56,7 +55,7 @@ const GrowthChart = ({ width, height, unit, type } : GrowthChartProps) => {
         };
 
         fetchTimelineData();
-    }, [unit, type]);
+    }, [unit]);
 
     useEffect(() => {
         const updateSize = () => {

@@ -47,7 +47,7 @@ const LevelCard = ({ role } : LevelCardProps) => {
             <div className='flex flex-col bg-white px-[17px] py-[18px] rounded-t-[16px] gap-[10px]'>
                 <div className='flex flex-1 gap-[8px] items-center'>
                     <div className={`flex w-[28px] h-[28px] rounded-full ${theme.primaryBg} border-[3px] ${theme.border}`}>
-                        <p className={`flex flex-1 items-center justify-center text-caption-12M text-center ${theme.surfaceText}`}> {level} </p>
+                        <p className={`flex flex-1 w-[22px] h-[22px] items-center justify-center text-caption-12M text-center ${theme.surfaceText}`}> {level} </p>
                     </div>
 
                     <div className='flex flex-col'>

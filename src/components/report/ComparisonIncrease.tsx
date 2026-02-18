@@ -7,6 +7,10 @@ const ComparisonIncrease = ({ type, percentage } : ComparisonProps) => {
     const getImagePath = () : string | null => {
         const p = Math.abs(percentage);
 
+        if (p === 0) {
+            return "/images/growth/InitialGrowthTimeline.png";
+        }
+
         if (type === 'up') {
             if (p >= 30) return "/images/growth/increasing_3.png";
             if (p >= 20) return "/images/growth/increasing_2.png";
@@ -22,8 +26,6 @@ const ComparisonIncrease = ({ type, percentage } : ComparisonProps) => {
 
             return null;
         }
-
-        return null;
     };
 
     const imagePath = getImagePath();

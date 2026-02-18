@@ -33,10 +33,10 @@ export const getGrowthLogMonthly = async (yearMonth : string, type : string, pag
     return response.data;
 }
 
-export const getGrowthLogAggregateScore = async (unit : string, type : string) :Promise<GrowthLogTimelineResponse> => {
+export const getGrowthLogAggregateScore = async (unit : string) :Promise<GrowthLogTimelineResponse> => {
     const response = await axiosInstance.get(`/growth-logs/aggregate/scores`, {
         params : {
-            unit, type
+            unit
         }
     })
 

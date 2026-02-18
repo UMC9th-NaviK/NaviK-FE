@@ -149,6 +149,7 @@ const AddingGoalsPage = () => {
                             onChange={(e) => setGoalTitle(e.target.value)}
                             maxLength={MAX_LENGTH}
                             className="bg-white h-[49px] rounded-[8px] border-[1px] border-primary-blue-200 p-[16px] gap-[10px] text-caption-12M text-[#11111166] resize-none focus:outline-none"
+                            placeholder="공백 포함 10자 이내로 입력해주세요."
                             />
                         </div>
 
