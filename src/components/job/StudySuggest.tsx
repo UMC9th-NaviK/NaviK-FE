@@ -48,7 +48,7 @@ const StudySuggest = () => {
                   </div>
                 ))
               ) : (
-                <div className="flex w-full items-center justify-center py-4">
+                <div className="flex h-60 w-full items-center justify-center py-4">
                   <p className="text-caption-12M text-gray-500">추천 스터디가 없습니다.</p>
                 </div>
               )}
