@@ -7,15 +7,19 @@ export type KPICardResponse<T> = {
 };
 
 export interface KPICardBase {
+    sharedImageUrl: any;
     kpiCardId: number;
     name: string;
     imageUrl: string;
 }
 
 export type KPICardResponseResult = KPICardBase;
-export type KPICardTopResponseResult = KPICardBase;
 export type KPICardBottomResponseResult = KPICardBase;
 export type KPICardAllResponseResult = KPICardBase;
+
+export interface KPICardTopResponseResult extends KPICardBase {
+    sharedImageUrl : string;
+}
 
 export interface KPICardDetailResponseResult extends KPICardBase {
     content: {
