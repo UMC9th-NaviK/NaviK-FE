@@ -6,13 +6,12 @@ import { ROLE_MAP } from '../../types/role';
 import { useStudyRecommend } from '../../hooks/queries/useStudyRecommend';
 
 const StudySuggest = () => {
-  const { name } = useUser();
+  const { name, job } = useUser();
   const navigate = useNavigate();
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const { data, isLoading } = useStudyRecommend(null, 5);
-  const { job } = useUser();
-  const mappedRole = ROLE_MAP[job || 'pm'];
+  const mappedRole = (job && ROLE_MAP[job]) || 'pm';
 
   return (
     <div className="bg-base-100 shadow-card flex flex-col gap-4 rounded-2xl py-4">
@@ -43,9 +42,9 @@ const StudySuggest = () => {
           ) : (
             <>
               {data && data.length > 0 ? (
-                data.map((_, idx) => (
+                data.map((study, idx) => (
                   <div key={idx} className="flex-none snap-center">
-                    <RecommendationNotice role={mappedRole} />
+                    <RecommendationNotice role={mappedRole} study={study} />
                   </div>
                 ))
               ) : (

@@ -53,9 +53,9 @@ const OvercomingKPIPage = () => {
                 ) : (
                   <>
                     {studyData && studyData.length > 0 ? (
-                      studyData.map((_, idx) => (
+                      studyData.map((study, idx) => (
                         <div key={idx} className="flex-none snap-center">
-                          <RecommendationNotice role={mappedRole} />
+                          <RecommendationNotice role={mappedRole} study={study} />
                         </div>
                       ))
                     ) : (
