@@ -13,6 +13,7 @@ interface StudyRecommendation {
     participationMethod: "ONLINE" | "OFFLINE" | "HYBRID";
 }
 
+
 interface StudyRecommendationListResult {
     content: StudyRecommendation[];
     pageSize: number;
@@ -22,6 +23,16 @@ interface StudyRecommendationListResult {
 
 export const getStudyRecommendation = async (cursor : number | null, size : number) : Promise<StudyRecommendationListResult> => {
     const response = await axiosInstance.get(`/studies/recommendation`, {
+        params : {
+            cursor, size,
+        }
+    })
+
+    return response.data.result;
+}
+
+export const getStudyRecommendationKPIId = async (kpiId : number, cursor : number | null, size : number) : Promise<StudyRecommendationListResult> => {
+    const response = await axiosInstance.get(`/studies/recommendation/${kpiId}`, {
         params : {
             cursor, size,
         }
