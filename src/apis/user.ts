@@ -1,3 +1,4 @@
+import type { CommonResponse } from '../types/common';
 import type {
   ApiResponse,
   ResponseUserInfo,
@@ -76,4 +77,13 @@ export const putUserProfileImage = async (imageUrl: string) => {
     },
   });
   return response.data;
+};
+
+export const postUserLogout = async (): Promise<CommonResponse<string>> => {
+  const { data } = await axiosInstance.post('/auth/logout');
+
+  if (!data.isSuccess) {
+    throw new Error(data.message || 'Failed to logout');
+  }
+  return data;
 };
