@@ -1,8 +1,24 @@
 import { Icon } from '@iconify/react';
 import SubHeader from '../../components/myPage/SubHeader';
 import { FOOTERPB } from '../../components/common/Footer';
+import { postUserLogout } from '../../apis/user';
+import { useUserStore } from '../../store/useUserStore';
 
 const SettingPage = () => {
+  const onClickLogout = async () => {
+    try {
+      await postUserLogout();
+    } catch (error) {
+      console.error('❌ Server logout failed:', error);
+    } finally {
+      useUserStore.getState().clearUser();
+      window.location.href = '/login';
+    }
+  };
+
+  // TODO: 추후 회원탈퇴 API 연동
+  const onClickWithdraw = () => {};
+
   return (
     <div className="flex w-full flex-col items-center pb-2">
       {/* 헤더*/}
@@ -48,7 +64,7 @@ const SettingPage = () => {
         <div className={`mt-25 flex flex-col gap-4 px-1 ${FOOTERPB}`}>
           <div className="text-opacity-black-40 text-body-14R flex justify-between">
             <span>현재 버전</span>
-            <span>v1.4.6(3)</span>
+            <span>v1.0.0</span>
           </div>
           <div className="text-opacity-black-40 text-body-14R flex justify-between">
             <span>피드백 및 1대1 문의</span>
@@ -56,9 +72,9 @@ const SettingPage = () => {
           </div>
 
           <div className="text-opacity-black-40 text-caption-12R mt-3 flex justify-center gap-4">
-            <button>로그아웃</button>
+            <button onClick={onClickLogout}>로그아웃</button>
             <span>|</span>
-            <button>회원탈퇴</button>
+            <button onClick={onClickWithdraw}>회원탈퇴</button>
           </div>
         </div>
       </div>
