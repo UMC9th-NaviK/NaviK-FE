@@ -55,7 +55,9 @@ axiosInstance.interceptors.response.use(
       if (originalRequest.url?.includes('/auth/refresh')) {
         console.error('❌ Refresh token expired or invalid');
         localStorage.removeItem('accessToken');
-        window.location.href = '/login';
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login';
+        }
         return Promise.reject(error);
       }
 
@@ -88,7 +90,9 @@ axiosInstance.interceptors.response.use(
         console.error('❌ Token refresh failed:', refreshError);
         processQueue(refreshError as Error, null);
         localStorage.removeItem('accessToken');
-        window.location.href = '/login';
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login';
+        }
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

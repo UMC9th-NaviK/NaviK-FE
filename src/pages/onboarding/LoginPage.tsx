@@ -1,16 +1,29 @@
 import { useEffect, useState } from 'react';
 import SplashScreen from './SplashScreen';
 import LoginButtonList from '../../components/onboarding/LoginButtonList';
+import { useNavigate } from 'react-router-dom';
+import { checkAuthStatus } from '../../apis/auth';
 
 const LoginPage = () => {
   const [showSplash, setShowSplash] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 3600);
-    return () => clearTimeout(timer);
-  }, []);
+    const checkAuthAndSplash = async () => {
+      const splashTimer = new Promise<void>((resolve) => setTimeout(resolve, 3600));
+      const authCheck = checkAuthStatus();
+
+      const [, isLoggedIn] = await Promise.all([splashTimer, authCheck]);
+
+      if (isLoggedIn) {
+        navigate('/home', { replace: true });
+      } else {
+        setShowSplash(false);
+      }
+    };
+
+    checkAuthAndSplash();
+  }, [navigate]);
 
   if (showSplash) {
     return <SplashScreen />;
