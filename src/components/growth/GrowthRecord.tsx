@@ -36,14 +36,23 @@ const GrowthRecord = () => {
         onSuccess: (response) => {
             if (response.result.status === 'FAILED') {
                 retryAI(response.result.id);
+
+                alert("성장 로그 분석 중입니다. 잠시만 기다려주세요!"); 
+
+                handleCancelGrowthLog();
+
                 return;
             }
     
             queryClient.invalidateQueries({ queryKey: ['growthLogs'] });
+
+            alert("성장 로그가 성공적으로 등록되었습니다!"); 
+
             handleCancelGrowthLog();
         },
         onError: (error) => {
             console.error(error);
+            alert("성장 로그 등록에 실패했습니다. 다시 시도해주세요.");
         }
     });
     
@@ -75,7 +84,7 @@ const GrowthRecord = () => {
         }
 
         catch (error) {
-            console.error("노션 URL을 가져오는데 실패했습니다.", error);
+            alert("노션 URL을 가져오는데 실패했습니다.");
         }
     };
 

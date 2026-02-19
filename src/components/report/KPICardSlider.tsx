@@ -47,7 +47,7 @@ const KPICardSlider = ({ role, cards, activeIndex, onIndexChange }: KPICardSlide
                 scrollPaddingLeft: `calc(50% - ${CARD_WIDTH / 2}px)`,
                 scrollPaddingRight: `calc(50% - ${CARD_WIDTH / 2}px)`,
 
-                touchAction: 'pan-y',
+                touchAction: 'auto',
             }}
         >
             {cards.map((card, idx) => {
