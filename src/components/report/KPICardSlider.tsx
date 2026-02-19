@@ -46,6 +46,8 @@ const KPICardSlider = ({ role, cards, activeIndex, onIndexChange }: KPICardSlide
                 paddingRight: `calc(50% - ${CARD_WIDTH / 2}px)`,
                 scrollPaddingLeft: `calc(50% - ${CARD_WIDTH / 2}px)`,
                 scrollPaddingRight: `calc(50% - ${CARD_WIDTH / 2}px)`,
+
+                touchAction: 'pan-y',
             }}
         >
             {cards.map((card, idx) => {
@@ -55,7 +57,7 @@ const KPICardSlider = ({ role, cards, activeIndex, onIndexChange }: KPICardSlide
                     <div
                         key={card.kpiCardId}
                         className="snap-center shrink-0 flex items-center justify-center"
-                        style={{ width: CARD_WIDTH }}
+                        style={{ width: CARD_WIDTH , scrollSnapStop: 'always' }}
                     >
                         {isActive ? (
                             <img
