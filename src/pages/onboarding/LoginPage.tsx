@@ -10,12 +10,13 @@ const LoginPage = () => {
 
   useEffect(() => {
     let cancelled = false;
+    let timerId: ReturnType<typeof setTimeout> | undefined;
 
     const checkAuthAndSplash = async () => {
       const splashTimer = new Promise<void>((resolve) => {
-        const id = setTimeout(resolve, 3600);
-        return id;
+        timerId = setTimeout(resolve, 3600);
       });
+
       const authCheck = checkAuthStatus();
 
       const [, isLoggedIn] = await Promise.all([splashTimer, authCheck]);
@@ -33,6 +34,9 @@ const LoginPage = () => {
 
     return () => {
       cancelled = true;
+      if (timerId !== undefined) {
+        clearTimeout(timerId);
+      }
     };
   }, [navigate]);
 
