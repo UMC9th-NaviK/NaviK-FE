@@ -42,7 +42,7 @@ const CoreKPIPage = () => {
                     공고를 불러오는 중...
                   </div>
                 ) : recruitments.length === 0 ? (
-                  <div className="text-base-400 flex h-54.25 w-full items-center justify-center">
+                  <div className="text-base-400 flex h-[249px] w-full items-center justify-center">
                     아직 추천 공고가 없습니다.
                   </div>
                 ) : (
