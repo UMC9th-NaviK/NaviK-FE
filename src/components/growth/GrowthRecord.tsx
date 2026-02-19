@@ -46,13 +46,13 @@ const GrowthRecord = () => {
     
             queryClient.invalidateQueries({ queryKey: ['growthLogs'] });
 
-            alert("성장 로그가 성공적으로 등록되었습니다!"); 
+            alert("분석 요청이 완료되었습니다!"); 
 
             handleCancelGrowthLog();
         },
         onError: (error) => {
             console.error(error);
-            alert("성장 로그 등록에 실패했습니다. 다시 시도해주세요.");
+            alert("분석이 실패하였습니다. 다시 시도해주세요.");
         }
     });
     
