@@ -27,3 +27,12 @@ export const syncUserProfile = async (): Promise<void> => {
     console.error('프로필 동기화 실패:', error);
   }
 };
+
+export const checkAuthStatus = async (): Promise<boolean> => {
+  try {
+    await axiosInstance.get('/users/my-page');
+    return true;
+  } catch {
+    return false;
+  }
+};

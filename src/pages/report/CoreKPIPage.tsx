@@ -41,6 +41,10 @@ const CoreKPIPage = () => {
                   <div className="text-base-400 flex h-[249px] w-full items-center justify-center">
                     공고를 불러오는 중...
                   </div>
+                ) : recruitments.length === 0 ? (
+                  <div className="text-base-400 flex h-[249px] w-full items-center justify-center">
+                    아직 추천 공고가 없습니다.
+                  </div>
                 ) : (
                   recruitments.map((recruitment) => (
                     <div key={recruitment.id} className="w-[284px] shrink-0 snap-start snap-always">
