@@ -9,11 +9,10 @@ import { useEffect, useState } from 'react';
 import { getKPICardBottom, getKPICardDetail } from '../../apis/report/kpiCard';
 import type { KPICardBase, KPICardDetailResponseResult } from '../../types/kpiCard';
 import { Icon } from '@iconify/react';
-import { useStudyRecommend } from '../../hooks/queries/useStudyRecommend';
+import { useStudyRecommendationKPI } from '../../hooks/queries/useStudyRecommend';
 
 const OvercomingKPIDetailPage = () => {
   const { profile, role } = useProfile();
-  const { data = [] } = useStudyRecommend(null, 5);
 
   const name = profile?.nickname as string;
 
@@ -30,46 +29,47 @@ const OvercomingKPIDetailPage = () => {
 
   useEffect(() => {
     const fetchInitialCards = async () => {
-      try {
-        const response = await getKPICardBottom();
+        try {
+            const response = await getKPICardBottom();
 
-        setCards(response.result);
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err);
-      }
+            setCards(response.result);
+            setIsLoading(false);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     fetchInitialCards();
   }, []);
 
-  useEffect(() => {
+    useEffect(() => {
     if (cards.length === 0) return;
 
     const currentId = cards[activeIndex].kpiCardId;
 
     const fetchDetail = async () => {
-      try {
-        const response = await getKPICardDetail(currentId, 'weak');
+        try {
+            const response = await getKPICardDetail(currentId, 'weak');
 
-        setDetailData(response.result);
+            setDetailData(response.result);
 
-        if (response.result.kpiCardId % 10 !== 0) {
-          setConvertedValue(`0${response.result.kpiCardId % 10}`);
-        } else {
-          setConvertedValue(`1${response.result.kpiCardId % 10}`);
+            if (response.result.kpiCardId % 10 !== 0) {
+                setConvertedValue(`0${response.result.kpiCardId % 10}`);
+            } else {
+                setConvertedValue(`1${response.result.kpiCardId % 10}`);
+            }
+        } catch (err) {
+            console.error('상세조회 실패', err);
         }
-      } catch (err) {
-        console.error('상세조회 실패', err);
-      }
     };
 
     fetchDetail();
-  }, [activeIndex, cards]);
+    }, [activeIndex, cards]);
 
-  //const { data: studies = [] } = useStudyRecommend(null, 5);
+    const currentKpiId = cards.length > 0 ? cards[activeIndex].kpiCardId : null;
+    const { data: studyResult } = useStudyRecommendationKPI(currentKpiId as number, null, 5);
 
-  //const currentStudyId = studies.length > 0 ? studies[activeIndex].studyId : null;
+    const recommendations = studyResult?.content || [];
 
   if (isLoading) {
     return (
@@ -128,9 +128,13 @@ const OvercomingKPIDetailPage = () => {
 
               <div className="scrollbar-hide snap-x snap-mandatory scroll-pl-[22px] overflow-x-auto pr-5">
                 <div className="box-border flex w-max flex-nowrap gap-[16px] scroll-smooth">
-                  {data && data.length > 0 && (
-                    <RecommendationNotice role={mappedRole} study={data[0]} />
-                  )}
+                {recommendations.length > 0 ? (
+                    recommendations.map((study) => (
+                        <RecommendationNotice key={study.studyId} role={mappedRole} study={study} />
+                    ))
+                    ) : (
+                    <p className="text-gray-400">추천 스터디가 없습니다.</p>
+                )}
                   <div className="h-full w-[1px] flex-shrink-0" />
                 </div>
               </div>

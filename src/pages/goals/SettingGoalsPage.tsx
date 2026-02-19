@@ -65,7 +65,7 @@ const SettingGoalsPage = () => {
                         <img 
                         src="/images/goals/logo.png"
                         alt="나빅 로고"
-                        className="absolute z-20 top-[0px] right-[10px] w-[115px] h-[115px]"
+                        className="absolute z-20 top-[5px] right-[5px] w-[105px] h-[105px]"
                         />
                     </div>
 
@@ -93,7 +93,7 @@ const SettingGoalsPage = () => {
                         <div className="flex justify-end w-full"> 
                             <button 
                             onClick={() => navigate("/goals/add")}
-                            className="flex items-center justify-center w-[100px] h-[38px] rounded-[8px] py-[8px] px-[24px] gap-[10px] bg-primary-blue-500">
+                            className="flex items-center justify-center w-[100px] h-[38px] rounded-[8px] py-[8px] gap-[10px] bg-primary-blue-500">
                                 <p className="text-body-14B text-base-100">
                                     목표 추가
                                 </p>
