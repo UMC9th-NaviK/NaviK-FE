@@ -9,11 +9,18 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let cancelled = false;
+
     const checkAuthAndSplash = async () => {
-      const splashTimer = new Promise<void>((resolve) => setTimeout(resolve, 3600));
+      const splashTimer = new Promise<void>((resolve) => {
+        const id = setTimeout(resolve, 3600);
+        return id;
+      });
       const authCheck = checkAuthStatus();
 
       const [, isLoggedIn] = await Promise.all([splashTimer, authCheck]);
+
+      if (cancelled) return;
 
       if (isLoggedIn) {
         navigate('/home', { replace: true });
@@ -23,6 +30,10 @@ const LoginPage = () => {
     };
 
     checkAuthAndSplash();
+
+    return () => {
+      cancelled = true;
+    };
   }, [navigate]);
 
   if (showSplash) {
