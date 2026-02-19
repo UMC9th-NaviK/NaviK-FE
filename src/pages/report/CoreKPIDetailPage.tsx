@@ -49,8 +49,6 @@ const CoreKPIDetailPage = () => {
             try {
                 const response = await getKPICardDetail(currentId, 'strong');
 
-                console.log('API Response:', response);
-
                 setDetailData(response.result);
             } catch (err) {
                 console.error('상세조회 실패', err);
