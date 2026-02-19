@@ -8,7 +8,7 @@ const ComparisonIncrease = ({ type, percentage } : ComparisonProps) => {
         const p = Math.abs(percentage);
 
         if (p === 0) {
-            return "/images/growth/InitialGrowthTimeline.png";
+            return "/images/growth/GrowthLogZero.png";
         }
 
         if (type === 'up') {
