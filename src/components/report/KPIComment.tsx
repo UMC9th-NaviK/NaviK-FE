@@ -115,17 +115,14 @@ const KPIComment = ({ role, detailData, name }: KPICommentProps) => {
           </div>
           <div className="flex w-full flex-1 gap-[4px]">
             <div
-              className={`h-[16px] rounded-full bg-gradient-to-r`}
-              style={{
-                width: `${bottomPercentage}%`,
-                backgroundImage: `linear-gradient(to right, ${theme.surfaceVar}, ${theme.primaryVar})`,
-              }}
+              className={`h-[16px] rounded-full bg-white`}
+              style={{ width: `${bottomPercentage}%`}}
             >
               {' '}
             </div>
             <div
-              className={`h-[16px] rounded-full bg-white`}
-              style={{ width: `${100 - bottomPercentage}%` }}
+              className={`h-[16px] rounded-full bg-gradient-to-l`}
+              style={{ width: `${100 - bottomPercentage}%`, backgroundImage: `linear-gradient(to left, ${theme.surfaceVar}, ${theme.primaryVar})`}}
             >
               {' '}
             </div>
